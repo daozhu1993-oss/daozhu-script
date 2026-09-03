@@ -6,6 +6,7 @@ status: "原创企划案 · 工业级样板"
 role: "原创编剧 / 故事架构"
 logline: "宗族除名的逆子携染血绝密还乡，以身为饵步步做局，洗刷冤屈重定天下公道。"
 highlight: "影视正规军案头示范 · 涵盖55集完整分集大纲、人物拓扑图与前3集标准分镜脚本"
+poster: "/images/posters/yizhihuanxiang.jpg"
 order: 1
 ---
 

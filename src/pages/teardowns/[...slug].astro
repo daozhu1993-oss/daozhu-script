@@ -22,41 +22,57 @@ const { Content } = await entry.render();
       ← 返回爆款拆解列表
     </a>
 
-    <!-- Header info -->
+    <!-- Header info with Poster -->
     <header class="pb-8 border-b border-cinema-800">
-      <div class="flex flex-wrap items-center gap-2 mb-3">
-        <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-          {entry.data.format}
-        </span>
-        <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-          {entry.data.episodesOrDuration}
-        </span>
-        <span class="text-xs text-cinema-400">
-          类型：{entry.data.genre}
-        </span>
-      </div>
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <!-- Poster Thumbnail -->
+        {entry.data.poster && (
+          <div class="w-full md:w-56 shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-cinema-800 bg-cinema-900 group">
+            <img
+              src={entry.data.poster}
+              alt={entry.data.title}
+              class="w-full h-auto object-cover aspect-[3/4] group-hover:scale-102 transition-transform duration-500"
+            />
+          </div>
+        )}
 
-      <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif">
-        {entry.data.title}
-      </h1>
+        <!-- Meta and Title -->
+        <div class="flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              {entry.data.format}
+            </span>
+            <span class="text-xs font-mono text-cinema-300 bg-cinema-900 px-2 py-0.5 rounded border border-cinema-800">
+              {entry.data.episodesOrDuration}
+            </span>
+            <span class="text-xs text-cinema-400">
+              类型：{entry.data.genre}
+            </span>
+          </div>
 
-      <!-- Hook & Structure callout -->
-      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="p-4 rounded-xl bg-cinema-900 border border-cinema-800">
-          <span class="text-amber-400 font-bold text-xs uppercase tracking-wider block mb-1">
-            ⚡ 核心进场钩子
-          </span>
-          <p class="text-sm text-cinema-200">
-            {entry.data.hookTiming}
-          </p>
-        </div>
-        <div class="p-4 rounded-xl bg-cinema-900 border border-cinema-800">
-          <span class="text-blue-400 font-bold text-xs uppercase tracking-wider block mb-1">
-            🏗️ 架构特点
-          </span>
-          <p class="text-sm text-cinema-200">
-            {entry.data.structureSummary}
-          </p>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif mb-4">
+            {entry.data.title}
+          </h1>
+
+          <!-- Hook & Structure callout -->
+          <div class="grid grid-cols-1 gap-3">
+            <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800">
+              <span class="text-amber-400 font-bold text-xs uppercase tracking-wider block mb-1">
+                ⚡ 核心进场钩子
+              </span>
+              <p class="text-xs sm:text-sm text-cinema-200">
+                {entry.data.hookTiming}
+              </p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800">
+              <span class="text-blue-400 font-bold text-xs uppercase tracking-wider block mb-1">
+                🏗️ 架构特点
+              </span>
+              <p class="text-xs sm:text-sm text-cinema-200">
+                {entry.data.structureSummary}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 

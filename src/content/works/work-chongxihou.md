@@ -6,6 +6,7 @@ status: "原创企划案 · 样板剧本"
 role: "原创编剧"
 logline: "穿越医女被迫冲喜嫁入侯府，面对濒死夫君与恶毒亲戚，扮猪吃虎并肩破局，双向奔赴夺回爵位。"
 highlight: "女频先抑后扬典型范本 · 示范‘强强联手、双向试探’的男女主对白潜台词设计"
+poster: "/images/posters/chongxihou.jpg"
 order: 2
 ---
 

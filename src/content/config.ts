@@ -30,6 +30,7 @@ const teardownsCollection = defineCollection({
     hookTiming: z.string(),
     structureSummary: z.string(),
     takeaways: z.array(z.string()),
+    poster: z.string().optional(),
     featured: z.boolean().default(false),
   }),
 });
@@ -63,6 +64,7 @@ const worksCollection = defineCollection({
     role: z.string().default('总编剧'),
     logline: z.string(),
     highlight: z.string(),
+    poster: z.string().optional(),
     order: z.number().default(99),
   }),
 });
