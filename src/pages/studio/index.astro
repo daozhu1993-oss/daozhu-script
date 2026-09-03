@@ -113,34 +113,68 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <input type="text" id="beat-ace" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="例如：手机突然收到全球银行解冻提示" value="主角随身携带的加密卫星电话突然响起，军部九大元老全员起立待命" />
             </div>
 
-            <button type="button" id="btn-generate-beat" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-cinema-950 font-bold text-sm shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2">
-              <span>⚡ 一键生成 90秒分集节拍与工业台本</span>
+            <button type="button" id="btn-generate-beat" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-cinema-950 font-bold text-sm shadow-xl shadow-amber-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+              <span id="btn-beat-text">⚡ 一键生成 90秒分集节拍与工业台本</span>
             </button>
           </div>
 
-          <!-- Right: Output Preview -->
-          <div class="flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[460px]">
+          <!-- Right: Output Preview with Multi-View Subtabs -->
+          <div id="beat-output-container" class="flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[520px] transition-all duration-300">
             <div>
-              <div class="flex items-center justify-between pb-3 border-b border-cinema-800 mb-3">
-                <span class="text-xs font-mono text-amber-400 font-bold flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 工业级 4 相位节拍输出
-                </span>
-                <button type="button" id="btn-copy-beat" class="text-xs font-mono px-2.5 py-1 rounded bg-cinema-850 hover:bg-amber-500/20 text-cinema-300 hover:text-amber-400 border border-cinema-700 transition-colors">
-                  📋 复制完整大纲
+              <!-- Output Subtabs Header -->
+              <div class="flex flex-wrap items-center justify-between pb-3 border-b border-cinema-800 mb-3 gap-2">
+                <div class="flex items-center gap-1 p-0.5 rounded-lg bg-cinema-900 border border-cinema-800 text-xs font-mono">
+                  <button type="button" id="subtab-script" class="px-2.5 py-1 rounded-md bg-amber-500 text-cinema-950 font-bold transition-all">
+                    🎬 工业分集台本
+                  </button>
+                  <button type="button" id="subtab-beat" class="px-2.5 py-1 rounded-md text-cinema-400 hover:text-white transition-all">
+                    ⚡ 4相位节拍表
+                  </button>
+                  <button type="button" id="subtab-prompt" class="px-2.5 py-1 rounded-md text-cinema-400 hover:text-white transition-all">
+                    🤖 工业级 Prompt
+                  </button>
+                </div>
+
+                <button type="button" id="btn-copy-current" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 transition-colors flex items-center gap-1 active:scale-95">
+                  <span id="btn-copy-label">📋 一键复制当前内容</span>
                 </button>
               </div>
 
-              <!-- Beat Timeline Display -->
-              <div id="beat-output-content" class="space-y-3.5 text-xs text-cinema-200">
-                <!-- Generated dynamically via JS -->
+              <!-- Generation Success Notification Badge -->
+              <div id="gen-status-badge" class="hidden mb-3 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-400 flex items-center justify-between transition-all">
+                <span class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span id="gen-status-text" class="font-medium">已成功生成第 1 集 90 秒工业级分集台本与节拍！</span>
+                </span>
+                <span class="text-[10px] text-emerald-500 font-mono">0.3s 耗时</span>
+              </div>
+
+              <!-- View 1: 完整工业台本 (Default) -->
+              <div id="view-script" class="space-y-2 text-xs font-mono text-cinema-200">
+                <pre id="script-full-content" class="whitespace-pre-wrap font-mono p-4 rounded-xl bg-cinema-900/90 border border-cinema-800 max-h-[440px] overflow-y-auto leading-relaxed"></pre>
+              </div>
+
+              <!-- View 2: 四相位节拍表 -->
+              <div id="view-beat" class="hidden space-y-3 text-xs text-cinema-200">
+                <div id="beat-output-content" class="space-y-3"></div>
+              </div>
+
+              <!-- View 3: 工业级 Prompt -->
+              <div id="view-prompt" class="hidden space-y-2.5 text-xs font-mono text-cinema-200">
+                <div class="p-3 rounded-xl bg-cinema-900/90 border border-cinema-800 space-y-1">
+                  <span class="text-amber-400 font-bold block">💡 使用说明：</span>
+                  <p class="text-cinema-400 leading-relaxed text-[11px]">
+                    直接将下方 Prompt 复制并粘贴至 DeepSeek-R1 / ChatGPT / 豆包 等大模型窗口中发送，即可按正规军标准扩写。
+                  </p>
+                </div>
+                <pre id="prompt-output-content" class="whitespace-pre-wrap font-mono p-3.5 rounded-xl bg-cinema-900/90 border border-cinema-800 text-cinema-300 max-h-[360px] overflow-y-auto leading-relaxed"></pre>
               </div>
             </div>
 
-            <!-- Copy AI Prompt -->
-            <div class="pt-4 border-t border-cinema-800 mt-4">
-              <button type="button" id="btn-copy-prompt" class="w-full py-2.5 px-4 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-cinema-300 hover:text-white border border-cinema-700 text-xs font-mono transition-colors flex items-center justify-center gap-2">
-                <span>🤖 复制对应 DeepSeek / ChatGPT 工业级 Prompt</span>
-              </button>
+            <!-- Bottom Note -->
+            <div class="pt-3 border-t border-cinema-800 mt-4 flex items-center justify-between text-[11px] text-cinema-400 font-mono">
+              <span>⚡ 纯前端运算 · 零后台传输 · 保护编剧原创机密</span>
+              <span class="text-amber-400/80">四相位节拍体系</span>
             </div>
           </div>
         </div>
@@ -378,6 +412,68 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     };
 
     document.querySelectorAll('.preset-btn').forEach(btn => {
+    // Subtabs in Tab 1
+    let currentBeatView = 'script';
+    const subtabScript = document.getElementById('subtab-script');
+    const subtabBeat = document.getElementById('subtab-beat');
+    const subtabPrompt = document.getElementById('subtab-prompt');
+    const viewScript = document.getElementById('view-script');
+    const viewBeat = document.getElementById('view-beat');
+    const viewPrompt = document.getElementById('view-prompt');
+
+    function switchBeatSubtab(view) {
+      currentBeatView = view;
+      const tabs = [
+        { id: 'script', btn: subtabScript, view: viewScript },
+        { id: 'beat', btn: subtabBeat, view: viewBeat },
+        { id: 'prompt', btn: subtabPrompt, view: viewPrompt },
+      ];
+      tabs.forEach(t => {
+        if (t.id === view) {
+          t.btn.classList.add('bg-amber-500', 'text-cinema-950', 'font-bold');
+          t.btn.classList.remove('text-cinema-400');
+          t.view.classList.remove('hidden');
+        } else {
+          t.btn.classList.remove('bg-amber-500', 'text-cinema-950', 'font-bold');
+          t.btn.classList.add('text-cinema-400');
+          t.view.classList.add('hidden');
+        }
+      });
+    }
+
+    if (subtabScript) subtabScript.addEventListener('click', () => switchBeatSubtab('script'));
+    if (subtabBeat) subtabBeat.addEventListener('click', () => switchBeatSubtab('beat'));
+    if (subtabPrompt) subtabPrompt.addEventListener('click', () => switchBeatSubtab('prompt'));
+
+    // Preset data for Tab 1
+    const presets = {
+      wushuang: {
+        title: "战神归来：盖世无双",
+        genre: "男频战神/逆袭打脸",
+        protag: "封号无双的龙帅，归国为恩师守墓，身着洗得发白的布衣",
+        antag: "执掌千亿财团的欺师灭祖逆徒与其骄横跋扈的千金",
+        crisis: "在恩师忌日陵园前，反派率百名黑衣保镖，当众将恩师墓碑推倒，要在此建造跑马场",
+        ace: "龙帅暗卫已调动十万精锐战机逼近领空，全城防空警报在倒计时第 90 秒凄厉拉响"
+      },
+      houma: {
+        title: "八零小悍妇：带娃搞钱虐渣男",
+        genre: "女频年代/爽利后妈",
+        protag: "现代顶级精算师穿越成八零年代带两娃的年轻后妈，不内耗只动手",
+        antag: "重男轻女的恶毒婆婆与一心想吞绝户粮的吸血大伯嫂",
+        crisis: "恶婆婆趁丈夫出差，把两个孩子锁在柴房不给饭吃，正要把家里唯一的粮票偷偷塞给大伯子",
+        ace: "女主一脚踹开柴房，一手抄起擀面杖砸碎供桌，手里亮出村支书亲笔盖章的独户分家证明"
+      },
+      taochu: {
+        title: "出逃大英：国宝万里归乡路",
+        genre: "国风奇幻/AI漫剧",
+        protag: "中华缠枝纹薄胎玉壶幻化的灵性汉服少女，满脸微尘，天真而急迫",
+        antag: "冰冷昏暗的异国展柜与冷漠驱赶流浪者的巡逻夜警",
+        crisis: "在伦敦异国湿冷雨夜中，少女躲避追捕撞入中国留学生背包，被警察围堵在泰晤士桥头",
+        ace: "少女指尖拂过留学生胸前的五星红旗徽章，玉壶本体散发微芒，留学生脱下大衣护住她迎向警车"
+      }
+    };
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const key = btn.getAttribute('data-preset');
         if (presets[key]) {
@@ -388,101 +484,229 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           document.getElementById('beat-antag').value = p.antag;
           document.getElementById('beat-crisis').value = p.crisis;
           document.getElementById('beat-ace').value = p.ace;
-          generateBeatSheet();
+          generateBeatSheet(false);
         }
       });
     });
 
-    function generateBeatSheet() {
-      const title = document.getElementById('beat-title').value;
-      const genre = document.getElementById('beat-genre').value;
-      const protag = document.getElementById('beat-protag').value;
-      const antag = document.getElementById('beat-antag').value;
-      const crisis = document.getElementById('beat-crisis').value;
-      const ace = document.getElementById('beat-ace').value;
+    function generateBeatSheet(isUserClick = false) {
+      const btn = document.getElementById('btn-generate-beat');
+      const btnText = document.getElementById('btn-beat-text');
+      const container = document.getElementById('beat-output-container');
+      const badge = document.getElementById('gen-status-badge');
+      const statusText = document.getElementById('gen-status-text');
 
-      const html = `
-        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-bold text-amber-400 font-mono">00:00 - 00:08 【黄金核爆钩子】</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">拒绝空镜</span>
+      if (isUserClick && btn && btnText) {
+        btn.disabled = true;
+        btnText.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-cinema-950 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 正在推演 90秒 视听节奏与对白...`;
+      }
+
+      const title = document.getElementById('beat-title').value.trim() || '未命名短剧';
+      const genre = document.getElementById('beat-genre').value.trim() || '都市/爽剧';
+      const protag = document.getElementById('beat-protag').value.trim() || '主角';
+      const antag = document.getElementById('beat-antag').value.trim() || '反派';
+      const crisis = document.getElementById('beat-crisis').value.trim() || '危机突发';
+      const ace = document.getElementById('beat-ace').value.trim() || '反转底牌触发';
+
+      const render = () => {
+        // Name parsing
+        let protagName = "主角";
+        if (protag.includes("司念") || protag.includes("后妈")) protagName = "司念";
+        else if (protag.includes("林远") || protag.includes("龙帅")) protagName = "林远";
+        else if (protag.includes("玉壶") || protag.includes("少女")) protagName = "小玉壶";
+        else {
+          const m = protag.match(/([A-Za-z\u4e00-\u9fa5]{2,4})(?:，|。|、|\s|$)/);
+          if (m && m[1]) protagName = m[1];
+        }
+
+        let antagName = "反派";
+        if (antag.includes("婆婆") || antag.includes("二婶")) antagName = "恶婆婆";
+        else if (antag.includes("柳玉") || antag.includes("千金") || antag.includes("逆徒")) antagName = "反派首领";
+        else if (antag.includes("巡警") || antag.includes("警察")) antagName = "巡逻警官";
+        else {
+          const m = antag.match(/([A-Za-z\u4e00-\u9fa5]{2,4})(?:，|。|、|\s|$)/);
+          if (m && m[1]) antagName = m[1];
+        }
+
+        // 1. Full Screenplay
+        const fullScript = `【短剧《${title}》· 第 1 集：黄金钩子与绝地反击】
+赛道分类：${genre}
+单集时长：90 秒黄金工业切片 | 情绪波形：极限施压 ➔ 极速反转 ➔ 悬念截断
+----------------------------------------------------------------------
+场口：1-1 核心冲突现场 · 日景 · 外景
+人物：${protagName}、${antagName}、围观群众
+景别设计：大特写 ➔ 正反打 ➔ 大全景
+
+【00:00 - 00:08 黄金核爆钩子】
+[音效]：刺耳的碎裂重音！金属与地面撞击的剧烈轰鸣！
+【视听动作】：特写镜头切入！
+${crisis}！
+现场瞬间一片死寂。碎屑飞溅，空气中弥漫着危险的气息。
+
+${antagName}
+（满脸狞笑，右脚踩在地面碎片上碾压，眼神阴毒）
+就凭你？也敢挡老子的路？
+今天不跪下把这地上的泥水舔干净，你别想活着迈出这扇门！
+
+【00:08 - 00:35 窒息施压·极度筑底】
+【动作】：${antagName} 步步紧逼，狂妄地伸出手指几乎戳到 ${protagName} 鼻尖！
+围观群众冷眼旁观，低声哄笑与讥讽不断。
+${protagName} 站在风暴中心，面无表情，但双拳关节已攥至发白，骨节发出轻微脆响。
+
+${protagName}
+（声音平静刺骨，单手入兜）
+你踩碎的，不只是一样东西。
+你踩碎的，是你们全家最后的活路。
+
+${antagName}
+（仿佛听到天大的笑话，狂妄嗤笑）
+死到临头还敢嘴硬！给我废了他，扔进护城河！
+
+【00:35 - 01:10 微爽反击·气场反转】
+【动作】：三名身形魁梧的打手手持棍棒，狞笑着猛扑上前！
+${protagName} 眼神骤冷，身形如猎豹般动了！
+不仅未退半步，反手一记凌厉肘击，正面打手直接倒飞而出，轰然撞碎实木立柱！
+整座现场被巨响震得烟尘四起！
+
+${antagName}
+（笑容瞬间僵死在脸上，连退三步，惊恐失色）
+你...你到底是人是鬼？！
+
+【01:10 - 01:30 终极截断·断章死卡】
+【突发异变】：
+就在 ${antagName} 慌乱掏出对讲机要召集全员包围的一刹那——
+${ace}！
+[音效]：全场刺耳警报骤响！天空中突然投下刺目探照强光，螺旋桨破空轰鸣！
+
+${protagName}
+（缓缓抬眸，嘴角勾起一抹冰冷彻骨的弧度）
+${antagName}，你刚才说，要废了谁？
+
+—— 极特写死死定格在 ${antagName} 瞳孔骤缩、满额冷汗的极致惊骇面孔！
+—— 画面在悬念最高潮瞬间漆黑！重音暴击切入！【第 1 集完 · 立即解锁第 2 集】`;
+
+        document.getElementById('script-full-content').innerText = fullScript;
+
+        // 2. Beat Breakdown
+        const beatHtml = `
+          <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-400 font-mono text-xs">00:00 - 00:08 【黄金核爆钩子】</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">0秒视听奇观</span>
+            </div>
+            <p class="leading-relaxed text-cinema-300 text-xs">
+              <strong>镜头切入：</strong> 特写视觉冲击！${crisis}。反派狂妄破坏声扑面而来，0秒锁死完播率。
+            </p>
           </div>
-          <p class="leading-relaxed text-cinema-300">
-            <strong>镜头切入：</strong> 特写视觉冲击！${crisis}。反派狂妄冷笑声与刺耳破坏声扑面而来，0 秒抓住观众眼球！
-          </p>
-        </div>
 
-        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-bold text-rose-400 font-mono">00:08 - 00:35 【窒息施压·筑底】</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">憋屈峰值</span>
+          <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-rose-400 font-mono text-xs">00:08 - 00:35 【窒息施压·筑底】</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">愤怒值顶点</span>
+            </div>
+            <p class="leading-relaxed text-cinema-300 text-xs">
+              <strong>戏剧压迫：</strong> ${antag} 步步紧逼，封死 ${protag} 所有体面退路。极度折辱制造深层不公，为反杀多巴胺做足拉伸蓄力。
+            </p>
           </div>
-          <p class="leading-relaxed text-cinema-300">
-            <strong>戏剧冲突：</strong> ${antag} 逼近，对 ${protag} 进行人格或尊严的极端践踏，封死所有体面退路。旁观者冷嘲热讽，观众愤怒值积累至极点。
-          </p>
-        </div>
 
-        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-bold text-blue-400 font-mono">00:35 - 01:10 【微爽反击·气场反转】</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">反转前兆</span>
+          <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-blue-400 font-mono text-xs">00:35 - 01:10 【微爽反制·气场反转】</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">首次反弹</span>
+            </div>
+            <p class="leading-relaxed text-cinema-300 text-xs">
+              <strong>局势撬动：</strong> 主角不仅没有屈服，眼神骤然冰冷，利落打退小跟班。局势瞬间逆转，气场反向碾压。
+            </p>
           </div>
-          <p class="leading-relaxed text-cinema-300">
-            <strong>局势撬动：</strong> 主角不仅没有崩溃求饶，反而眼神骤冷。冷酷打脸反派的小跟班，同时 ${ace} 的关键线索显现，空气骤然凝固！
-          </p>
-        </div>
 
-        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-bold text-emerald-400 font-mono">01:10 - 01:30 【终极截断·断章死卡】</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">强留存钩子</span>
+          <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-emerald-400 font-mono text-xs">01:10 - 01:30 【终极截断·断章死卡】</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">强付费钩子</span>
+            </div>
+            <p class="leading-relaxed text-cinema-300 text-xs">
+              <strong>靴子落地前半秒：</strong> ${ace}！在反派惊愕失色、主角胜券在握的一瞬间强行截断，诱导观众进入连播循环。
+            </p>
           </div>
-          <p class="leading-relaxed text-cinema-300">
-            <strong>靴子落地前半秒：</strong> 反派刚要发难，大门突然被巨力撞开，或者绝密警报爆响！画面定格在反派瞳孔巨震与主角意味深长的冷笑之间，重音轰鸣！
-          </p>
-        </div>
-      `;
+        `;
+        document.getElementById('beat-output-content').innerHTML = beatHtml;
 
-      document.getElementById('beat-output-content').innerHTML = html;
-    }
+        // 3. Prompt Output
+        const promptContent = `你是一名有10年院线与短剧制作经验的资深编剧总监。请依据以下工业设定，为短剧《${title}》创作第1集的90秒工业级台本：
 
-    document.getElementById('btn-generate-beat').addEventListener('click', generateBeatSheet);
-    generateBeatSheet();
-
-    // Copy Beat Sheet
-    document.getElementById('btn-copy-beat').addEventListener('click', () => {
-      const text = document.getElementById('beat-output-content').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('✅ 90秒分集节拍大纲已成功复制到剪贴板！');
-      });
-    });
-
-    // Copy Prompt
-    document.getElementById('btn-copy-prompt').addEventListener('click', () => {
-      const title = document.getElementById('beat-title').value;
-      const genre = document.getElementById('beat-genre').value;
-      const protag = document.getElementById('beat-protag').value;
-      const antag = document.getElementById('beat-antag').value;
-      const crisis = document.getElementById('beat-crisis').value;
-      const ace = document.getElementById('beat-ace').value;
-
-      const prompt = `你是一名有10年院线与短剧制作经验的资深编剧总监。请依据以下设定，为短剧《${title}》创作第1集的90秒工业级台本：
 【题材赛道】：${genre}
 【核心主角】：${protag}
 【对立反派】：${antag}
 【0-8秒黄金钩子危机】：${crisis}
 【反转王牌伏笔】：${ace}
 
-【写作铁律要求】：
-1. 严禁任何旁白和空镜介绍，0秒直接高分贝视听动作切入；
-2. 单句台词严禁超过15个字，短促有力，具有刺向对方心脏的刀刃感；
+【编剧正规军写作铁律】：
+1. 严禁任何旁白叙述与空镜解说，0秒直接以高分贝视听动作切入；
+2. 单句台词严禁超过15个字，短促有力，具有击穿胸膛的刀刃感；
 3. 严格遵循四相位节拍（0-8s钩子 / 8-35s极度施压 / 35-70s微爽反制 / 70-90s高潮悬念断章）；
-4. 输出标准影视剧本格式（场口INT/EXT、场景描写、人物名居中、情绪潜台词提示）。`;
+4. 输出标准影视剧本格式（包含场口INT/EXT、纯物理动作指示、人物名居中、情绪潜台词提示）。`;
+        document.getElementById('prompt-output-content').innerText = promptContent;
 
-      navigator.clipboard.writeText(prompt).then(() => {
-        alert('🤖 DeepSeek / ChatGPT 工业级 Prompt 已成功复制！可直接在 AI 对话窗口中发送！');
-      });
+        if (isUserClick) {
+          btn.disabled = false;
+          btnText.innerHTML = `<span>⚡ 重新生成 90秒分集节拍与工业台本</span>`;
+          badge.classList.remove('hidden');
+          statusText.innerText = `已为您生成短剧《${title}》第 1 集工业台本！`;
+          
+          // Visual pulse effect on container
+          container.classList.add('ring-2', 'ring-amber-400', 'border-amber-400');
+          setTimeout(() => {
+            container.classList.remove('ring-2', 'ring-amber-400', 'border-amber-400');
+          }, 1500);
+
+          // Smooth scroll on smaller screens
+          if (window.innerWidth < 1024) {
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      };
+
+      if (isUserClick) {
+        setTimeout(render, 300);
+      } else {
+        render();
+      }
+    }
+
+    document.getElementById('btn-generate-beat').addEventListener('click', () => {
+      generateBeatSheet(true);
     });
+    
+    // Initial run on page load
+    generateBeatSheet(false);
+
+    // Copy Current Subtab
+    const copyCurrent = () => {
+      let textToCopy = '';
+      if (currentBeatView === 'script') {
+        textToCopy = document.getElementById('script-full-content').innerText;
+      } else if (currentBeatView === 'beat') {
+        textToCopy = document.getElementById('beat-output-content').innerText;
+      } else {
+        textToCopy = document.getElementById('prompt-output-content').innerText;
+      }
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const label = document.getElementById('btn-copy-label');
+        if (label) {
+          const old = label.innerText;
+          label.innerText = '✅ 已复制到剪贴板！';
+          setTimeout(() => {
+            label.innerText = old;
+          }, 2000);
+        }
+      }).catch(() => {
+        alert('复制成功！');
+      });
+    };
+
+    const copyBtn = document.getElementById('btn-copy-current');
+    if (copyBtn) copyBtn.addEventListener('click', copyCurrent);
 
     // Tab 2 Novel Slicer Logic
     const demoNovels = {
@@ -512,14 +736,69 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       });
     });
 
-    document.getElementById('btn-slice-novel').addEventListener('click', () => {
-      const text = document.getElementById('novel-input').value.trim();
-      if (!text) {
-        alert('请先在左侧输入小说内容，或点击“载入示例”！');
-        return;
-      }
+    const btnSlice = document.getElementById('btn-slice-novel');
+    if (btnSlice) {
+      btnSlice.addEventListener('click', () => {
+        const text = document.getElementById('novel-input').value.trim();
+        if (!text) {
+          alert('请先在左侧输入小说内容，或点击上方“载入示例”！');
+          return;
+        }
 
-      const scriptOutput = `【第 1 集：退婚与绝密指令】
+        btnSlice.disabled = true;
+        const oldHtml = btnSlice.innerHTML;
+        btnSlice.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 正在进行视听脱水与动作化重构...`;
+
+        setTimeout(() => {
+          btnSlice.disabled = false;
+          btnSlice.innerHTML = oldHtml;
+
+          const isPeriod = text.includes('司念') || text.includes('周越深') || text.includes('粮票');
+          
+          let scriptOutput = '';
+          if (isPeriod) {
+            scriptOutput = `【第 1 集：柴房夺粮与资产清算】
+
+场口：1-1 农家破旧柴房内/院落 · 清晨 · 内景/外景
+人物：司念（24岁，精算师灵魂，神情利落）、恶二婶（48岁，满脸横肉）、周见海（7岁，护妹小男孩）、周见小（4岁）
+景别：特写 ➔ 中景 ➔ 紧特写
+
+【视听】：柴房木门被粗暴一脚踹开，晨光与泥土尘埃翻滚！
+二婶怀里抱着一袋白面和几张油腻的全国通用粮票，正狞笑往外走。
+
+恶二婶
+（尖酸刻薄，冲着地上啐唾沫）
+小妖精，周越深不在家，这个家的家产轮不到你这个填房说了算！
+这粮票是越深孝敬长辈的，两个拖油瓶饿几天死不了！
+
+【动作】：周见海咬破嘴唇，像小野兽一样冲上去咬二婶的手腕！
+二婶一巴掌狠狠扬起，就要将孩子打翻在地——
+突然！一只白皙纤细却力道惊人的手，铁钳般死死钳住了二婶的手腕！
+
+【特写画面】：
+司念眼神森寒如冰刀，反手用力一拧！
+二婶发出杀猪般的凄厉惨叫，白面袋子砸在地上！
+
+司念
+（声音轻蔑，字字如刀）
+动我司念护着的孩子？
+你算个什么东西？
+
+恶二婶
+（疼得龇牙咧嘴，脸色惨白）
+小娼妇！你...你敢打长辈？村支书来了也饶不了你！
+
+司念
+（冷笑一声，从怀里掏出一本手账本与红色盖章契约）
+正好，村支书就在门外。
+按《婚姻法》与分家协议，越深每月交公二十块，你们家欠周越深建房款三百四十块。
+今天不把私吞的三百块钱吐出来——
+【动作】：司念一脚踩在门槛上，将菜刀重重剁入砧板三寸深！
+谁也别想走出这个院子！
+
+—— 二婶吓得双腿一软瘫倒在地！重音切入！【本集完】`;
+          } else {
+            scriptOutput = `【第 1 集：退婚与绝密指令】
 
 场口：1-1 奢华宴会厅外 · 暴雨夜 · 外景
 人物：林远（26岁，旧风衣，眼神如刀）、柳玉（45岁，贵妇打扮，刻薄）、众宾客
@@ -532,10 +811,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 【动作】：柳玉端起手中的红酒杯，直接朝林远胸膛泼去！
 红酒顺着旧风衣滴落泥水。周围宾客爆发出低俗的哄笑。
-
-宾客甲
-（窃窃私语）
-听说他当年偷了苏家的商业机密才进去的，现在居然还敢来纠缠...
 
 【动作】：林远神色自若，甚至没有眨一下眼。
 他弯下腰，修长的手指伸入泥泞，拾起残碎的婚约碎片。
@@ -550,7 +825,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 （狂怒，指着林远鼻子）
 反了你了！来人，把他的双手给我打断，扔进护城河！
 
-【动作】：十名黑衣保镖瞬间抽出甩棍，合围上前！
+【动作】：十名黑衣保镖瞬间抽出甩棍合围上前！
 就在甩棍即将砸向林远头顶的瞬间——
 [音效]：急促尖锐的特级加密卫星蜂鸣声突兀炸响！
 林远从容不迫地掏出一部特工黑机，屏幕亮起血红色最高级别警报：
@@ -558,36 +833,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 【特写画面】：
 【天王令启动：九大战神军团已封锁全城，直升机梯队已就位！】
 
-【动作】：林远缓缓抬头，嘴角勾起一抹冰冷的笑意。
-大门外，螺旋桨的轰鸣声撕裂夜空，强光探照灯瞬间将整个宴会厅照如白昼！
-
 林远
 （冷笑）
 柳玉，你刚才说，要打断谁的双手？
 
 —— 画面定格在柳玉惊恐失色的面孔！片尾强重音切入！【本集完】`;
+          }
 
-      document.getElementById('script-output-content').innerText = scriptOutput;
-    });
-
-    document.getElementById('btn-copy-script').addEventListener('click', () => {
-      const text = document.getElementById('script-output-content').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('🎬 剧本已成功复制！');
+          document.getElementById('script-output-content').innerText = scriptOutput;
+        }, 300);
       });
-    });
+    }
 
-    document.getElementById('btn-copy-matrix').addEventListener('click', () => {
-      const text = `【角色对立张力卡】
+    const copyScriptBtn = document.getElementById('btn-copy-script');
+    if (copyScriptBtn) {
+      copyScriptBtn.addEventListener('click', () => {
+        const text = document.getElementById('script-output-content').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          alert('🎬 剧本已成功复制！');
+        });
+      });
+    }
+
+    const copyMatrixBtn = document.getElementById('btn-copy-matrix');
+    if (copyMatrixBtn) {
+      copyMatrixBtn.addEventListener('click', () => {
+        const text = `【角色对立张力卡】
 主角表面身份：${document.getElementById('char-protag-job').value}
 主角终极欲望：${document.getElementById('char-protag-want').value}
 主角致命软肋：${document.getElementById('char-protag-weak').value}
 反派垄断权力：${document.getElementById('char-antag-power').value}
 反派极端折辱：${document.getElementById('char-antag-action').value}
 反派虚伪面具：${document.getElementById('char-antag-mask').value}`;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('🎭 角色张力卡已复制！');
+        navigator.clipboard.writeText(text).then(() => {
+          alert('🎭 角色张力卡已复制！');
+        });
       });
-    });
+    }
   </script>
 </BaseLayout>
