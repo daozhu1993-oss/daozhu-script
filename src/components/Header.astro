@@ -8,7 +8,8 @@ const { activePath = '/' } = Astro.props;
 const navLinks = [
   { href: '/guides', label: '方法论库', en: 'Guides' },
   { href: '/teardowns', label: '拆爆款', en: 'Teardowns' },
-  { href: '/templates', label: '模板工具', en: 'Templates' },
+  { href: '/studio', label: '创作工作台', en: 'Studio', isNew: true },
+  { href: '/templates', label: '模板手艺包', en: 'Templates' },
   { href: '/start', label: '新手路径', en: 'Start' },
   { href: '/works', label: '原创样板', en: 'Works' },
   { href: '/about', label: '关于岛主', en: 'About' },
@@ -45,13 +46,18 @@ const navLinks = [
           <a
             href={item.href}
             class:list={[
-              'px-3 py-1.5 rounded-md text-sm font-medium transition-all',
+              'px-2.5 py-1.5 rounded-md text-sm font-medium transition-all relative inline-flex items-center gap-1.5',
               isActive
                 ? 'text-amber-400 bg-amber-500/10 font-semibold'
                 : 'text-cinema-300 hover:text-white hover:bg-cinema-800/60',
             ]}
           >
             {item.label}
+            {item.isNew && (
+              <span class="px-1.5 py-0.5 text-[9px] font-mono rounded bg-gradient-to-r from-amber-400 to-amber-500 text-cinema-950 font-extrabold tracking-tighter">
+                HOT
+              </span>
+            )}
           </a>
         );
       })}

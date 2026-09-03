@@ -45,6 +45,7 @@ const templatesCollection = defineCollection({
       '分集大纲',
       'Prompt字典',
       '人物小传',
+      '小说转剧本',
     ]),
     access: z.enum(['free', 'email', 'pro']),
     fileFormat: z.string().default('Markdown / Notion'),

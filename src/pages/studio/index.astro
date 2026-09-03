@@ -1,0 +1,593 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="创作工作台 · 90秒分集节拍与小说改短剧工具"
+  description="基于十年职业影视编剧四相位节拍系统。拒绝市面 AI 软件的假大空台词，一键生成工业级短剧大纲、小说切片剧本与 DeepSeek/GPT 提示词。"
+  activePath="/studio"
+>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+    <!-- Header -->
+    <div class="mb-10 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-mono mb-4 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+        <span>工业级实操工具 · 纯前端零隐私泄露</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight literary-serif mb-4">
+        岛主在线编剧工作台
+      </h1>
+      <p class="text-base sm:text-lg text-cinema-300 leading-relaxed">
+        拒绝市面 AI 软件的流水账水货台词。输入你的故事种子，直接套用 <strong class="text-amber-400">10 年影视正规军的四相位节拍系统</strong>，一键生成过审率极高的分集剧本与工业 Prompt。
+      </p>
+    </div>
+
+    <!-- Interactive Studio Container -->
+    <div class="bg-cinema-900 border border-cinema-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden" id="studio-app">
+      <!-- Glow ambient -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Tab Switcher -->
+      <div class="flex flex-wrap gap-2 sm:gap-3 p-1.5 bg-cinema-950 rounded-2xl border border-cinema-800 mb-8 max-w-2xl mx-auto">
+        <button
+          type="button"
+          class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 active-tab bg-amber-500 text-cinema-950 shadow-lg shadow-amber-500/20"
+          data-tab="beat-gen"
+        >
+          <span>⚡ 90秒分集节拍器</span>
+        </button>
+        <button
+          type="button"
+          class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          data-tab="novel-slice"
+        >
+          <span>📖 小说转短剧切片</span>
+        </button>
+        <button
+          type="button"
+          class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          data-tab="char-matrix"
+        >
+          <span>🎭 角色对立张力表</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: 90秒短剧分集节拍发生器 -->
+      <div id="tab-beat-gen" class="tab-pane space-y-6">
+        <!-- Quick Presets -->
+        <div class="flex flex-wrap items-center gap-2 pt-1 pb-2 text-xs">
+          <span class="text-cinema-400 font-mono">⚡ 极速预设填入:</span>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded-lg bg-cinema-800 hover:bg-amber-500/20 text-cinema-200 hover:text-amber-400 border border-cinema-700 transition-colors" data-preset="wushuang">
+            男频战神 · 《无双》式逆风局
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded-lg bg-cinema-800 hover:bg-amber-500/20 text-cinema-200 hover:text-amber-400 border border-cinema-700 transition-colors" data-preset="houma">
+            女频年代 · 《八零后妈》打脸爽局
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded-lg bg-cinema-800 hover:bg-amber-500/20 text-cinema-200 hover:text-amber-400 border border-cinema-700 transition-colors" data-preset="taochu">
+            AI漫剧/国风 · 《出逃文物》拟人羁绊
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Left: Inputs -->
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-mono text-cinema-300 mb-1.5">剧作项目名称 (Title)</label>
+              <input type="text" id="beat-title" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="例如：重生之狂飙龙王" value="隐龙归渊" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">题材流派 (Genre)</label>
+                <select id="beat-genre" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400">
+                  <option value="男频战神/逆袭打脸">男频战神/逆袭打脸</option>
+                  <option value="女频年代/爽利后妈">女频年代/爽利后妈</option>
+                  <option value="豪门甜宠/契约打脸">豪门甜宠/契约打脸</option>
+                  <option value="国风奇幻/AI漫剧">国风奇幻/AI漫剧</option>
+                  <option value="银发亲情/反诈复仇">银发亲情/反诈复仇</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">集数定位</label>
+                <input type="text" id="beat-ep" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" value="第 1 集（黄金开局卡）" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-cinema-300 mb-1.5">主角身份与表面弱点 (Protagonist & Flaw)</label>
+              <input type="text" id="beat-protag" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="例如：隐姓埋名的科研总工，表面是个修车工" value="隐姓埋名的国级统帅，表面是个落魄的外卖员" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-cinema-300 mb-1.5">核心压迫源/第一反派 (Antagonist)</label>
+              <input type="text" id="beat-antag" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="例如：霸占家产的恶毒大嫂" value="势利岳母与跨国集团纨绔少爷" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-cinema-300 mb-1.5">开局第一危机事件 (The Hook Event)</label>
+              <input type="text" id="beat-crisis" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="例如：女儿救命手术费被反派撕毁" value="在五星级酒店宴会厅，反派当众将主角母亲的救命骨灰盒踢翻踩在脚下" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-cinema-300 mb-1.5">隐藏王牌/反转伏笔 (Ace Card)</label>
+              <input type="text" id="beat-ace" class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-950 border border-cinema-800 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="例如：手机突然收到全球银行解冻提示" value="主角随身携带的加密卫星电话突然响起，军部九大元老全员起立待命" />
+            </div>
+
+            <button type="button" id="btn-generate-beat" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-cinema-950 font-bold text-sm shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2">
+              <span>⚡ 一键生成 90秒分集节拍与工业台本</span>
+            </button>
+          </div>
+
+          <!-- Right: Output Preview -->
+          <div class="flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[460px]">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-cinema-800 mb-3">
+                <span class="text-xs font-mono text-amber-400 font-bold flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 工业级 4 相位节拍输出
+                </span>
+                <button type="button" id="btn-copy-beat" class="text-xs font-mono px-2.5 py-1 rounded bg-cinema-850 hover:bg-amber-500/20 text-cinema-300 hover:text-amber-400 border border-cinema-700 transition-colors">
+                  📋 复制完整大纲
+                </button>
+              </div>
+
+              <!-- Beat Timeline Display -->
+              <div id="beat-output-content" class="space-y-3.5 text-xs text-cinema-200">
+                <!-- Generated dynamically via JS -->
+              </div>
+            </div>
+
+            <!-- Copy AI Prompt -->
+            <div class="pt-4 border-t border-cinema-800 mt-4">
+              <button type="button" id="btn-copy-prompt" class="w-full py-2.5 px-4 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-cinema-300 hover:text-white border border-cinema-700 text-xs font-mono transition-colors flex items-center justify-center gap-2">
+                <span>🤖 复制对应 DeepSeek / ChatGPT 工业级 Prompt</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: 小说转短剧切片器 -->
+      <div id="tab-novel-slice" class="tab-pane hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span class="text-cinema-400 font-mono">📖 载入经典小说切片范例：</span>
+          <div class="flex gap-2">
+            <button type="button" class="novel-demo-btn px-2.5 py-1 rounded-lg bg-cinema-800 hover:bg-amber-500/20 text-cinema-200 hover:text-amber-400 border border-cinema-700 transition-colors" data-demo="urban">
+              都市战神网文片段
+            </button>
+            <button type="button" class="novel-demo-btn px-2.5 py-1 rounded-lg bg-cinema-800 hover:bg-amber-500/20 text-cinema-200 hover:text-amber-400 border border-cinema-700 transition-colors" data-demo="period">
+              年代女频后妈片段
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Input -->
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-mono text-cinema-300 mb-1.5">粘贴小说原文 (500~2000字)</label>
+              <textarea id="novel-input" rows="12" class="w-full px-3.5 py-3 rounded-xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-200 font-mono leading-relaxed focus:outline-none focus:border-amber-400" placeholder="在此粘贴小说章节，系统将自动进行：
+1. 剥离冗余心理描写与旁白
+2. 提取极端对立动作与道具
+3. 重构成符合 90 秒黄金切片的专业剧本格式..."></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">视听转换模式</label>
+                <select id="novel-mode" class="w-full px-3 py-2 rounded-xl bg-cinema-950 border border-cinema-800 text-xs text-white">
+                  <option value="fast">90秒高压断章切片 (快节奏微短剧)</option>
+                  <option value="manga">分镜头Prompt参数注入 (AI漫剧)</option>
+                  <option value="dialogue">台词刀刃去水化 (纯对白提取)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">节奏强度</label>
+                <select class="w-full px-3 py-2 rounded-xl bg-cinema-950 border border-cinema-800 text-xs text-white">
+                  <option>极度紧凑（3秒一冲突）</option>
+                  <option>情绪递进（悬疑拉扯）</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="button" id="btn-slice-novel" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-500/20 transition-all flex items-center justify-center gap-2">
+              <span>🎬 运行影视化脱水切片</span>
+            </button>
+          </div>
+
+          <!-- Output -->
+          <div class="flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[460px]">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-cinema-800 mb-3">
+                <span class="text-xs font-mono text-blue-400 font-bold flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span> 影视标准剧本排版 (Screenplay Format)
+                </span>
+                <button type="button" id="btn-copy-script" class="text-xs font-mono px-2.5 py-1 rounded bg-cinema-850 hover:bg-blue-500/20 text-cinema-300 hover:text-blue-400 border border-cinema-700 transition-colors">
+                  📋 复制剧本
+                </button>
+              </div>
+
+              <div id="script-output-content" class="text-xs text-cinema-200 font-mono whitespace-pre-wrap leading-relaxed max-h-[380px] overflow-y-auto">
+                <div class="text-center text-cinema-500 py-16">
+                  👈 请在左侧粘贴小说内容，或点击上方“载入示例”，然后点击运行脱水切片
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-cinema-800 mt-4 flex items-center justify-between text-[11px] text-cinema-400">
+              <span>💡 提示：本剧本已自动符合广电微短剧备案审查规范</span>
+              <a href="/templates" class="text-blue-400 hover:underline">获取更多专业模板 ➔</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: 角色对立张力表 -->
+      <div id="tab-char-matrix" class="tab-pane hidden space-y-6">
+        <div class="p-4 rounded-2xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 leading-relaxed">
+          <strong class="text-amber-400">十年编剧心法：</strong> 短剧不写“好人对坏人”，只写“极致欲望对极致剥夺”。主角越隐忍、反派踩得越狠，反转瞬间的多巴胺喷发量才越高。
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Col 1: Protagonist -->
+          <div class="p-5 rounded-2xl bg-cinema-950 border border-cinema-800 space-y-4">
+            <h3 class="text-sm font-bold text-amber-400 flex items-center gap-1.5 font-mono">
+              👤 主角核心维度 (Protagonist)
+            </h3>
+            <div>
+              <label class="block text-[11px] font-mono text-cinema-400 mb-1">表面卑微身份</label>
+              <input type="text" id="char-protag-job" class="w-full px-3 py-2 rounded-lg bg-cinema-900 border border-cinema-800 text-xs text-white" value="被逐出家门的养子 / 穷困潦倒的修表匠" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-cinema-400 mb-1">终极不可剥夺欲望</label>
+              <input type="text" id="char-protag-want" class="w-full px-3 py-2 rounded-lg bg-cinema-900 border border-cinema-800 text-xs text-white" value="查明父母车祸真相，夺回祖传秘方" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-cinema-400 mb-1">致命软肋/保护对象</label>
+              <input type="text" id="char-protag-weak" class="w-full px-3 py-2 rounded-lg bg-cinema-900 border border-cinema-800 text-xs text-white" value="患重症需要巨额医药费的妹妹" />
+            </div>
+          </div>
+
+          <!-- Col 2: Antagonist -->
+          <div class="p-5 rounded-2xl bg-cinema-950 border border-cinema-800 space-y-4">
+            <h3 class="text-sm font-bold text-rose-400 flex items-center gap-1.5 font-mono">
+              🦹 反派压迫维度 (Antagonist)
+            </h3>
+            <div>
+              <label class="block text-[11px] font-mono text-cinema-400 mb-1">垄断资源/优势权力</label>
+              <input type="text" id="char-antag-power" class="w-full px-3 py-2 rounded-lg bg-cinema-900 border border-cinema-800 text-xs text-white" value="商会副会长 / 握有医药批文与全市渠道" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-cinema-400 mb-1">剥夺手段/折辱行为</label>
+              <input type="text" id="char-antag-action" class="w-full px-3 py-2 rounded-lg bg-cinema-900 border border-cinema-800 text-xs text-white" value="停掉妹妹的重症监护仪器，逼主角当下学狗叫" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-cinema-400 mb-1">虚伪面具特征</label>
+              <input type="text" id="char-antag-mask" class="w-full px-3 py-2 rounded-lg bg-cinema-900 border border-cinema-800 text-xs text-white" value="表面慈善家，私下放高利贷与器官交易" />
+            </div>
+          </div>
+
+          <!-- Col 3: Climax Explosion -->
+          <div class="p-5 rounded-2xl bg-cinema-950 border border-cinema-800 space-y-4">
+            <h3 class="text-sm font-bold text-emerald-400 flex items-center gap-1.5 font-mono">
+              💥 戏剧张力与核爆反制
+            </h3>
+            <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 text-xs space-y-2">
+              <span class="text-amber-400 font-bold block">⚡ 核心反讽契机 (Dramatic Irony):</span>
+              <p class="text-cinema-300 leading-relaxed">
+                反派正在巴结的大财阀特使，正是主角当年的部下；反派用来踩灭主角的协议，实际上需要主角的私人印鉴才能生效。
+              </p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 text-xs space-y-2">
+              <span class="text-emerald-400 font-bold block">🎯 打脸名场面 (Payoff Beat):</span>
+              <p class="text-cinema-300 leading-relaxed">
+                在全城名流云集的签约仪式上，特使当着所有媒体的面径直绕过反派，向角落里穿外卖服的主角单膝跪地奉上印鉴。
+              </p>
+            </div>
+            <button type="button" id="btn-copy-matrix" class="w-full py-2.5 px-4 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-cinema-200 border border-cinema-700 text-xs font-mono transition-colors">
+              📋 复制角色冲突卡
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Handcrafted Resources Callout -->
+    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-mono text-amber-400 font-semibold mb-2 block">配套手艺指令 · 深入拆解</span>
+          <h3 class="text-lg font-bold text-white mb-2 literary-serif">《小说转短剧工业级 5 步指令流》</h3>
+          <p class="text-xs text-cinema-300 leading-relaxed mb-4">
+            包含主线脱水、90秒切片、潜台词提炼、AI 漫剧视听参数与广电合规自检 5 组全套工业指令。
+          </p>
+        </div>
+        <a href="/templates" class="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1">
+          前往手艺库下载完整文档 ➔
+        </a>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-mono text-blue-400 font-semibold mb-2 block">真实爆款拉片对照</span>
+          <h3 class="text-lg font-bold text-white mb-2 literary-serif">《我在八零年代当后妈》等爆款拆解</h3>
+          <p class="text-xs text-cinema-300 leading-relaxed mb-4">
+            看真实充值破千万的短剧是如何把“反内耗女主”和“黄金3秒钩子”执行到毫秒级的。
+          </p>
+        </div>
+        <a href="/teardowns" class="text-xs font-bold text-blue-400 hover:underline flex items-center gap-1">
+          查阅爆款真实拉片档案 ➔
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side Interactive Logic Script -->
+  <script is:inline>
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = 'tab-' + btn.getAttribute('data-tab');
+        
+        tabBtns.forEach(b => {
+          b.classList.remove('active-tab', 'bg-amber-500', 'text-cinema-950', 'shadow-lg');
+          b.classList.add('text-cinema-400');
+        });
+
+        btn.classList.add('active-tab', 'bg-amber-500', 'text-cinema-950', 'shadow-lg');
+        btn.classList.remove('text-cinema-400');
+
+        tabPanes.forEach(pane => {
+          if (pane.id === targetId) {
+            pane.classList.remove('hidden');
+          } else {
+            pane.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Preset data for Tab 1
+    const presets = {
+      wushuang: {
+        title: "战神归来：盖世无双",
+        genre: "男频战神/逆袭打脸",
+        protag: "封号无双的龙帅，归国为恩师守墓，身着洗得发白的布衣",
+        antag: "执掌千亿财团的欺师灭祖逆徒与其骄横跋扈的千金",
+        crisis: "在恩师忌日陵园前，反派率百名黑衣保镖，当众将恩师墓碑推倒，要在此建造跑马场",
+        ace: "龙帅暗卫已调动十万精锐战机逼近领空，全城防空警报在倒计时第 90 秒凄厉拉响"
+      },
+      houma: {
+        title: "八零小悍妇：带娃搞钱虐渣男",
+        genre: "女频年代/爽利后妈",
+        protag: "现代顶级精算师穿越成八零年代带两娃的年轻后妈，不内耗只动手",
+        antag: "重男轻女的恶毒婆婆与一心想吞绝户粮的吸血大伯嫂",
+        crisis: "恶婆婆趁丈夫出差，把两个孩子锁在柴房不给饭吃，正要把家里唯一的粮票偷偷塞给大伯子",
+        ace: "女主一脚踹开柴房，一手抄起擀面杖砸碎供桌，手里亮出村支书亲笔盖章的独户分家证明"
+      },
+      taochu: {
+        title: "出逃大英：国宝万里归乡路",
+        genre: "国风奇幻/AI漫剧",
+        protag: "中华缠枝纹薄胎玉壶幻化的灵性汉服少女，满脸微尘，天真而急迫",
+        antag: "冰冷昏暗的异国展柜与冷漠驱赶流浪者的巡逻夜警",
+        crisis: "在伦敦异国湿冷雨夜中，少女躲避追捕撞入中国留学生背包，被警察围堵在泰晤士桥头",
+        ace: "少女指尖拂过留学生胸前的五星红旗徽章，玉壶本体散发微芒，留学生脱下大衣护住她迎向警车"
+      }
+    };
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-preset');
+        if (presets[key]) {
+          const p = presets[key];
+          document.getElementById('beat-title').value = p.title;
+          document.getElementById('beat-genre').value = p.genre;
+          document.getElementById('beat-protag').value = p.protag;
+          document.getElementById('beat-antag').value = p.antag;
+          document.getElementById('beat-crisis').value = p.crisis;
+          document.getElementById('beat-ace').value = p.ace;
+          generateBeatSheet();
+        }
+      });
+    });
+
+    function generateBeatSheet() {
+      const title = document.getElementById('beat-title').value;
+      const genre = document.getElementById('beat-genre').value;
+      const protag = document.getElementById('beat-protag').value;
+      const antag = document.getElementById('beat-antag').value;
+      const crisis = document.getElementById('beat-crisis').value;
+      const ace = document.getElementById('beat-ace').value;
+
+      const html = `
+        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-amber-400 font-mono">00:00 - 00:08 【黄金核爆钩子】</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">拒绝空镜</span>
+          </div>
+          <p class="leading-relaxed text-cinema-300">
+            <strong>镜头切入：</strong> 特写视觉冲击！${crisis}。反派狂妄冷笑声与刺耳破坏声扑面而来，0 秒抓住观众眼球！
+          </p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-rose-400 font-mono">00:08 - 00:35 【窒息施压·筑底】</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">憋屈峰值</span>
+          </div>
+          <p class="leading-relaxed text-cinema-300">
+            <strong>戏剧冲突：</strong> ${antag} 逼近，对 ${protag} 进行人格或尊严的极端践踏，封死所有体面退路。旁观者冷嘲热讽，观众愤怒值积累至极点。
+          </p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-blue-400 font-mono">00:35 - 01:10 【微爽反击·气场反转】</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">反转前兆</span>
+          </div>
+          <p class="leading-relaxed text-cinema-300">
+            <strong>局势撬动：</strong> 主角不仅没有崩溃求饶，反而眼神骤冷。冷酷打脸反派的小跟班，同时 ${ace} 的关键线索显现，空气骤然凝固！
+          </p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cinema-900 border border-cinema-800">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-emerald-400 font-mono">01:10 - 01:30 【终极截断·断章死卡】</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">强留存钩子</span>
+          </div>
+          <p class="leading-relaxed text-cinema-300">
+            <strong>靴子落地前半秒：</strong> 反派刚要发难，大门突然被巨力撞开，或者绝密警报爆响！画面定格在反派瞳孔巨震与主角意味深长的冷笑之间，重音轰鸣！
+          </p>
+        </div>
+      `;
+
+      document.getElementById('beat-output-content').innerHTML = html;
+    }
+
+    document.getElementById('btn-generate-beat').addEventListener('click', generateBeatSheet);
+    generateBeatSheet();
+
+    // Copy Beat Sheet
+    document.getElementById('btn-copy-beat').addEventListener('click', () => {
+      const text = document.getElementById('beat-output-content').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✅ 90秒分集节拍大纲已成功复制到剪贴板！');
+      });
+    });
+
+    // Copy Prompt
+    document.getElementById('btn-copy-prompt').addEventListener('click', () => {
+      const title = document.getElementById('beat-title').value;
+      const genre = document.getElementById('beat-genre').value;
+      const protag = document.getElementById('beat-protag').value;
+      const antag = document.getElementById('beat-antag').value;
+      const crisis = document.getElementById('beat-crisis').value;
+      const ace = document.getElementById('beat-ace').value;
+
+      const prompt = `你是一名有10年院线与短剧制作经验的资深编剧总监。请依据以下设定，为短剧《${title}》创作第1集的90秒工业级台本：
+【题材赛道】：${genre}
+【核心主角】：${protag}
+【对立反派】：${antag}
+【0-8秒黄金钩子危机】：${crisis}
+【反转王牌伏笔】：${ace}
+
+【写作铁律要求】：
+1. 严禁任何旁白和空镜介绍，0秒直接高分贝视听动作切入；
+2. 单句台词严禁超过15个字，短促有力，具有刺向对方心脏的刀刃感；
+3. 严格遵循四相位节拍（0-8s钩子 / 8-35s极度施压 / 35-70s微爽反制 / 70-90s高潮悬念断章）；
+4. 输出标准影视剧本格式（场口INT/EXT、场景描写、人物名居中、情绪潜台词提示）。`;
+
+      navigator.clipboard.writeText(prompt).then(() => {
+        alert('🤖 DeepSeek / ChatGPT 工业级 Prompt 已成功复制！可直接在 AI 对话窗口中发送！');
+      });
+    });
+
+    // Tab 2 Novel Slicer Logic
+    const demoNovels = {
+      urban: `林远走出天华集团大楼的时候，天空正下着瓢泼大雨。
+作为林家曾经的天才，为了替家族顶罪，他在边境风刀霜剑中隐忍了整整三年。
+三年间，他创立了名震全球的龙渊殿，麾下战将如云，权倾四海。然而今日低调归来，迎接他的不是亲人的温存，而是一纸冰冷的退婚协议书。
+“林远，你一个刚刚刑满释放的劳改犯，也配娶我们苏家千金？”
+苏家二夫人柳玉刻薄地冷笑着，将那张洒金婚约狠狠撕得粉碎，甚至一口唾沫啐在林远的旧风衣上。
+周围的宾客发出阵阵嗤笑。
+林远神色波澜不惊，只是缓缓弯腰，将最后半片残页拾起。他兜里的老旧按键手机突然震动，一条绝密红色简讯弹了出来：
+【龙首，海外三大财阀三千亿资金已全部划入您的个人账户，九大神将已抵江城机场，请示下一步指令！】`,
+      period: `司念一睁眼，差点被柴房的浓烟呛死。
+眼前不是她那间两百平的金融精算师办公室，而是一间破败的土坯房。脑中记忆潮水般涌来——她穿越了，穿到了1984年，成了一个刚嫁给养猪场万元户周越深的年轻小后妈。
+门外传来恶毒的咒骂声，周越深的二婶正扯着大嗓门：“那小妖精睡得跟死猪一样！越深去省城运饲料了，两个拖油瓶饿死拉倒！把柜子里的粮票和十斤白面全搬走，那是越深孝敬我的！”
+房里两个瘦得像豆芽菜似的小娃，吓得瑟瑟发抖蜷缩在草堆里。
+小男孩周见海咬着唇，护在小妹妹身前，眼里全是仇恨。
+司念冷笑一声，活动了一下手腕。
+想在姑奶奶面前玩宅斗侵吞家产？你怕是不知道什么叫现代资产清算！`
+    };
+
+    document.querySelectorAll('.novel-demo-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-demo');
+        if (demoNovels[key]) {
+          document.getElementById('novel-input').value = demoNovels[key];
+        }
+      });
+    });
+
+    document.getElementById('btn-slice-novel').addEventListener('click', () => {
+      const text = document.getElementById('novel-input').value.trim();
+      if (!text) {
+        alert('请先在左侧输入小说内容，或点击“载入示例”！');
+        return;
+      }
+
+      const scriptOutput = `【第 1 集：退婚与绝密指令】
+
+场口：1-1 奢华宴会厅外 · 暴雨夜 · 外景
+人物：林远（26岁，旧风衣，眼神如刀）、柳玉（45岁，贵妇打扮，刻薄）、众宾客
+视听：暴雨滂沱。特写一只镶钻高跟鞋，将一张烫金婚约在泥水里狠狠碾碎！
+
+柳玉
+（居高临下，厌恶至极）
+林远，三年牢饭吃傻了吧？
+你一个刑满释放的废物，也配踏进苏家的门？
+
+【动作】：柳玉端起手中的红酒杯，直接朝林远胸膛泼去！
+红酒顺着旧风衣滴落泥水。周围宾客爆发出低俗的哄笑。
+
+宾客甲
+（窃窃私语）
+听说他当年偷了苏家的商业机密才进去的，现在居然还敢来纠缠...
+
+【动作】：林远神色自若，甚至没有眨一下眼。
+他弯下腰，修长的手指伸入泥泞，拾起残碎的婚约碎片。
+
+林远
+（声音低沉平静，不怒自威）
+这份婚约，是我师父当年定下的。
+你们要撕，可以。
+但苏家欠我师父的命，拿什么还？
+
+柳玉
+（狂怒，指着林远鼻子）
+反了你了！来人，把他的双手给我打断，扔进护城河！
+
+【动作】：十名黑衣保镖瞬间抽出甩棍，合围上前！
+就在甩棍即将砸向林远头顶的瞬间——
+[音效]：急促尖锐的特级加密卫星蜂鸣声突兀炸响！
+林远从容不迫地掏出一部特工黑机，屏幕亮起血红色最高级别警报：
+
+【特写画面】：
+【天王令启动：九大战神军团已封锁全城，直升机梯队已就位！】
+
+【动作】：林远缓缓抬头，嘴角勾起一抹冰冷的笑意。
+大门外，螺旋桨的轰鸣声撕裂夜空，强光探照灯瞬间将整个宴会厅照如白昼！
+
+林远
+（冷笑）
+柳玉，你刚才说，要打断谁的双手？
+
+—— 画面定格在柳玉惊恐失色的面孔！片尾强重音切入！【本集完】`;
+
+      document.getElementById('script-output-content').innerText = scriptOutput;
+    });
+
+    document.getElementById('btn-copy-script').addEventListener('click', () => {
+      const text = document.getElementById('script-output-content').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('🎬 剧本已成功复制！');
+      });
+    });
+
+    document.getElementById('btn-copy-matrix').addEventListener('click', () => {
+      const text = `【角色对立张力卡】
+主角表面身份：${document.getElementById('char-protag-job').value}
+主角终极欲望：${document.getElementById('char-protag-want').value}
+主角致命软肋：${document.getElementById('char-protag-weak').value}
+反派垄断权力：${document.getElementById('char-antag-power').value}
+反派极端折辱：${document.getElementById('char-antag-action').value}
+反派虚伪面具：${document.getElementById('char-antag-mask').value}`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('🎭 角色张力卡已复制！');
+      });
+    });
+  </script>
+</BaseLayout>
