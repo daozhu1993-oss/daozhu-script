@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadMagnetCard from '../../components/LeadMagnetCard.astro';
+
+const steps = [
+  {
+    step: '01',
+    title: '洗掉文人思维：建立“情绪多巴胺”认知',
+    desc: '不要总想着第一集就表达宏大的哲学思想。短剧观众看的是欲望代偿。先吃透“压抑→蓄势→爆发→反馈”这套像弹簧一样的爽感力学。',
+    actionLink: '/guides/02-dopamine-formula',
+    actionText: '必学：四步爽感公式剖析',
+  },
+  {
+    step: '02',
+    title: '掌握单集 90 秒的切片艺术',
+    desc: '短剧不是连续电影，而是 80 个高压情绪切片。学习如何在 10 秒内设立危机、在 50 秒内让观众咬牙切齿、并在 90 秒靴子落地前精准卡点切黑屏。',
+    actionLink: '/guides/01-short-drama-rhythm',
+    actionText: '必学：单集 90 秒微结构拆解',
+  },
+  {
+    step: '03',
+    title: '攻克生杀大权：黄金前 3 集',
+    desc: '90% 的短剧死在前 3 集的投流数据上。学习第 1 集的生存绝境、第 2 集的爽点预演、以及第 3 集的断崖式付费卡扣设计。',
+    actionLink: '/guides/03-first-three-episodes',
+    actionText: '必学：黄金前 3 集留人法',
+  },
+  {
+    step: '04',
+    title: '借力 AI 工具：打通视听与分镜管线',
+    desc: '如果你做 AI 漫剧，千万别抽卡两小时生一堆废图。把剧本里的文学描写，精准翻译成 Midjourney / ComfyUI 能读懂的光影与景别提示词。',
+    actionLink: '/guides/04-ai-manga-workflow',
+    actionText: '必学：AI 漫剧工业化工作流',
+  },
+  {
+    step: '05',
+    title: '拿走脚手架：今天就写出你的第 1 个本子',
+    desc: '不要对着空白文档发呆。直接下载岛主自用的《前 3 集爽点节拍卡》与《人物欲望冲突表》，照着框架填空，两小时内产出你的第一个平台级大纲。',
+    actionLink: '/templates',
+    actionText: '必拿：免费开局脚手架',
+  },
+];
+---
+
+<BaseLayout activePath="/start" title="新手从 0 到第一个本子 · 岛主编剧工坊">
+  <section class="pt-12 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-3">
+        🚀 ZERO-TO-ONE LEARNING PATH
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight literary-serif">
+        从 0 到写出你的第一个商用本子
+      </h1>
+      <p class="mt-4 text-sm sm:text-base text-cinema-300 leading-relaxed">
+        专门为刚入行、或从网文/传统文案转型的朋友定制的五步通关路线。把零散的手艺串成一条线，不走任何弯路。
+      </p>
+    </div>
+
+    <!-- Stepper Pipeline -->
+    <div class="relative border-l-2 border-cinema-800 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
+      {steps.map((item) => (
+        <div class="relative group">
+          <!-- Step bubble -->
+          <div class="absolute -left-[35px] sm:-left-[51px] top-0 w-8 h-8 rounded-full bg-cinema-950 border-2 border-amber-500 text-amber-400 font-mono text-xs font-bold flex items-center justify-center shadow-md">
+            {item.step}
+          </div>
+
+          <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all">
+            <h3 class="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
+              第 {item.step} 步：{item.title}
+            </h3>
+            <p class="text-sm text-cinema-300 leading-relaxed mb-4">
+              {item.desc}
+            </p>
+            <a
+              href={item.actionLink}
+              class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 px-3.5 py-2 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-colors"
+            >
+              <span>➔</span>
+              <span>{item.actionText}</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom Lead Magnet -->
+    <div class="mt-16">
+      <LeadMagnetCard />
+    </div>
+  </section>
+</BaseLayout>

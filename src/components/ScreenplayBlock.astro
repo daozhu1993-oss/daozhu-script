@@ -1,0 +1,59 @@
+---
+interface Props {
+  sceneHeading: string;
+  actionText: string;
+  character: string;
+  parenthetical?: string;
+  dialogue: string;
+  note?: string;
+}
+
+const {
+  sceneHeading,
+  actionText,
+  character,
+  parenthetical,
+  dialogue,
+  note,
+} = Astro.props;
+---
+
+<div class="my-6 rounded-xl border border-cinema-700/70 bg-cinema-900/90 p-5 shadow-lg relative overflow-hidden group">
+  <div class="absolute top-0 right-0 px-3 py-1 bg-amber-500/10 text-amber-400 border-b border-l border-amber-500/20 text-[11px] font-mono rounded-bl-lg">
+    影视工业标准格式 · SCREENPLAY
+  </div>
+
+  <div class="screenplay-font text-cinema-200 text-sm leading-relaxed space-y-3 pt-2">
+    <!-- 场景标头 -->
+    <div class="font-bold text-amber-400 tracking-wider">
+      {sceneHeading}
+    </div>
+
+    <!-- 动作提示 -->
+    <div class="text-cinema-300 text-[13px] leading-normal pl-2 border-l-2 border-cinema-700">
+      {actionText}
+    </div>
+
+    <!-- 角色与台词 -->
+    <div class="max-w-md mx-auto pt-2 text-center space-y-1">
+      <div class="font-bold text-white tracking-widest uppercase text-xs">
+        {character}
+      </div>
+      {parenthetical && (
+        <div class="text-cinema-400 text-xs italic">
+          ({parenthetical})
+        </div>
+      )}
+      <div class="text-cinema-100 text-left px-4 pt-1 font-normal leading-relaxed bg-cinema-850/50 py-2 rounded border border-cinema-800/80">
+        “{dialogue}”
+      </div>
+    </div>
+  </div>
+
+  {note && (
+    <div class="mt-4 pt-3 border-t border-cinema-800 text-xs text-cinema-400 flex items-start gap-2">
+      <span class="text-amber-400 font-semibold shrink-0">💡 编剧点评:</span>
+      <span>{note}</span>
+    </div>
+  )}
+</div>

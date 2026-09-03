@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const teardowns = await getCollection('teardowns');
+---
+
+<BaseLayout activePath="/teardowns" title="拆爆款 · 岛主编剧工坊">
+  <section class="pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="max-w-2xl mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-mono mb-3">
+        🔬 BREAKDOWNS & REVERSE ENGINEERING
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight literary-serif">
+        爆款短剧与漫剧拉片拆解
+      </h1>
+      <p class="mt-3 text-sm sm:text-base text-cinema-300 leading-relaxed">
+        用编剧的解剖刀拆解爆款。不写情绪化影评，只拆：爽点在第几分钟、钩子怎么下的、压抑怎么蓄势的。给你 3-5 条明天就能抄的手艺。
+      </p>
+    </div>
+
+    <!-- Teardowns List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {teardowns.map((item) => (
+        <article class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-blue-500/40 hover:bg-cinema-850/60 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                {item.data.format} · {item.data.episodesOrDuration}
+              </span>
+              <span class="text-xs text-cinema-400 font-mono">
+                {item.data.genre}
+              </span>
+            </div>
+
+            <h2 class="text-lg sm:text-xl font-bold text-white mb-2.5 hover:text-blue-400 transition-colors">
+              <a href={`/teardowns/${item.slug}`}>
+                {item.data.title}
+              </a>
+            </h2>
+
+            <div class="p-3 rounded-lg bg-cinema-950/80 border border-cinema-800 text-xs text-cinema-300 mb-4">
+              <span class="text-amber-400 font-bold block mb-1">⚡ 黄金钩子卡点:</span>
+              <span>{item.data.hookTiming}</span>
+            </div>
+
+            <p class="text-sm text-cinema-300 leading-relaxed mb-4">
+              {item.data.structureSummary}
+            </p>
+
+            <!-- Takeaways Preview -->
+            <div class="space-y-1.5 pt-2 border-t border-cinema-800/60">
+              <span class="text-[11px] font-mono text-cinema-400 block mb-1">核心可抄要点:</span>
+              {item.data.takeaways.slice(0, 2).map((point) => (
+                <div class="text-xs text-cinema-300 flex items-start gap-1.5">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span class="line-clamp-1">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs">
+            <span class="text-cinema-400">岛主亲自操刀 / 精选解剖</span>
+            <a href={`/teardowns/${item.slug}`} class="text-blue-400 font-medium hover:underline flex items-center gap-1">
+              查看完整拉片拆解 ➔
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

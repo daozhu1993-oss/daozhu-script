@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const works = await getCollection('works');
+const sortedWorks = works.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout activePath="/works" title="商业战绩与作品 · 岛主编剧工坊">
+  <section class="pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="max-w-2xl mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-3">
+        🏆 PROVEN TRACK RECORD
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight literary-serif">
+        真实商业战绩与代表作
+      </h1>
+      <p class="mt-3 text-sm sm:text-base text-cinema-300 leading-relaxed">
+        手艺不是空口无凭吹出来的。十年职业生涯，手里有真金白银验证过的真实剧本与上线项目。用可验证的商业事实建立专业信任。
+      </p>
+    </div>
+
+    <!-- Works Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {sortedWorks.map(async (work) => {
+        const { Content } = await work.render();
+        return (
+          <article class="p-7 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col justify-between relative overflow-hidden">
+            <!-- Decorative badge -->
+            <div class="absolute top-0 right-0 px-3.5 py-1 bg-amber-500/15 text-amber-400 border-b border-l border-amber-500/20 text-[11px] font-mono rounded-bl-xl font-bold">
+              {work.data.status}
+            </div>
+
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-cinema-800 text-cinema-300 border border-cinema-700">
+                  {work.data.format} · {work.data.episodes} 集
+                </span>
+                <span class="text-xs text-amber-400 font-mono">
+                  担任: {work.data.role}
+                </span>
+              </div>
+
+              <h2 class="text-2xl font-bold text-white mb-3 literary-serif">
+                {work.data.title}
+              </h2>
+
+              <div class="p-3.5 rounded-xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 mb-5 leading-relaxed">
+                <span class="text-amber-400 font-bold block mb-1 font-mono">一句话故事 (Logline):</span>
+                <span>{work.data.logline}</span>
+              </div>
+
+              <div class="p-3 rounded-lg bg-amber-950/20 border border-amber-500/30 text-xs text-amber-300 mb-6">
+                <strong>💡 商业亮点：</strong>{work.data.highlight}
+              </div>
+
+              <div class="prose prose-invert prose-xs text-cinema-300 border-t border-cinema-800/80 pt-4 max-h-60 overflow-y-auto">
+                <Content />
+              </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-cinema-800 flex items-center justify-between text-xs">
+              <span class="text-cinema-400 font-mono">10年职业沉淀 · 商业版权保密</span>
+              <a href="/about" class="text-amber-400 font-medium hover:underline">
+                咨询类似定制 / 改本合作 ➔
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>

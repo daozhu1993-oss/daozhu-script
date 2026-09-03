@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const services = [
+  {
+    title: '1 对 1 剧本深度诊断 / 急诊室',
+    desc: '直接把你的前 5 集剧本或 80 集分集大纲发过来。用十年职业编剧眼光，逐集指出：哪里的矛盾软了、哪里的台词水了、哪个卡点能把留存拉高 20%。',
+    status: '常年开放预约 · 需提前排期',
+    badge: '高客单咨询',
+  },
+  {
+    title: '短剧 / AI 漫剧全案故事架构定制',
+    desc: '面向制片方、MCN 机构或出海平台，提供从核心麦格芬设计、世界观搭建、人物小传到黄金前三集的整套商业剧作全案开发。',
+    status: '商业签约合作',
+    badge: '全案开发',
+  },
+  {
+    title: '短剧/漫剧变现实战训练营（内测筹备中）',
+    desc: '拒绝录播水课，全流程实战带练。从 0 带你跑通一个完整能卖给平台的商用本子，优秀本子直接协助对接平台与制片方收剧渠道。',
+    status: '敬请期待 · 可先加微信入预备群',
+    badge: '训练营',
+  },
+];
+---
+
+<BaseLayout activePath="/about" title="关于岛主与合作 · 岛主编剧工坊">
+  <section class="pt-12 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <!-- Bio Header -->
+    <div class="p-8 rounded-3xl bg-cinema-900 border border-cinema-800 mb-12 relative overflow-hidden">
+      <div class="relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-4">
+          🎬 ABOUT THE CREATOR
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight literary-serif mb-4">
+          我是岛主，一个写了 10 年本子的职业编剧
+        </h1>
+        <div class="text-sm sm:text-base text-cinema-200 leading-relaxed space-y-4">
+          <p>
+            这十年里，我经历过传统影视的漫长立项，也见证了网文长篇的起伏，最终扎进了<strong>微短剧与 AI 漫剧</strong>这场全新的视觉叙事革命中。
+          </p>
+          <p>
+            我手里有真金白银跑出来的商业战绩：《一纸还乡》（55集全案总编剧）、《冲喜后，我那短命夫君生龙活虎》（33集总编剧）。
+            我深知每一集 90 秒的背后，是多少次对人性欲望、社会焦虑与多巴胺分泌机制的精确计算。
+          </p>
+          <p class="text-amber-300 font-medium">
+            搭建这个站，我不做快餐新闻，只想把这十年的真手艺，讲成普通创作者也能直接照着抄、立刻能动手的工业化方法。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commercial Services (变现产品矩阵) -->
+    <div class="mb-14">
+      <div class="mb-6">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-1">
+          SERVICES & CONSULTING · 业务与变现
+        </h2>
+        <h3 class="text-2xl font-bold text-white literary-serif">
+          商业合作与咨询服务
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4">
+        {services.map((item) => (
+          <div class="p-6 rounded-2xl bg-cinema-900/90 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                  {item.badge}
+                </span>
+                <h4 class="text-lg font-bold text-white">
+                  {item.title}
+                </h4>
+              </div>
+              <p class="text-sm text-cinema-300 leading-relaxed max-w-xl">
+                {item.desc}
+              </p>
+            </div>
+            <div class="sm:text-right shrink-0">
+              <span class="text-xs text-cinema-400 font-mono block mb-2">{item.status}</span>
+              <a
+                href="#contact"
+                class="inline-block px-4 py-2 rounded-xl bg-cinema-800 hover:bg-amber-500 hover:text-cinema-950 text-white text-xs font-bold border border-cinema-700 transition-colors"
+              >
+                立即咨询
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Contact & Community Card -->
+    <div id="contact" class="p-8 rounded-3xl bg-gradient-to-br from-cinema-900 to-cinema-950 border border-cinema-700 shadow-xl">
+      <div class="max-w-xl">
+        <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 literary-serif">
+          联系岛主 · 开启合作
+        </h3>
+        <p class="text-sm text-cinema-300 mb-6 leading-relaxed">
+          无论你是寻求剧本诊断的写手、寻找爆款原创剧本的制片方，还是探索 AI 漫剧管线的工作室，随时联系我。
+        </p>
+
+        <div class="space-y-3 text-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 p-3.5 rounded-xl bg-cinema-950 border border-cinema-800">
+            <span class="text-cinema-400 w-24 shrink-0 font-medium">💬 个人微信:</span>
+            <span class="text-amber-400 font-mono font-bold select-all">daozhu1993</span>
+            <span class="text-xs text-cinema-400 sm:ml-auto">(请备注重度创作 / 改本咨询)</span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 p-3.5 rounded-xl bg-cinema-950 border border-cinema-800">
+            <span class="text-cinema-400 w-24 shrink-0 font-medium">📮 官方邮箱:</span>
+            <span class="text-cinema-200 font-mono select-all">contact@daozhu.script</span>
+            <span class="text-xs text-cinema-400 sm:ml-auto">(商业项目/剧本发件)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

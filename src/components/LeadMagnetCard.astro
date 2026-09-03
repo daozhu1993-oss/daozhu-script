@@ -1,0 +1,57 @@
+---
+interface Props {
+  variant?: 'compact' | 'full';
+}
+
+const { variant = 'full' } = Astro.props;
+---
+
+<div id="lead-pack" class="relative overflow-hidden rounded-2xl border-2 border-amber-500/40 bg-gradient-to-br from-cinema-900 via-cinema-900 to-amber-950/30 p-6 sm:p-8 glow-amber">
+  <!-- Decorative film icon background -->
+  <div class="absolute -right-8 -bottom-8 text-9xl text-amber-500/5 select-none pointer-events-none font-serif">
+    🎬
+  </div>
+
+  <div class="relative z-10 max-w-2xl">
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-semibold uppercase tracking-wider mb-4">
+      <span>🎁</span> 岛主开局礼包 · 免费获取
+    </div>
+
+    <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug">
+      《短剧前 3 集爽点节拍表》<br class="hidden sm:inline" />
+      <span class="text-amber-400 font-serif">+ AI 漫剧分镜提示词工业字典</span>
+    </h3>
+
+    <p class="mt-3 text-sm text-cinema-300 leading-relaxed">
+      十年编剧内部自用脚手架。包含：80集短剧分集断章节奏卡、12种极致压抑与反转打脸模板、以及直接复制进 Midjourney/ComfyUI 的镜头景别 Prompt 词库。
+    </p>
+
+    <!-- Email / WeChat Form -->
+    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+      <input
+        type="email"
+        placeholder="输入你的接收邮箱（即刻自动发送下载链接）"
+        class="flex-1 px-4 py-3 rounded-xl bg-cinema-950 border border-cinema-700 text-white text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 placeholder:text-cinema-400"
+      />
+      <button
+        type="button"
+        onclick="alert('【M0占位演示】已收到你的订阅意向！在正式上线后，系统将自动把《短剧黄金前3集爽点节拍表+Prompt字典》发至你的邮箱。你也可以直接添加岛主微信: daozhu1993 立即索取内测版。')"
+        class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm transition-all shadow-md shadow-amber-500/20 active:scale-95 shrink-0"
+      >
+        立即免费获取 (0元)
+      </button>
+    </div>
+
+    <div class="mt-3 flex flex-wrap items-center gap-4 text-xs text-cinema-400">
+      <span class="flex items-center gap-1">
+        <span class="text-emerald-400">✓</span> 格式为 Markdown / Notion / PDF
+      </span>
+      <span class="flex items-center gap-1">
+        <span class="text-emerald-400">✓</span> 永久免费更新
+      </span>
+      <span class="flex items-center gap-1">
+        <span class="text-emerald-400">✓</span> 拒绝垃圾邮件，可随时一键退订
+      </span>
+    </div>
+  </div>
+</div>

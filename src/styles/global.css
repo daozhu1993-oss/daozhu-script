@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #0c0f14;
+    --color-surface: #11151c;
+    --color-surface-hover: #171c26;
+    --color-border: #232b38;
+    --color-text-main: #f4f6fa;
+    --color-text-muted: #9ba8be;
+    --color-accent: #f59e0b;
+    --color-accent-hover: #fbbf24;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    selection-background-color: #f59e0b;
+    selection-color: #0c0f14;
+  }
+
+  ::selection {
+    background-color: #f59e0b;
+    color: #0c0f14;
+  }
+}
+
+/* 剧本标准排印（Courier 打字机风格） */
+.screenplay-font {
+  font-family: "Courier Prime", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* 典雅中文章节标题（宋体/明体质感） */
+.literary-serif {
+  font-family: "Source Han Serif SC", "Noto Serif SC", Songti SC, SimSun, serif;
+}
+
+/* 胶片颗粒微质感与光影 */
+.glow-amber {
+  box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.15);
+}
+
+.glow-amber-strong {
+  box-shadow: 0 0 50px -10px rgba(245, 158, 11, 0.3);
+}
+
+/* 爽感节奏节点与线条 */
+.timeline-dot::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #f59e0b;
+}

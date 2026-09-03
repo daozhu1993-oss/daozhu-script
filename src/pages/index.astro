@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadMagnetCard from '../components/LeadMagnetCard.astro';
+import ScreenplayBlock from '../components/ScreenplayBlock.astro';
+import BeatVisualizer from '../components/BeatVisualizer.astro';
+import { getCollection } from 'astro:content';
+
+const guides = await getCollection('guides');
+const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+
+const teardowns = await getCollection('teardowns');
+const featuredTeardowns = teardowns.filter(t => t.data.featured).slice(0, 2);
+
+const templates = await getCollection('templates');
+const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+
+<BaseLayout activePath="/" title="岛主编剧工坊 · 短剧与AI漫剧变现手艺库">
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-20 px-4 sm:px-6 overflow-hidden border-b border-cinema-800/80">
+    <!-- Ambient glowing spotlight -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[130px] pointer-events-none rounded-full"></div>
+
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <!-- Authority Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cinema-900 border border-amber-500/30 text-xs font-mono text-amber-400 mb-6 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+        <span>10 年职业编剧 · 真实商业作品背书 · 拒绝玄学假大空</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] literary-serif">
+        教你写出<span class="text-amber-400 bg-clip-text">能卖、能爆</span>的<br />
+        短剧 / AI 漫剧本子
+      </h1>
+
+      <!-- Value Subtitle -->
+      <p class="mt-6 text-base sm:text-xl text-cinema-300 max-w-2xl mx-auto leading-relaxed">
+        十年编剧手艺，把“压抑→蓄势→爆发→反馈”的爽感结构，拆成今天就能直接照着抄的工业化方法。
+      </p>
+
+      <!-- Primary Action CTAs -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/start"
+          class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm sm:text-base shadow-lg shadow-amber-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+        >
+          <span>🚀</span>
+          <span>从 0 到第一个本子 · 新手路径</span>
+        </a>
+        <a
+          href="/guides"
+          class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-white font-medium text-sm sm:text-base border border-cinema-700 hover:border-amber-400/40 transition-all flex items-center justify-center gap-2"
+        >
+          <span>📖</span>
+          <span>系统方法论库</span>
+        </a>
+      </div>
+
+      <!-- Social Proof Strip -->
+      <div class="mt-12 pt-8 border-t border-cinema-850/80 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs sm:text-sm text-cinema-400 font-mono">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 font-bold">55 集</span>
+          <span>商业短剧《一纸还乡》全案总编剧</span>
+        </div>
+        <span class="text-cinema-800 hidden sm:inline">|</span>
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 font-bold">33 集</span>
+          <span>商业短剧《冲喜后》总编剧</span>
+        </div>
+        <span class="text-cinema-800 hidden sm:inline">|</span>
+        <div class="flex items-center gap-2">
+          <span class="text-emerald-400 font-bold">100%</span>
+          <span>Evergreen 实用手艺</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three Master Tracks (三大核心入口) -->
+  <section class="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">
+        THREE PILLARS · 核心支柱
+      </h2>
+      <p class="text-2xl sm:text-3xl font-bold text-white tracking-tight literary-serif">
+        不是流式资讯，而是拿来即用的手艺工具箱
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Track 1: Guides -->
+      <a
+        href="/guides"
+        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+      >
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+            📖
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+            学方法 · 方法论库
+          </h3>
+          <p class="text-sm text-cinema-400 leading-relaxed">
+            按知识主题组织。从单集 90 秒情绪切片、压抑蓄势爆发四步法、黄金前 3 集留存，到 AI 漫剧管线，全套系统讲透。
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-amber-400">
+          <span>进入方法论库</span>
+          <span class="group-hover:translate-x-1 transition-transform">➔</span>
+        </div>
+      </a>
+
+      <!-- Track 2: Teardowns -->
+      <a
+        href="/teardowns"
+        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+      >
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+            🔬
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-2">
+            拆爆款 · 深度拉片
+          </h3>
+          <p class="text-sm text-cinema-400 leading-relaxed">
+            用编剧眼拆解爆款。精准定位爽点在第几分钟、钩子埋在哪里，总结 3-5 条明天写本就能用的硬核干货。绝不水影评。
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-blue-400">
+          <span>查看经典拆解</span>
+          <span class="group-hover:translate-x-1 transition-transform">➔</span>
+        </div>
+      </a>
+
+      <!-- Track 3: Templates -->
+      <a
+        href="/templates"
+        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+      >
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+            🧰
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+            拿模板 · 工具脚手架
+          </h3>
+          <p class="text-sm text-cinema-400 leading-relaxed">
+            提供可直接复制、下载的工业化脚手架：分集断章节奏卡、爽点检查表、人物欲望冲突表、AI 漫剧镜头 Prompt 映射字典。
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-emerald-400">
+          <span>下载实用模板</span>
+          <span class="group-hover:translate-x-1 transition-transform">➔</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Live Demonstration: Real Screenplay Craft -->
+  <section class="py-12 px-4 sm:px-6 max-w-4xl mx-auto">
+    <div class="border border-cinema-800 rounded-2xl p-6 sm:p-8 bg-cinema-900/60">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 text-lg">🖋️</span>
+          <h3 class="text-base sm:text-lg font-bold text-white">
+            什么是真正的编剧手艺？
+          </h3>
+        </div>
+        <span class="text-xs font-mono text-cinema-400">从台词潜台词到镜头语言</span>
+      </div>
+
+      <p class="text-sm text-cinema-300 mb-4 leading-relaxed">
+        业余写手写台词，把心里话直接说出来；职业编剧写台词，<strong class="text-amber-300">字面越平静，底下风暴越烈</strong>。看看下面的标准剧本示范：
+      </p>
+
+      <ScreenplayBlock
+        sceneHeading="INT. 顾氏宗祠 - 夜 [暴雪]"
+        actionText="寒风卷着碎雪撞击棂窗。族长顾廷威端坐高堂，手旁搁着已除名的朱笔族谱。顾淮跪在冰冷青砖上，肩头积雪未化，衣衫单薄。"
+        character="顾淮"
+        parenthetical="抬起头，眼神平静得像一口古井，嘴角泛起微不可察的嘲弄"
+        dialogue="族长，这朱笔抹掉的，只是族谱上的两笔墨；可抹不掉的，是顾家欠我娘的一条命。"
+        note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，规则约束已失效，接下来将是降维维度的复仇。"
+      />
+
+      <BeatVisualizer
+        episodeName="《一纸还乡》第一集 · 生死卡点"
+      />
+    </div>
+  </section>
+
+  <!-- Featured Content Showcase -->
+  <section class="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      <div>
+        <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">
+          CURATED ESSENTIALS · 精选手艺
+        </h2>
+        <h3 class="text-2xl font-bold text-white literary-serif">
+          首发方法论长文
+        </h3>
+      </div>
+      <a href="/guides" class="text-sm font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1">
+        查看全部方法论 ➔
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {sortedGuides.map((guide) => (
+        <a
+          href={`/guides/${guide.slug}`}
+          class="p-5 rounded-xl bg-cinema-900 border border-cinema-800 hover:border-cinema-700 hover:bg-cinema-850 transition-all flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                {guide.data.topic}
+              </span>
+              <span class="text-[11px] text-cinema-400 font-mono">
+                {guide.data.level} · {guide.data.readTime}
+              </span>
+            </div>
+            <h4 class="text-base font-bold text-white hover:text-amber-400 transition-colors line-clamp-2">
+              {guide.data.title}
+            </h4>
+            <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed">
+              {guide.data.summary}
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
+            <span>更新于 {guide.data.updated}</span>
+            <span class="text-amber-400">阅读全文 ➔</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Lead Magnet Conversion Section -->
+  <section class="py-12 px-4 sm:px-6 max-w-4xl mx-auto">
+    <LeadMagnetCard />
+  </section>
+</BaseLayout>

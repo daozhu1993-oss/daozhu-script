@@ -1,0 +1,89 @@
+---
+interface Props {
+  activePath?: string;
+}
+
+const { activePath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: '/guides', label: '方法论库', en: 'Guides' },
+  { href: '/teardowns', label: '拆爆款', en: 'Teardowns' },
+  { href: '/templates', label: '模板工具', en: 'Templates' },
+  { href: '/start', label: '新手路径', en: 'Start' },
+  { href: '/works', label: '商业战绩', en: 'Works' },
+  { href: '/about', label: '关于岛主', en: 'About' },
+];
+---
+
+<header class="w-full bg-cinema-900/95 border-b border-cinema-800 backdrop-blur-md sticky top-[29px] z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-cinema-950 font-bold shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
+        <span class="text-lg">🎬</span>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-base font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors">
+            岛主编剧工坊
+          </span>
+          <span class="text-[10px] font-mono tracking-wider uppercase px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            10年实战手艺
+          </span>
+        </div>
+        <p class="text-[11px] text-cinema-400 hidden sm:block">
+          短剧 · AI漫剧变现手艺库
+        </p>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+      {navLinks.map((item) => {
+        const isActive = activePath.startsWith(item.href);
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'px-3 py-1.5 rounded-md text-sm font-medium transition-all',
+              isActive
+                ? 'text-amber-400 bg-amber-500/10 font-semibold'
+                : 'text-cinema-300 hover:text-white hover:bg-cinema-800/60',
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Header Action Button -->
+    <div class="flex items-center gap-3">
+      <a
+        href="/templates#lead-pack"
+        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-cinema-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-sm shadow-amber-500/20 active:scale-95"
+      >
+        <span>🎁</span>
+        <span>免费领开局包</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Secondary Nav -->
+  <div class="md:hidden flex items-center justify-between px-4 py-2 border-t border-cinema-800/60 overflow-x-auto text-xs space-x-3 bg-cinema-950/60">
+    {navLinks.map((item) => {
+      const isActive = activePath === item.href;
+      return (
+        <a
+          href={item.href}
+          class:list={[
+            'shrink-0 py-1 px-2 rounded',
+            isActive ? 'text-amber-400 font-bold bg-amber-500/10' : 'text-cinema-400',
+          ]}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+  </div>
+</header>

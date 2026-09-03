@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BeatVisualizer from '../../components/BeatVisualizer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const teardowns = await getCollection('teardowns');
+  return teardowns.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout activePath="/teardowns" title={`${entry.data.title} · 爆款拆解`}>
+  <article class="pt-10 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <!-- Back button -->
+    <a href="/teardowns" class="text-xs font-mono text-cinema-400 hover:text-blue-400 mb-6 inline-flex items-center gap-1">
+      ← 返回爆款拆解列表
+    </a>
+
+    <!-- Header info -->
+    <header class="pb-8 border-b border-cinema-800">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+          {entry.data.format}
+        </span>
+        <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+          {entry.data.episodesOrDuration}
+        </span>
+        <span class="text-xs text-cinema-400">
+          类型：{entry.data.genre}
+        </span>
+      </div>
+
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif">
+        {entry.data.title}
+      </h1>
+
+      <!-- Hook & Structure callout -->
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl bg-cinema-900 border border-cinema-800">
+          <span class="text-amber-400 font-bold text-xs uppercase tracking-wider block mb-1">
+            ⚡ 核心进场钩子
+          </span>
+          <p class="text-sm text-cinema-200">
+            {entry.data.hookTiming}
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-cinema-900 border border-cinema-800">
+          <span class="text-blue-400 font-bold text-xs uppercase tracking-wider block mb-1">
+            🏗️ 架构特点
+          </span>
+          <p class="text-sm text-cinema-200">
+            {entry.data.structureSummary}
+          </p>
+        </div>
+      </div>
+
+      <!-- Takeaways summary pill -->
+      <div class="mt-6 p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30">
+        <h4 class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+          🎯 本期可直接复用的 4 大编剧手艺:
+        </h4>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-cinema-300">
+          {entry.data.takeaways.map((point) => (
+            <li class="flex items-start gap-1.5">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </header>
+
+    <!-- Visualizer Component -->
+    <div class="mt-8">
+      <BeatVisualizer
+        episodeName={`${entry.data.title} · 核心节奏解剖`}
+      />
+    </div>
+
+    <!-- Markdown Article Content -->
+    <div class="prose prose-invert max-w-none mt-8 text-cinema-200 leading-loose space-y-6 text-sm sm:text-base">
+      <Content />
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="mt-16 pt-8 border-t border-cinema-800 flex items-center justify-between">
+      <a href="/teardowns" class="text-xs text-cinema-400 hover:text-white">
+        ← 查看其他拉片拆解
+      </a>
+      <a href="/templates" class="text-xs text-amber-400 hover:underline">
+        去模板库复制同款节奏卡 ➔
+      </a>
+    </div>
+  </article>
+</BaseLayout>

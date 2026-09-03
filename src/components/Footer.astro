@@ -1,0 +1,101 @@
+---
+// Footer component
+---
+<footer class="w-full bg-cinema-950 border-t border-cinema-800/80 pt-16 pb-12 mt-20 text-cinema-400 text-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-cinema-800/60">
+      <!-- Col 1: Brand & Manifesto -->
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🎬</span>
+          <span class="text-base font-bold text-white tracking-wide">岛主编剧工坊</span>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            Evergreen 手艺库
+          </span>
+        </div>
+        <p class="text-cinema-300 text-sm leading-relaxed max-w-md">
+          十年职业编剧真实手艺。手里有真本子（《一纸还乡》55集、《冲喜后，我那短命夫君生龙活虎》33集），
+          不聊玄学假大空，把“压抑→蓄势→爆发→反馈”的爽感结构，拆成今天就能照着抄的工业化方法。
+        </p>
+        <div class="text-xs text-cinema-400 pt-2 flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>手艺站长期维护 · 拒绝内容农场 · 知识体系持续沉淀</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Navigation Tracks -->
+      <div>
+        <h4 class="text-white font-semibold text-xs tracking-wider uppercase mb-4 text-cinema-200">
+          学习路径
+        </h4>
+        <ul class="space-y-2.5 text-sm">
+          <li>
+            <a href="/start" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+              <span>🚀</span> 新手从 0 到第一个本子
+            </a>
+          </li>
+          <li>
+            <a href="/guides" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+              <span>📖</span> 编剧方法论库 (Guides)
+            </a>
+          </li>
+          <li>
+            <a href="/teardowns" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+              <span>🔬</span> 爆款拉片拆解 (Teardowns)
+            </a>
+          </li>
+          <li>
+            <a href="/templates" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+              <span>🧰</span> 生产力模板库 (Templates)
+            </a>
+          </li>
+          <li>
+            <a href="/works" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+              <span>🏆</span> 商业战绩与作品 (Works)
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Consulting & Contact -->
+      <div>
+        <h4 class="text-white font-semibold text-xs tracking-wider uppercase mb-4 text-cinema-200">
+          商业合作 & 咨询
+        </h4>
+        <p class="text-xs text-cinema-400 mb-3 leading-relaxed">
+          提供 1 对 1 剧本深度诊断、短剧大纲定制、AI 漫剧视听工程顾问。
+        </p>
+        <div class="space-y-2 text-xs">
+          <div class="p-2.5 rounded bg-cinema-900 border border-cinema-800">
+            <span class="text-cinema-400 block mb-1">主理人微信咨询:</span>
+            <span class="text-amber-400 font-mono font-medium">daozhu1993 (备注重度创作)</span>
+          </div>
+          <div class="p-2.5 rounded bg-cinema-900 border border-cinema-800">
+            <span class="text-cinema-400 block mb-1">合作邮箱:</span>
+            <span class="text-cinema-300 font-mono">contact@daozhu.script (或主理人微信)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cinema-400">
+      <div>
+        © {new Date().getFullYear()} 岛主编剧工坊 · StoryCraft. 保留所有权利.
+      </div>
+      <div class="flex items-center space-x-6">
+        <a href="https://daozhu-ai-daily.daozhu1993.workers.dev/" class="hover:text-cinema-300">
+          AI资讯日报
+        </a>
+        <span class="text-cinema-800">·</span>
+        <a href="https://daozhu1993-oss.github.io/daozhu-inspo/" class="hover:text-cinema-300">
+          设计动效灵感
+        </a>
+        <span class="text-cinema-800">·</span>
+        <a href="/about" class="hover:text-cinema-300">
+          关于岛主
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

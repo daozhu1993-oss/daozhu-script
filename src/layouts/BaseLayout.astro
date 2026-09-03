@@ -1,0 +1,48 @@
+---
+import EcosystemBar from '../components/EcosystemBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activePath?: string;
+}
+
+const {
+  title = '岛主编剧工坊 · 短剧与AI漫剧变现手艺库',
+  description = '教你写出能卖、能爆的短剧/AI漫剧本子。十年职业编剧，手里有真本子，把爽感结构讲成可抄的方法。',
+  activePath = '/',
+} = Astro.props;
+
+const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · 岛主编剧工坊`;
+---
+
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class="min-h-screen bg-cinema-950 text-cinema-100 flex flex-col font-sans selection:bg-amber-500 selection:text-cinema-950">
+    <EcosystemBar />
+    <Header activePath={activePath} />
+    
+    <main class="flex-grow">
+      <slot />
+    </main>
+    
+    <Footer />
+  </body>
+</html>
