@@ -9,10 +9,7 @@ const guides = await getCollection('guides');
 const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
 
 const teardowns = await getCollection('teardowns');
-const featuredTeardowns = teardowns.filter(t => t.data.featured).slice(0, 2);
-
-const templates = await getCollection('templates');
-const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+const featuredTeardowns = teardowns.slice(0, 3);
 ---
 
 <BaseLayout activePath="/" title="岛主编剧工坊 · 短剧与AI漫剧变现手艺库">
@@ -25,7 +22,7 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
       <!-- Authority Badge -->
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cinema-900 border border-amber-500/30 text-xs font-mono text-amber-400 mb-6 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-        <span>10 年职业编剧 · 真实商业作品背书 · 拒绝玄学假大空</span>
+        <span>10 年职业影视编剧 · 带着正规军手艺降维实战</span>
       </div>
 
       <!-- Main Headline -->
@@ -36,7 +33,7 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
 
       <!-- Value Subtitle -->
       <p class="mt-6 text-base sm:text-xl text-cinema-300 max-w-2xl mx-auto leading-relaxed">
-        十年编剧手艺，把“压抑→蓄势→爆发→反馈”的爽感结构，拆成今天就能直接照着抄的工业化方法。
+        十年案头沉淀。受够了传统影视的长周期，把影视工业级的结构力学与爽感节奏，降维拆成今天就能直接照着抄的工业化方法。
       </p>
 
       <!-- Primary Action CTAs -->
@@ -57,21 +54,21 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
         </a>
       </div>
 
-      <!-- Social Proof Strip -->
+      <!-- Social Proof Strip (Authentic & Professional) -->
       <div class="mt-12 pt-8 border-t border-cinema-850/80 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs sm:text-sm text-cinema-400 font-mono">
         <div class="flex items-center gap-2">
-          <span class="text-amber-400 font-bold">55 集</span>
-          <span>商业短剧《一纸还乡》全案总编剧</span>
+          <span class="text-amber-400 font-bold">10 年</span>
+          <span>职业影视剧作内功</span>
         </div>
         <span class="text-cinema-800 hidden sm:inline">|</span>
         <div class="flex items-center gap-2">
-          <span class="text-amber-400 font-bold">33 集</span>
-          <span>商业短剧《冲喜后》总编剧</span>
+          <span class="text-amber-400 font-bold">硬核拆解</span>
+          <span>透视《无双》《八零后妈》等顶流爆款</span>
         </div>
         <span class="text-cinema-800 hidden sm:inline">|</span>
         <div class="flex items-center gap-2">
           <span class="text-emerald-400 font-bold">100%</span>
-          <span>Evergreen 实用手艺</span>
+          <span>工业级脚手架拿来即用</span>
         </div>
       </div>
     </div>
@@ -114,7 +111,7 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
       <!-- Track 2: Teardowns -->
       <a
         href="/teardowns"
-        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-blue-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
       >
         <div>
           <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
@@ -124,7 +121,7 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
             拆爆款 · 深度拉片
           </h3>
           <p class="text-sm text-cinema-400 leading-relaxed">
-            用编剧眼拆解爆款。精准定位爽点在第几分钟、钩子埋在哪里，总结 3-5 条明天写本就能用的硬核干货。绝不水影评。
+            用编剧眼拆解公认爆款（《无双》《八零后妈》《逃出大英》）。精准定位爽点在第几分钟、钩子埋在哪里，总结 3-5 条明天就能抄的硬核手艺。
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-blue-400">
@@ -136,7 +133,7 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
       <!-- Track 3: Templates -->
       <a
         href="/templates"
-        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-emerald-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
       >
         <div>
           <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
@@ -164,14 +161,14 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
         <div class="flex items-center gap-2">
           <span class="text-amber-400 text-lg">🖋️</span>
           <h3 class="text-base sm:text-lg font-bold text-white">
-            什么是真正的编剧手艺？
+            什么是正规军编剧手艺？
           </h3>
         </div>
         <span class="text-xs font-mono text-cinema-400">从台词潜台词到镜头语言</span>
       </div>
 
       <p class="text-sm text-cinema-300 mb-4 leading-relaxed">
-        业余写手写台词，把心里话直接说出来；职业编剧写台词，<strong class="text-amber-300">字面越平静，底下风暴越烈</strong>。看看下面的标准剧本示范：
+        业余写手写台词，把心里话直接吼出来；职业编剧写台词，<strong class="text-amber-300">字面越平静，底下风暴越烈</strong>。看看下面的标准剧本示范：
       </p>
 
       <ScreenplayBlock
@@ -180,24 +177,72 @@ const topTemplates = templates.sort((a, b) => a.data.order - b.data.order).slice
         character="顾淮"
         parenthetical="抬起头，眼神平静得像一口古井，嘴角泛起微不可察的嘲弄"
         dialogue="族长，这朱笔抹掉的，只是族谱上的两笔墨；可抹不掉的，是顾家欠我娘的一条命。"
-        note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，规则约束已失效，接下来将是降维维度的复仇。"
+        note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，世俗规则约束已失效，接下来将是降维维度的复仇。"
       />
 
       <BeatVisualizer
-        episodeName="《一纸还乡》第一集 · 生死卡点"
+        episodeName="爆款微短剧第一集 · 黄金生死卡点"
       />
     </div>
   </section>
 
-  <!-- Featured Content Showcase -->
+  <!-- Featured Real Teardowns Showcase -->
   <section class="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      <div>
+        <h2 class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-2">
+          REVERSE ENGINEERING · 深度拉片
+        </h2>
+        <h3 class="text-2xl font-bold text-white literary-serif">
+          现象级爆款真实拆解
+        </h3>
+      </div>
+      <a href="/teardowns" class="text-sm font-medium text-blue-400 hover:text-blue-300 flex items-center gap-1">
+        查看全部拉片拆解 ➔
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {featuredTeardowns.map((item) => (
+        <a
+          href={`/teardowns/${item.slug}`}
+          class="p-5 rounded-xl bg-cinema-900 border border-cinema-800 hover:border-blue-500/40 hover:bg-cinema-850 transition-all flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                {item.data.format}
+              </span>
+              <span class="text-[11px] text-cinema-400 font-mono">
+                {item.data.episodesOrDuration}
+              </span>
+            </div>
+            <h4 class="text-base font-bold text-white hover:text-blue-400 transition-colors line-clamp-2">
+              {item.data.title}
+            </h4>
+            <div class="mt-3 p-2.5 rounded bg-cinema-950 text-xs text-cinema-300 line-clamp-2 border border-cinema-850">
+              <span class="text-amber-400 font-bold">⚡ 钩子：</span>
+              {item.data.hookTiming}
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
+            <span>核心手艺提炼</span>
+            <span class="text-blue-400">拉片详析 ➔</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Guides Showcase -->
+  <section class="py-12 px-4 sm:px-6 max-w-6xl mx-auto border-t border-cinema-800/60">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
       <div>
         <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">
           CURATED ESSENTIALS · 精选手艺
         </h2>
         <h3 class="text-2xl font-bold text-white literary-serif">
-          首发方法论长文
+          方法论必读精选
         </h3>
       </div>
       <a href="/guides" class="text-sm font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1">
