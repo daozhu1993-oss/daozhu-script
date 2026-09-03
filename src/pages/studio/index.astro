@@ -383,35 +383,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       });
     });
 
-    // Preset data for Tab 1
-    const presets = {
-      wushuang: {
-        title: "战神归来：盖世无双",
-        genre: "男频战神/逆袭打脸",
-        protag: "封号无双的龙帅，归国为恩师守墓，身着洗得发白的布衣",
-        antag: "执掌千亿财团的欺师灭祖逆徒与其骄横跋扈的千金",
-        crisis: "在恩师忌日陵园前，反派率百名黑衣保镖，当众将恩师墓碑推倒，要在此建造跑马场",
-        ace: "龙帅暗卫已调动十万精锐战机逼近领空，全城防空警报在倒计时第 90 秒凄厉拉响"
-      },
-      houma: {
-        title: "八零小悍妇：带娃搞钱虐渣男",
-        genre: "女频年代/爽利后妈",
-        protag: "现代顶级精算师穿越成八零年代带两娃的年轻后妈，不内耗只动手",
-        antag: "重男轻女的恶毒婆婆与一心想吞绝户粮的吸血大伯嫂",
-        crisis: "恶婆婆趁丈夫出差，把两个孩子锁在柴房不给饭吃，正要把家里唯一的粮票偷偷塞给大伯子",
-        ace: "女主一脚踹开柴房，一手抄起擀面杖砸碎供桌，手里亮出村支书亲笔盖章的独户分家证明"
-      },
-      taochu: {
-        title: "出逃大英：国宝万里归乡路",
-        genre: "国风奇幻/AI漫剧",
-        protag: "中华缠枝纹薄胎玉壶幻化的灵性汉服少女，满脸微尘，天真而急迫",
-        antag: "冰冷昏暗的异国展柜与冷漠驱赶流浪者的巡逻夜警",
-        crisis: "在伦敦异国湿冷雨夜中，少女躲避追捕撞入中国留学生背包，被警察围堵在泰晤士桥头",
-        ace: "少女指尖拂过留学生胸前的五星红旗徽章，玉壶本体散发微芒，留学生脱下大衣护住她迎向警车"
-      }
-    };
-
-    document.querySelectorAll('.preset-btn').forEach(btn => {
     // Subtabs in Tab 1
     let currentBeatView = 'script';
     const subtabScript = document.getElementById('subtab-script');
