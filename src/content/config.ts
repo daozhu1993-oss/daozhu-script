@@ -5,6 +5,7 @@ const guidesCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     topic: z.enum([
+      '付费点剧作学',
       '结构与节奏',
       '爽感公式',
       '留人与钩子',

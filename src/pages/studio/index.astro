@@ -28,27 +28,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Tab Switcher -->
-      <div class="flex flex-wrap gap-2 sm:gap-3 p-1.5 bg-cinema-950 rounded-2xl border border-cinema-800 mb-8 max-w-2xl mx-auto">
+      <div class="flex flex-wrap gap-2 p-1.5 bg-cinema-950 rounded-2xl border border-cinema-800 mb-8 max-w-4xl mx-auto">
         <button
           type="button"
-          class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 active-tab bg-amber-500 text-cinema-950 shadow-lg shadow-amber-500/20"
+          class="tab-btn flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 active-tab bg-amber-500 text-cinema-950 shadow-lg shadow-amber-500/20"
           data-tab="beat-gen"
         >
-          <span>⚡ 90秒分集节拍器</span>
+          <span>⚡ 90秒分集节拍</span>
         </button>
         <button
           type="button"
-          class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          class="tab-btn flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          data-tab="paywall-calc"
+        >
+          <span>💰 付费点卡位推演</span>
+        </button>
+        <button
+          type="button"
+          class="tab-btn flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
           data-tab="novel-slice"
         >
-          <span>📖 小说转短剧切片</span>
+          <span>📖 小说视听脱水</span>
         </button>
         <button
           type="button"
-          class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          class="tab-btn flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          data-tab="compliance-scan"
+        >
+          <span>🛡️ 广电合规自检</span>
+        </button>
+        <button
+          type="button"
+          class="tab-btn flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
           data-tab="char-matrix"
         >
-          <span>🎭 角色对立张力表</span>
+          <span>🎭 角色对立张力</span>
         </button>
       </div>
 
@@ -171,6 +185,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               </div>
             </div>
 
+            <!-- Script Doctor High-Conversion CTA -->
+            <div class="mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-cinema-900 to-cinema-950 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div class="space-y-1">
+                <div class="text-amber-400 font-bold flex items-center gap-2 font-mono">
+                  <span class="text-base">🩺</span>
+                  <span>剧本医生 · 一对一过审起量精修</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-normal">限名额</span>
+                </div>
+                <p class="text-cinema-400 text-[11px] leading-relaxed">
+                  算法推演的是工业骨架，爆款拼的是刀刃火候。想要 10 年院线编剧亲手为你的一集剧本做过审与起量打磨？
+                </p>
+              </div>
+              <a
+                href="/about#contact"
+                class="shrink-0 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-cinema-950 font-bold text-xs shadow-md shadow-amber-500/20 transition-all text-center"
+              >
+                预约剧本医生 ➔
+              </a>
+            </div>
+
             <!-- Bottom Note -->
             <div class="pt-3 border-t border-cinema-800 mt-4 flex items-center justify-between text-[11px] text-cinema-400 font-mono">
               <span>⚡ 纯前端运算 · 零后台传输 · 保护编剧原创机密</span>
@@ -180,7 +214,99 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- TAB 2: 小说转短剧切片器 -->
+      <!-- TAB 2: 短剧付费点卡位推演器 (Paywall Beat Calculator) -->
+      <div id="tab-paywall-calc" class="tab-pane hidden space-y-6">
+        <div class="p-4 rounded-2xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <strong class="text-amber-400 font-mono">💰 付费点剧作学法则：</strong>
+            免费集的使命不是讲完故事，而是在付费弹窗前一秒，把情绪落差与不可逆代价推到沸点。严禁在打完脸后收费！
+          </div>
+          <a href="/guides/07-paywall-dramaturgy" class="shrink-0 text-amber-400 font-bold hover:underline">
+            阅读《付费点剧作学》旗舰指南 ➔
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Input Parameters (Left 5 Cols) -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-5 rounded-2xl bg-cinema-950 border border-cinema-800 space-y-4">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2 font-mono">
+                <span>⚙️ 短剧商业参数设定</span>
+              </h3>
+
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">题材赛道</label>
+                <select id="pw-genre" class="w-full px-3 py-2 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-white">
+                  <option value="male-counter">男频战神 / 逆袭打脸 (强冲突与压制反弹)</option>
+                  <option value="female-period">女频年代 / 恶亲虐渣 (极致憋屈到反内耗撕破)</option>
+                  <option value="suspense">悬疑反转 / 致命死结 (多重反转与假死局)</option>
+                  <option value="urban-boss">现代豪门 / 身份错位 (假千金与真龙马甲)</option>
+                  <option value="manga-fantasy">国风奇幻 / AI漫剧 (视觉奇观与种族宿命)</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-mono text-cinema-300 mb-1.5">全剧规划总集数</label>
+                  <select id="pw-total-eps" class="w-full px-3 py-2 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-white font-mono">
+                    <option value="80">80 集 (标准短剧)</option>
+                    <option value="100">100 集 (长篇爽剧)</option>
+                    <option value="60">60 集 (高精短剧/AI漫剧)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-cinema-300 mb-1.5">平台免费试看集数</label>
+                  <select id="pw-free-eps" class="w-full px-3 py-2 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-white font-mono">
+                    <option value="12">前 12 集 (行业主流)</option>
+                    <option value="10">前 10 集 (快节奏卡位)</option>
+                    <option value="15">前 15 集 (深度长线酝酿)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">主角核心王牌 / 破局底牌</label>
+                <textarea id="pw-ace-card" rows="3" class="w-full px-3 py-2 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-cinema-200 font-mono focus:outline-none focus:border-amber-400" placeholder="例如：随身加密卫星电话突然响起，境外千亿战部全员待命；或手里亮出村支书盖章的独户证明..."></textarea>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-cinema-300 mb-1.5">反派最极端的一道折辱 / 绝杀威胁</label>
+                <textarea id="pw-crisis" rows="3" class="w-full px-3 py-2 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-cinema-200 font-mono focus:outline-none focus:border-amber-400" placeholder="例如：当众推倒恩师灵位改建跑马场；或趁丈夫不在把孩子锁柴房抢走所有救命粮票..."></textarea>
+              </div>
+
+              <button type="button" id="btn-calc-paywall" class="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-xs sm:text-sm shadow-xl shadow-amber-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                <span id="btn-calc-paywall-text">⚡ 一键推演三大付费浪涌波峰与生死卡点</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Output Dashboard (Right 7 Cols) -->
+          <div id="paywall-result-container" class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[500px] transition-all duration-300">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-cinema-800 mb-4">
+                <span class="text-xs font-mono text-amber-400 font-bold flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> 全剧三大付费浪涌波峰推演图
+                </span>
+                <button type="button" id="btn-copy-paywall" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-cinema-850 hover:bg-amber-500/20 text-cinema-300 hover:text-amber-400 border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95">
+                  <span id="btn-copy-paywall-label">📋 复制推演卡</span>
+                </button>
+              </div>
+
+              <!-- Content Area -->
+              <div id="paywall-output-content" class="space-y-4 text-xs font-mono">
+                <!-- Generated by JS -->
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-cinema-800 mt-4 flex items-center justify-between text-[11px] text-cinema-400 font-mono">
+              <span>💡 核心法则：付费卡点绝不卡在打脸后，只卡在靴子落地前半秒</span>
+              <span class="text-amber-400">追订率力学模型</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: 小说转短剧切片器 -->
       <div id="tab-novel-slice" class="tab-pane hidden space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
           <span class="text-cinema-400 font-mono">📖 载入经典小说切片范例：</span>
@@ -277,10 +403,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               </div>
             </div>
 
-            <div class="pt-3 border-t border-cinema-800 mt-4 space-y-2">
+            <div class="pt-3 border-t border-cinema-800 mt-4 space-y-3">
               <button type="button" id="btn-copy-novel-prompt" class="w-full py-2 px-3 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-cinema-300 hover:text-white border border-cinema-700 text-xs font-mono transition-colors flex items-center justify-center gap-1.5">
                 <span>🤖 复制针对本段小说的《DeepSeek-R1 80集全套指令》</span>
               </button>
+
+              <!-- IP Adaptation Script Doctor CTA -->
+              <div class="p-3 rounded-xl bg-gradient-to-r from-blue-500/10 via-cinema-900 to-cinema-950 border border-blue-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div class="space-y-0.5">
+                  <div class="text-blue-400 font-bold flex items-center gap-1.5 font-mono">
+                    <span>🩺 小说 IP 影视化全案顾问</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-normal">正规军监制</span>
+                  </div>
+                  <p class="text-cinema-400 text-[11px] leading-tight">
+                    拥有长篇网文想转微短剧或 AI 漫剧？岛主提供全剧付费卡点规划与前三集过审监制。
+                  </p>
+                </div>
+                <a
+                  href="/about#contact"
+                  class="shrink-0 px-3 py-1.5 rounded-lg bg-blue-500/20 hover:bg-blue-500 text-blue-300 hover:text-cinema-950 font-bold text-[11px] border border-blue-500/40 transition-all text-center"
+                >
+                  咨询岛主 ➔
+                </a>
+              </div>
+
               <div class="flex items-center justify-between text-[11px] text-cinema-400">
                 <span>💡 提示：剧本已自动符合广电微短剧备案审查与视听动作化规范</span>
                 <a href="/templates" class="text-blue-400 hover:underline">获取 5 步完整手艺包 ➔</a>
@@ -290,7 +436,68 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- TAB 3: 角色对立张力表 -->
+      <!-- TAB 4: 广电合规红线与低俗词自检器 -->
+      <div id="tab-compliance-scan" class="tab-pane hidden space-y-6">
+        <div class="p-4 rounded-2xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <strong class="text-emerald-400 font-mono">🛡️ 广电备案合规红线自检：</strong>
+            根据微短剧“黑榜”通报与备案审查标准，纯前端秒级扫描剧本违规风险，杜绝封建迷信、极端低俗、炫富拜金、违规执法。
+          </div>
+          <span class="text-emerald-400 font-mono text-[11px] shrink-0">100% 离线隐私保护</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Input Script (Left 6 Cols) -->
+          <div class="lg:col-span-6 space-y-4">
+            <div class="p-5 rounded-2xl bg-cinema-950 border border-cinema-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <label class="block text-xs font-mono text-cinema-300">粘贴台本内容进行合规扫描 (500~5000字)</label>
+                <button type="button" id="btn-load-compliance-demo" class="text-[11px] text-amber-400 hover:underline">
+                  载入待审查高危样例
+                </button>
+              </div>
+
+              <textarea id="compliance-input" rows="14" class="w-full px-3.5 py-3 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-cinema-200 font-mono leading-relaxed focus:outline-none focus:border-emerald-400" placeholder="在此粘贴你的分集台本或大纲，系统将自动扫描：
+1. 封建迷信与转世复生
+2. 恶俗辱骂与严重肉体残害
+3. 极端炫富拜金与煽动贫富对立
+4. 违规涉公检法执法行为
+5. 违背公序良俗价值观..."></textarea>
+
+              <button type="button" id="btn-run-compliance" class="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-emerald-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                <span id="btn-run-compliance-text">🛡️ 运行广电合规红线与低俗词扫描</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Output Report (Right 6 Cols) -->
+          <div id="compliance-result-container" class="lg:col-span-6 flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[500px]">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-cinema-800 mb-4">
+                <span class="text-xs font-mono text-emerald-400 font-bold flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 合规审查质检报告 (Compliance Audit)
+                </span>
+                <span id="compliance-safety-badge" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-cinema-900 border border-cinema-700 text-cinema-400">
+                  等待扫描
+                </span>
+              </div>
+
+              <div id="compliance-report-content" class="text-xs text-cinema-200 font-mono leading-relaxed space-y-4 max-h-[400px] overflow-y-auto">
+                <div class="text-center text-cinema-500 py-20">
+                  👈 请在左侧粘贴剧本内容，然后点击「运行广电合规红线扫描」
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-cinema-800 mt-4 flex items-center justify-between text-[11px] text-cinema-400 font-mono">
+              <span>💡 提示：本自检工具基于广电微短剧备案审查指引与行业通报建立</span>
+              <a href="/guides/06-screenplay-vs-novel-rules" class="text-emerald-400 hover:underline">查看编剧硬核法则 ➔</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: 角色对立张力表 -->
       <div id="tab-char-matrix" class="tab-pane hidden space-y-6">
         <div class="p-4 rounded-2xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 leading-relaxed">
           <strong class="text-amber-400">十年编剧心法：</strong> 短剧不写“好人对坏人”，只写“极致欲望对极致剥夺”。主角越隐忍、反派踩得越狠，反转瞬间的多巴胺喷发量才越高。
@@ -1133,6 +1340,266 @@ ${rawText}
         navigator.clipboard.writeText(prompt).then(() => {
           alert('🤖 已将您的小说原文与《DeepSeek-R1 80集全套指令》打包复制！\n可以直接在 DeepSeek / ChatGPT 对话框中粘贴发送！');
         });
+      });
+    }
+
+    // -------------------------------------------------------------
+    // TAB 2: Paywall Beat Calculator Logic (付费点卡位推演)
+    // -------------------------------------------------------------
+    const calcPaywallBtn = document.getElementById('btn-calc-paywall');
+    const paywallOutput = document.getElementById('paywall-output-content');
+    const copyPaywallBtn = document.getElementById('btn-copy-paywall');
+
+    function renderPaywallCalculation() {
+      const genre = document.getElementById('pw-genre')?.value || 'male-counter';
+      const totalEps = parseInt(document.getElementById('pw-total-eps')?.value || '80', 10);
+      const freeEps = parseInt(document.getElementById('pw-free-eps')?.value || '12', 10);
+      const ace = (document.getElementById('pw-ace-card')?.value || '随身携带的加密卫星电话突然响起，军部全员起立待命').trim();
+      const crisis = (document.getElementById('pw-crisis')?.value || '反派百名保镖甩棍即将砸向主角头顶，逼其当众下跪').trim();
+
+      const wave1 = freeEps;
+      const wave2 = Math.round(totalEps * 0.45);
+      const wave3 = totalEps - 4;
+
+      if (!paywallOutput) return;
+
+      paywallOutput.innerHTML = `
+        <div class="space-y-4">
+          <!-- Surge 1 -->
+          <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-400 font-mono flex items-center gap-1.5">
+                <span>🌊 第一浪 · 破冰首充生死线</span>
+                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-[10px]">第 ${wave1} 集死卡</span>
+              </span>
+              <span class="text-[10px] text-amber-400 font-mono">决定全剧首充率 (转化门槛最低)</span>
+            </div>
+            <p class="text-cinema-200 text-xs leading-relaxed">
+              <strong>当前输入危机：</strong>${crisis}
+            </p>
+            <div class="p-2.5 rounded-lg bg-cinema-900/80 border border-cinema-800 text-[11px] text-cinema-300">
+              <span class="text-amber-400 font-bold block mb-1">🎯 工业断章死卡规范：</span>
+              严禁在打完脸后弹付费窗！必须在第 ${wave1} 集倒计时 88 秒时，将折辱逼到绝境；倒计时 89.5 秒，主角底牌露出冰山一角（<strong>${ace.slice(0, 30)}...</strong>）；在反派从狂妄转为惊恐的“前半秒”强行黑屏切入付费弹窗！
+            </div>
+          </div>
+
+          <!-- Surge 2 -->
+          <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-400 font-mono flex items-center gap-1.5">
+                <span>🌊 第二浪 · 中段塌陷防弃剧点</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/20 text-[10px]">第 ${wave2} 集加码</span>
+              </span>
+              <span class="text-[10px] text-blue-400 font-mono">决定全剧完播率 (抬高赌注)</span>
+            </div>
+            <p class="text-cinema-200 text-xs leading-relaxed">
+              <strong>结构手艺：</strong>观众在此阶段已对单一套路疲惫。严禁重复第一阶段打脸，必须让主角遭受更高级阴谋伏击，陷入<strong>“假死/核心被夺/第二重不可分解死结”</strong>！
+            </p>
+            <div class="p-2.5 rounded-lg bg-cinema-900/80 border border-cinema-800 text-[11px] text-cinema-300">
+              <span class="text-blue-400 font-bold block mb-1">🎯 破局卡点：</span>
+              原本是家族恩怨，在此升级为跨国财阀决战；第 ${wave2} 集末，主角在废墟深处睁开眼，打响绝地反击第二阶段！
+            </div>
+          </div>
+
+          <!-- Surge 3 -->
+          <div class="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-purple-400 font-mono flex items-center gap-1.5">
+                <span>🌊 第三浪 · 大结局决战浪涌</span>
+                <span class="px-2 py-0.5 rounded bg-purple-500/20 text-[10px]">第 ${wave3}~${totalEps} 集</span>
+              </span>
+              <span class="text-[10px] text-purple-400 font-mono">全本购买与沉淀用户大满贯</span>
+            </div>
+            <p class="text-cinema-200 text-xs leading-relaxed">
+              <strong>终极释放：</strong>所有伏线全部收拢，反派底牌耗尽后垂死挣扎，主角全知全能的压倒性实力降维碾压，九重打脸多宝塔一口气释放到底！
+            </p>
+          </div>
+
+          <!-- Tension Warning -->
+          <div class="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-[11px] text-rose-300">
+            <strong>⚠️ 追订率避坑红线：</strong>
+            如果第 1~${wave1} 集里主角过早把误会解释清楚，或者提前把反派打趴下，观众的“心理安全感”会瞬间充满，导致第 ${wave1 + 1} 集弃剧率超过 80%！
+          </div>
+        </div>
+      `;
+    }
+
+    if (calcPaywallBtn) {
+      calcPaywallBtn.addEventListener('click', () => {
+        const btnText = document.getElementById('btn-calc-paywall-text');
+        calcPaywallBtn.disabled = true;
+        if (btnText) btnText.innerText = '⏳ 正在推演情绪势能波形...';
+
+        setTimeout(() => {
+          calcPaywallBtn.disabled = false;
+          if (btnText) btnText.innerText = '⚡ 一键推演三大付费浪涌波峰与生死卡点';
+          renderPaywallCalculation();
+
+          const container = document.getElementById('paywall-result-container');
+          if (container) {
+            container.classList.add('ring-2', 'ring-amber-400', 'border-amber-400');
+            setTimeout(() => {
+              container.classList.remove('ring-2', 'ring-amber-400', 'border-amber-400');
+            }, 1200);
+          }
+        }, 300);
+      });
+    }
+
+    // Default run paywall calc on first load
+    renderPaywallCalculation();
+
+    if (copyPaywallBtn) {
+      copyPaywallBtn.addEventListener('click', () => {
+        const totalEps = document.getElementById('pw-total-eps')?.value || '80';
+        const freeEps = document.getElementById('pw-free-eps')?.value || '12';
+        const text = `【短剧三大付费浪涌波峰工程图】
+全剧总集数：${totalEps} 集 | 免费集数：前 ${freeEps} 集
+第 1 浪（破冰付费生死线）：第 ${freeEps} 集卡点（靴子落地前半秒死卡）
+第 2 浪（中段疲惫期塌陷拯救）：第 ${Math.round(parseInt(totalEps, 10) * 0.45)} 集抬高赌注
+第 3 浪（大结局全本决战）：第 ${parseInt(totalEps, 10) - 4}~${totalEps} 集终极打脸释放
+铁律：付费卡点绝不卡在打脸后，只卡在反转前半秒！`;
+
+        navigator.clipboard.writeText(text).then(() => {
+          const label = document.getElementById('btn-copy-paywall-label');
+          if (label) {
+            label.innerText = '✅ 已复制推演卡！';
+            setTimeout(() => { label.innerText = '📋 复制推演卡'; }, 2000);
+          }
+        });
+      });
+    }
+
+    // -------------------------------------------------------------
+    // TAB 4: Compliance Scanner Logic (广电合规自检)
+    // -------------------------------------------------------------
+    const btnRunCompliance = document.getElementById('btn-run-compliance');
+    const complianceInput = document.getElementById('compliance-input');
+    const complianceReport = document.getElementById('compliance-report-content');
+    const complianceBadge = document.getElementById('compliance-safety-badge');
+    const btnLoadComplianceDemo = document.getElementById('btn-load-compliance-demo');
+
+    const highRiskDemoText = `柳玉一拍桌子，指着林远的鼻子破口大骂：“你个穷鬼也配踏进苏家的门？你这老不死的师父当年就是个废物，老子找十个保镖把你扔进护城河弄死你！踩死你就像踩死一只下等的蚂蚁！
+回头老子就把你妹妹的肾脏挖出来卖给黑市，让她下辈子投胎做牛做马，死后下地狱永世不得超生！”
+林远冷笑一声：“私设刑堂，你们以为省城公检法也是你们家开的？我借尸还魂归来，就是要你们血债血偿，断子绝孙！”`;
+
+    if (btnLoadComplianceDemo && complianceInput) {
+      btnLoadComplianceDemo.addEventListener('click', () => {
+        complianceInput.value = highRiskDemoText;
+      });
+    }
+
+    const complianceRules = [
+      {
+        type: '封建迷信与转世复生',
+        regex: /(借尸还魂|转世|重生|附体|厉鬼|托梦|夺舍|下蛊|下地狱|永世不得超生)/g,
+        level: '🔴 广电严重红线',
+        advice: '微短剧备案严禁宣扬封建迷信、鬼神索命与借尸还魂。若为穿越题材，建议在开局前设定为“现代虚拟现实体验/编剧剧本推演/现代平行时空科技实验”。'
+      },
+      {
+        type: '恶俗辱骂与极端语言暴力',
+        regex: /(弄死你|去死|老不死|小贱人|狗杂种|老杂碎|断子绝孙|弄死)/g,
+        level: '🟡 违规低俗辱骂',
+        advice: '将低俗谩骂改为潜台词刀刃化：“让你付出代价”、“你以为你能走出这扇门？”、“你自掘坟墓”。刀刃在眼神和动作，不在脏字。'
+      },
+      {
+        type: '严重肉体残害与器官血腥',
+        regex: /(挖出来|挖肾|挖眼|割舌|剁碎|断指|放血)/g,
+        level: '🔴 严重血腥残害',
+        advice: '严禁展示对人体器官的买卖与极端残害描写，需替换为“查封资产”、“斩断资金链”、“收回家族授权”等商业或法律制裁。'
+      },
+      {
+        type: '煽动贫富对立与极端炫富歧视',
+        regex: /(穷鬼也配|下等人|卑贱的穷人|踩死你就像踩死一只)/g,
+        level: '🟡 价值观导向风险',
+        advice: '平台重点打击无底线嘲讽底层、挑动贫富对立。反派的傲慢应体现在“对规则的践踏”和“商业垄断”，而非对人格的直接下等化侮辱。'
+      },
+      {
+        type: '违规涉公检法与私设刑堂',
+        regex: /(私设刑堂|公检法也是你们家开的|私自开枪|买通法官)/g,
+        level: '🔴 司法公信力红线',
+        advice: '禁止将公权力黑恶化描写。反派只能是买通私企安保、私人商会，最后必须由正义执法力量依法收网。'
+      }
+    ];
+
+    if (btnRunCompliance) {
+      btnRunCompliance.addEventListener('click', () => {
+        const text = (complianceInput?.value || '').trim();
+        if (!text) {
+          alert('请先在左侧粘贴剧本内容！');
+          return;
+        }
+
+        const btnText = document.getElementById('btn-run-compliance-text');
+        btnRunCompliance.disabled = true;
+        if (btnText) btnText.innerText = '🛡️ 正在进行全维度合规审查...';
+
+        setTimeout(() => {
+          btnRunCompliance.disabled = false;
+          if (btnText) btnText.innerText = '🛡️ 运行广电合规红线与低俗词扫描';
+
+          const findings = [];
+          complianceRules.forEach(rule => {
+            const matches = text.match(rule.regex);
+            if (matches) {
+              const uniqueMatches = Array.from(new Set(matches));
+              findings.push({
+                ...rule,
+                detected: uniqueMatches
+              });
+            }
+          });
+
+          if (!complianceReport || !complianceBadge) return;
+
+          if (findings.length === 0) {
+            complianceBadge.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+            complianceBadge.innerText = '🟢 98分 · 安全通过';
+            complianceReport.innerHTML = `
+              <div class="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 text-center space-y-3">
+                <div class="text-3xl">🎉</div>
+                <h4 class="text-sm font-bold text-emerald-400">未检测到广电黑榜违规红线！</h4>
+                <p class="text-xs text-cinema-300 leading-relaxed max-w-md mx-auto">
+                  该剧本未检出封建迷信、极端脏话辱骂、严重血腥残害或公权力涉黑违规，整体符合广电微短剧常态化备案与审查规范。
+                </p>
+              </div>
+            `;
+          } else {
+            const hasRed = findings.some(f => f.level.includes('🔴'));
+            complianceBadge.className = hasRed 
+              ? 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold'
+              : 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold';
+            complianceBadge.innerText = hasRed ? '🔴 触碰监管红线 (需整改)' : '🟡 存在低俗风险 (需修润)';
+
+            let html = `
+              <div class="p-3.5 rounded-xl ${hasRed ? 'bg-rose-500/10 border border-rose-500/30 text-rose-300' : 'bg-amber-500/10 border border-amber-500/30 text-amber-300'} text-xs">
+                <strong>审查结论：</strong> 共检出 <strong>${findings.length}</strong> 类合规风险点，涉及 <strong>${findings.map(f => f.detected.length).reduce((a,b)=>a+b, 0)}</strong> 处敏感词句，请参照以下建议进行动作化脱水替换：
+              </div>
+              <div class="space-y-3">
+            `;
+
+            findings.forEach(f => {
+              html += `
+                <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-white text-xs">${f.type}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-cinema-800 text-cinema-300">${f.level}</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1 text-xs">
+                    <span class="text-cinema-400 text-[11px]">敏感词拦截：</span>
+                    ${f.detected.map(w => `<span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 font-mono text-[11px] border border-rose-500/30">${w}</span>`).join(' ')}
+                  </div>
+                  <p class="text-[11px] text-cinema-300 bg-cinema-950/80 p-2.5 rounded-lg border border-cinema-850 leading-relaxed">
+                    <strong class="text-amber-400">💡 修改建议：</strong>${f.advice}
+                  </p>
+                </div>
+              `;
+            });
+
+            html += `</div>`;
+            complianceReport.innerHTML = html;
+          }
+        }, 350);
       });
     }
 
