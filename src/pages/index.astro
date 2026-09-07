@@ -6,7 +6,7 @@ import BeatVisualizer from '../components/BeatVisualizer.astro';
 import { getCollection } from 'astro:content';
 
 const guides = await getCollection('guides');
-const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0, 6);
 
 const teardowns = await getCollection('teardowns');
 const featuredTeardowns = teardowns.slice(0, 3);
