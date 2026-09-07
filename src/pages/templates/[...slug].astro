@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const templates = await getCollection('templates');
+  return templates.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout activePath="/templates" title={`${entry.data.title} · 生产力模板库`}>
+  <article class="pt-10 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <!-- Back button -->
+    <a href="/templates" class="text-xs font-mono text-cinema-400 hover:text-emerald-400 mb-6 inline-flex items-center gap-1">
+      ← 返回模板与工具库
+    </a>
+
+    <!-- Header info -->
+    <header class="pb-8 border-b border-cinema-800">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          {entry.data.type}
+        </span>
+        <span class="text-xs text-cinema-400 font-mono">
+          格式: {entry.data.fileFormat} · 权限: {entry.data.access === 'free' ? '免费开放' : entry.data.access === 'email' ? '邮箱换取' : 'PRO专享'}
+        </span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif">
+        {entry.data.title}
+      </h1>
+      <p class="mt-4 text-sm sm:text-base text-cinema-300 leading-relaxed bg-cinema-900/80 p-4 rounded-xl border border-cinema-800">
+        💡 <strong>亮点提要</strong>：{entry.data.highlight}
+      </p>
+    </header>
+
+    <!-- Markdown Article Content -->
+    <div class="prose prose-invert max-w-none mt-10 text-cinema-200 leading-loose space-y-6 text-sm sm:text-base">
+      <Content />
+    </div>
+
+    <!-- Article Footer CTA -->
+    <div class="mt-16 pt-8 border-t border-cinema-800 bg-gradient-to-br from-cinema-900 to-cinema-950 p-6 sm:p-8 rounded-2xl border border-cinema-700 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h4 class="text-white font-bold text-base flex items-center gap-2">
+          <span>🎁</span> 索取高清脑图 / 工程源文件
+        </h4>
+        <p class="text-xs sm:text-sm text-cinema-300 mt-1.5 leading-relaxed">
+          添加岛主个人微信 <strong class="text-amber-400 font-mono font-bold select-all">bl-free</strong>（备注「模板源件」），免费获取《短剧爽点_全景图.xmind》、Notion 协同脚手架及实战案例库。
+        </p>
+      </div>
+      <button
+        type="button"
+        onclick="navigator.clipboard.writeText('bl-free').then(() => alert('已复制岛主微信号 bl-free 到剪贴板！添加时请备注「模板源件」或「创作咨询」。'))"
+        class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-xs shrink-0 transition-all shadow-md active:scale-95"
+      >
+        一键复制微信号
+      </button>
+    </div>
+  </article>
+</BaseLayout>

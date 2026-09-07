@@ -10,6 +10,9 @@ const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0,
 
 const teardowns = await getCollection('teardowns');
 const featuredTeardowns = teardowns.slice(0, 3);
+
+const works = await getCollection('works');
+const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout activePath="/" title="岛主编剧工坊 · 短剧与AI漫剧变现手艺库">
@@ -330,6 +333,71 @@ const featuredTeardowns = teardowns.slice(0, 3);
           <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
             <span>更新于 {guide.data.updated}</span>
             <span class="text-amber-400">阅读全文 ➔</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Works Showcase (原创剧本案头样板) -->
+  <section class="py-12 px-4 sm:px-6 max-w-6xl mx-auto border-t border-cinema-800/60">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono mb-2">
+          <span>📑</span> AUTHENTIC SPEC SCRIPTS
+        </div>
+        <h3 class="text-2xl font-bold text-white literary-serif">
+          原创剧本案头 · 工业样板库
+        </h3>
+        <p class="text-xs sm:text-sm text-cinema-400 mt-1">
+          手艺靠真案头说话，拒绝虚假包装。全套大纲、人物小传与黄金前三集视听节拍卡已脱水公开。
+        </p>
+      </div>
+      <a href="/works" class="text-sm font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1 shrink-0">
+        浏览全部作品手稿 ➔
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {featuredWorks.map((work) => (
+        <a
+          href={`/works/${work.slug}`}
+          class="group rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col overflow-hidden shadow-xl"
+        >
+          {work.data.poster && (
+            <div class="aspect-[3/4] overflow-hidden bg-cinema-950 relative">
+              <img
+                src={work.data.poster}
+                alt={work.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-cinema-950/80 border border-amber-500/30 text-[10px] text-amber-400 font-mono font-bold backdrop-blur-sm">
+                {work.data.episodes} 集
+              </div>
+            </div>
+          )}
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1.5 mb-2">
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
+                  {work.data.format}
+                </span>
+                <span class="text-[10px] text-cinema-400 font-mono truncate">
+                  {work.data.status}
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1 literary-serif">
+                {work.data.title}
+              </h4>
+              <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed">
+                {work.data.logline}
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
+              <span class="text-[11px] text-amber-400/80 font-mono">前3集样板公开</span>
+              <span class="text-amber-400 font-bold group-hover:translate-x-0.5 transition-transform">研读 ➔</span>
+            </div>
           </div>
         </a>
       ))}

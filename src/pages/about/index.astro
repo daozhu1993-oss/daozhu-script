@@ -103,16 +103,31 @@ const services = [
         </p>
 
         <div class="space-y-3 text-sm">
-          <div class="flex flex-col sm:flex-row sm:items-center gap-2 p-3.5 rounded-xl bg-cinema-950 border border-cinema-800">
-            <span class="text-cinema-400 w-24 shrink-0 font-medium">💬 个人微信:</span>
-            <span class="text-amber-400 font-mono font-bold select-all">daozhu1993</span>
-            <span class="text-xs text-cinema-400 sm:ml-auto">(请备注重度创作 / 改本咨询)</span>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-cinema-950 border border-cinema-800">
+            <div class="flex items-center gap-2.5">
+              <span class="text-cinema-400 font-medium">💬 个人微信:</span>
+              <span class="text-amber-400 font-mono font-bold text-base select-all">bl-free</span>
+              <span class="text-xs text-cinema-400 hidden sm:inline">(备注重度创作 / 项目合作)</span>
+            </div>
+            <button
+              type="button"
+              onclick="navigator.clipboard.writeText('bl-free').then(() => alert('已复制岛主微信【bl-free】到剪贴板！添加时请备注「重度创作」或「项目合作」。'))"
+              class="px-4 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-bold transition-all shrink-0 self-start sm:self-auto"
+            >
+              复制微信号
+            </button>
           </div>
 
           <div class="flex flex-col sm:flex-row sm:items-center gap-2 p-3.5 rounded-xl bg-cinema-950 border border-cinema-800">
-            <span class="text-cinema-400 w-24 shrink-0 font-medium">📮 官方邮箱:</span>
+            <span class="text-cinema-400 w-28 shrink-0 font-medium">📕 小红书/社媒:</span>
+            <span class="text-cinema-200 font-medium">岛主编剧工坊</span>
+            <span class="text-xs text-cinema-400 sm:ml-auto">(持续更新短剧拆解与创作手记)</span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 p-3.5 rounded-xl bg-cinema-950 border border-cinema-800">
+            <span class="text-cinema-400 w-28 shrink-0 font-medium">📮 官方邮箱:</span>
             <span class="text-cinema-200 font-mono select-all">contact@daozhu.script</span>
-            <span class="text-xs text-cinema-400 sm:ml-auto">(商业项目/剧本发件)</span>
+            <span class="text-xs text-cinema-400 sm:ml-auto">(商业项目/台本发件)</span>
           </div>
         </div>
       </div>

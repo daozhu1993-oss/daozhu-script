@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = await getCollection('works');
+  return works.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout activePath="/works" title={`${entry.data.title} · 原创案头样板`}>
+  <article class="pt-10 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <!-- Back button -->
+    <a href="/works" class="text-xs font-mono text-cinema-400 hover:text-amber-400 mb-6 inline-flex items-center gap-1">
+      ← 返回原创手稿与剧本库
+    </a>
+
+    <!-- Header info with Poster -->
+    <header class="pb-8 border-b border-cinema-800">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <!-- Poster Thumbnail -->
+        {entry.data.poster && (
+          <div class="w-full md:w-56 shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-cinema-800 bg-cinema-900 group">
+            <img
+              src={entry.data.poster}
+              alt={entry.data.title}
+              class="w-full h-auto object-cover aspect-[3/4] group-hover:scale-102 transition-transform duration-500"
+            />
+          </div>
+        )}
+
+        <!-- Meta and Title -->
+        <div class="flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              {entry.data.format} · {entry.data.episodes} 集规格
+            </span>
+            <span class="text-xs font-mono text-cinema-300 bg-cinema-900 px-2 py-0.5 rounded border border-cinema-800">
+              担任: {entry.data.role}
+            </span>
+            <span class="text-xs text-amber-400/90 font-mono px-2 py-0.5 rounded bg-amber-950/40 border border-amber-500/30">
+              {entry.data.status}
+            </span>
+          </div>
+
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif mb-4">
+            {entry.data.title}
+          </h1>
+
+          <div class="p-4 rounded-xl bg-cinema-950 border border-cinema-800 text-xs sm:text-sm text-cinema-300 mb-4 leading-relaxed">
+            <span class="text-amber-400 font-bold block mb-1 font-mono">一句话故事 (Logline):</span>
+            <span>{entry.data.logline}</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-amber-950/20 border border-amber-500/30 text-xs text-amber-300">
+            <strong>💡 案头价值：</strong>{entry.data.highlight}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Markdown Article Content -->
+    <div class="prose prose-invert max-w-none mt-10 text-cinema-200 leading-loose space-y-6 text-sm sm:text-base">
+      <Content />
+    </div>
+
+    <!-- Article Footer CTA -->
+    <div class="mt-16 pt-8 border-t border-cinema-800 bg-gradient-to-br from-cinema-900 to-cinema-950 p-6 sm:p-8 rounded-2xl border border-cinema-700 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h4 class="text-white font-bold text-base flex items-center gap-2">
+          <span>🔒</span> 项目商业授权与完整剧本研读
+        </h4>
+        <p class="text-xs sm:text-sm text-cinema-300 mt-1.5 leading-relaxed">
+          后续全集完整商用台本、分集大纲及投拍授权已备案。请添加岛主微信 <strong class="text-amber-400 font-mono font-bold select-all">bl-free</strong> 洽谈（备注重度创作 / 项目合作）。
+        </p>
+      </div>
+      <button
+        type="button"
+        onclick="navigator.clipboard.writeText('bl-free').then(() => alert('已复制岛主微信号 bl-free 到剪贴板！添加时请备注「项目合作」或剧本名称。'))"
+        class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-xs shrink-0 transition-all shadow-md active:scale-95"
+      >
+        一键复制微信号
+      </button>
+    </div>
+  </article>
+</BaseLayout>
