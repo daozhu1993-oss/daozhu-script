@@ -3,97 +3,277 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const teardowns = await getCollection('teardowns');
+
+// Map custom category
+function getTeardownCategory(t: any) {
+  if (t.data.genre.includes('女频')) return '女频反内耗';
+  if (t.data.genre.includes('奇幻') || t.data.genre.includes('拟人')) return '家国破圈';
+  if (t.data.genre.includes('男频') || t.data.genre.includes('战神')) return '男频战神';
+  return '微短剧';
+}
+
+const catCounts: Record<string, number> = { 全部: teardowns.length };
+teardowns.forEach((t) => {
+  const c = getTeardownCategory(t);
+  catCounts[c] = (catCounts[c] || 0) + 1;
+});
+const categories = Object.keys(catCounts);
 ---
 
 <BaseLayout activePath="/teardowns" title="拆爆款 · 岛主编剧工坊">
   <section class="pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
     <!-- Header -->
-    <div class="max-w-2xl mb-10">
+    <div class="max-w-3xl mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-mono mb-3">
         🔬 BREAKDOWNS & REVERSE ENGINEERING
       </div>
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight literary-serif">
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight literary-serif">
         爆款短剧与漫剧拉片拆解
       </h1>
       <p class="mt-3 text-sm sm:text-base text-cinema-300 leading-relaxed">
-        用编剧的解剖刀拆解爆款。不写情绪化影评，只拆：爽点在第几分钟、钩子怎么下的、压抑怎么蓄势的。给你 3-5 条明天就能抄的手艺。
+        用编剧的解剖刀拆解爆款。不写情绪化影评，只拆：爽点在第几秒、钩子怎么下的、压抑怎么蓄势的。给你 3-5 条明天就能抄的工业级手艺。
       </p>
     </div>
 
+    <!-- Search & Filter Controls -->
+    <div class="mb-10 pb-6 border-b border-cinema-800 space-y-4">
+      <!-- Search Input -->
+      <div class="relative max-w-md">
+        <input
+          type="text"
+          id="teardown-search-input"
+          placeholder="搜索爆款片名、核心钩子或手艺关键词（如：后妈、大英、战神）..."
+          class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-white placeholder-cinema-500 focus:outline-none focus:border-blue-400 font-sans"
+        />
+        <span class="absolute left-3 top-2.5 text-cinema-500 text-sm">🔍</span>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap gap-2" id="teardown-category-filters">
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              class:list={[
+                'td-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer',
+                idx === 0
+                  ? 'bg-blue-500 text-white font-bold shadow-sm ring-1 ring-blue-400'
+                  : 'bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-800 border border-cinema-800',
+              ]}
+              data-category={cat}
+            >
+              <span>{cat}</span>
+              <span class="text-[10px] opacity-80 px-1 py-0.2 rounded bg-black/20 font-mono">
+                {catCounts[cat]}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <span class="text-xs text-cinema-400 font-mono" id="td-count-indicator">
+          共收录 {teardowns.length} 篇深度拉片
+        </span>
+      </div>
+    </div>
+
     <!-- Teardowns List -->
-    <div class="space-y-8">
-      {teardowns.map((item) => (
-        <article class="p-6 sm:p-7 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 hover:bg-cinema-850/70 transition-all flex flex-col md:flex-row gap-6 shadow-xl">
-          <!-- Poster Column -->
-          <div class="w-full md:w-52 sm:w-60 shrink-0">
-            <a href={`/teardowns/${item.slug}`} class="block aspect-[3/4] rounded-xl overflow-hidden bg-cinema-950 border border-cinema-800 relative group shadow-md">
-              {item.data.poster ? (
-                <img
-                  src={item.data.poster}
-                  alt={item.data.title}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-              ) : (
-                <div class="w-full h-full flex items-center justify-center text-4xl">🎬</div>
-              )}
-              <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-cinema-950/80 text-[10px] font-bold text-amber-400 border border-amber-500/30 backdrop-blur-sm">
-                {item.data.format}
-              </div>
-            </a>
-          </div>
-
-          <!-- Content Column -->
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex flex-wrap items-center gap-2 mb-2.5">
-                <span class="text-xs font-mono text-cinema-400">
-                  {item.data.genre}
-                </span>
-                <span class="text-cinema-700">·</span>
-                <span class="text-xs font-mono text-amber-400/90">
-                  {item.data.episodesOrDuration}
-                </span>
-              </div>
-
-              <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 hover:text-amber-400 transition-colors literary-serif">
-                <a href={`/teardowns/${item.slug}`}>
-                  {item.data.title}
-                </a>
-              </h2>
-
-              <div class="p-3.5 rounded-xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 mb-4">
-                <span class="text-amber-400 font-bold block mb-1">⚡ 黄金进场钩子:</span>
-                <span class="leading-relaxed">{item.data.hookTiming}</span>
-              </div>
-
-              <p class="text-sm text-cinema-300 leading-relaxed mb-4">
-                {item.data.structureSummary}
-              </p>
-
-              <!-- Takeaways Preview -->
-              <div class="space-y-1.5 pt-3 border-t border-cinema-800/60">
-                <span class="text-[11px] font-mono text-cinema-400 block mb-1">核心可抄手艺:</span>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {item.data.takeaways.map((point) => (
-                    <div class="text-xs text-cinema-300 flex items-start gap-1.5">
-                      <span class="text-emerald-400 font-bold">✓</span>
-                      <span class="line-clamp-1">{point}</span>
-                    </div>
-                  ))}
+    <div class="space-y-8" id="teardowns-list">
+      {teardowns.map((item) => {
+        const itemCat = getTeardownCategory(item);
+        return (
+          <article
+            class="teardown-card p-6 sm:p-7 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-blue-500/40 hover:bg-cinema-850/70 transition-all flex flex-col md:flex-row gap-6 shadow-xl"
+            data-td-category={itemCat}
+            data-td-title={item.data.title.toLowerCase()}
+            data-td-hook={item.data.hookTiming.toLowerCase()}
+            data-td-genre={item.data.genre.toLowerCase()}
+          >
+            <!-- Poster Column -->
+            <div class="w-full md:w-52 sm:w-60 shrink-0">
+              <a href={`/teardowns/${item.slug}`} class="block aspect-[3/4] rounded-xl overflow-hidden bg-cinema-950 border border-cinema-800 relative group shadow-md">
+                {item.data.poster ? (
+                  <img
+                    src={item.data.poster}
+                    alt={item.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full flex items-center justify-center text-4xl">🎬</div>
+                )}
+                <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-cinema-950/80 text-[10px] font-bold text-amber-400 border border-amber-500/30 backdrop-blur-sm font-mono">
+                  {item.data.format}
                 </div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs">
-              <span class="text-cinema-400 font-mono">十年编剧拉片档案 · 工业级视角</span>
-              <a href={`/teardowns/${item.slug}`} class="text-amber-400 font-bold hover:underline flex items-center gap-1">
-                阅读完整解剖与节奏波形 ➔
               </a>
             </div>
-          </div>
-        </article>
-      ))}
+
+            <!-- Content Column -->
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-2.5">
+                  <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    {itemCat}
+                  </span>
+                  <span class="text-xs font-mono text-cinema-400">
+                    {item.data.genre}
+                  </span>
+                  <span class="text-cinema-700">·</span>
+                  <span class="text-xs font-mono text-amber-400/90">
+                    {item.data.episodesOrDuration}
+                  </span>
+                </div>
+
+                <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 hover:text-blue-400 transition-colors literary-serif">
+                  <a href={`/teardowns/${item.slug}`}>
+                    {item.data.title}
+                  </a>
+                </h2>
+
+                <div class="p-3.5 rounded-xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 mb-4">
+                  <span class="text-amber-400 font-bold block mb-1">⚡ 黄金进场钩子:</span>
+                  <span class="leading-relaxed">{item.data.hookTiming}</span>
+                </div>
+
+                <p class="text-sm text-cinema-300 leading-relaxed mb-4">
+                  {item.data.structureSummary}
+                </p>
+
+                <!-- Visual Beats Mini Sequence -->
+                {item.data.beats && (
+                  <div class="mb-4 p-3 rounded-xl bg-cinema-950/80 border border-cinema-850">
+                    <div class="text-[10px] font-mono text-cinema-400 uppercase tracking-wider mb-2">
+                      ⚡ 专属秒级波形节奏预览：
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {item.data.beats.map((b: any) => (
+                        <div class="p-2 rounded-lg bg-cinema-900 border border-cinema-800 text-[11px]">
+                          <div class="flex items-center justify-between text-[10px] font-mono text-amber-400/90 mb-0.5">
+                            <span>{b.timing}</span>
+                            <span class="opacity-70">[{b.phase}]</span>
+                          </div>
+                          <div class="font-bold text-white truncate" title={b.title}>{b.title}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <!-- Takeaways Preview -->
+                <div class="space-y-1.5 pt-3 border-t border-cinema-800/60">
+                  <span class="text-[11px] font-mono text-cinema-400 block mb-1">核心可抄手艺:</span>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {item.data.takeaways.map((point) => (
+                      <div class="text-xs text-cinema-300 flex items-start gap-1.5">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span class="line-clamp-1">{point}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs">
+                <span class="text-cinema-400 font-mono">十年编剧拉片档案 · 工业级视角</span>
+                <a href={`/teardowns/${item.slug}`} class="text-blue-400 font-bold hover:underline flex items-center gap-1">
+                  阅读完整解剖与节奏波形 ➔
+                </a>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Empty Search State -->
+    <div id="td-empty-state" class="hidden text-center py-16 bg-cinema-900/50 rounded-2xl border border-cinema-800">
+      <span class="text-3xl mb-2 block">🔍</span>
+      <h3 class="text-sm font-bold text-white mb-1">未找到匹配的拉片拆解</h3>
+      <p class="text-xs text-cinema-400 mb-4">可以尝试更换关键词或清除筛选</p>
+      <button
+        type="button"
+        id="td-btn-reset"
+        class="px-4 py-2 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/40 text-xs font-bold transition-all cursor-pointer hover:bg-blue-500/30"
+      >
+        重置搜索与分类
+      </button>
     </div>
   </section>
+
+  <!-- Interactive Filter and Search Script -->
+  <script is:inline>
+    const filterBtns = document.querySelectorAll('.td-cat-btn');
+    const cards = document.querySelectorAll('.teardown-card');
+    const searchInput = document.getElementById('teardown-search-input');
+    const countIndicator = document.getElementById('td-count-indicator');
+    const emptyState = document.getElementById('td-empty-state');
+    const btnReset = document.getElementById('td-btn-reset');
+
+    let currentCategory = '全部';
+    let searchQuery = '';
+
+    function filterTeardowns() {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const cat = card.getAttribute('data-td-category') || '';
+        const title = card.getAttribute('data-td-title') || '';
+        const hook = card.getAttribute('data-td-hook') || '';
+        const genre = card.getAttribute('data-td-genre') || '';
+
+        const matchCat = currentCategory === '全部' || cat === currentCategory;
+        const matchSearch = !searchQuery || 
+          title.includes(searchQuery) || 
+          hook.includes(searchQuery) || 
+          genre.includes(searchQuery);
+
+        if (matchCat && matchSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (countIndicator) {
+        countIndicator.innerText = `显示 ${visibleCount} 篇拆解`;
+      }
+
+      if (emptyState) {
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+        }
+      }
+    }
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => {
+          b.className = 'td-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-800 border border-cinema-800';
+        });
+
+        btn.className = 'td-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-blue-500 text-white font-bold shadow-sm ring-1 ring-blue-400';
+        currentCategory = btn.getAttribute('data-category') || '全部';
+        filterTeardowns();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = (e.target.value || '').trim().toLowerCase();
+        filterTeardowns();
+      });
+    }
+
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        currentCategory = '全部';
+        const allBtn = document.querySelector('.td-cat-btn[data-category="全部"]');
+        if (allBtn) allBtn.click();
+      });
+    }
+  </script>
 </BaseLayout>

@@ -4,54 +4,107 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const templates = await getCollection('templates');
-  return templates.map((entry) => ({
+  const sortedTemplates = templates.sort((a, b) => a.data.order - b.data.order);
+  return sortedTemplates.map((entry, index) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: {
+      entry,
+      prevTemplate: index > 0 ? sortedTemplates[index - 1] : null,
+      nextTemplate: index < sortedTemplates.length - 1 ? sortedTemplates[index + 1] : null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevTemplate, nextTemplate } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<BaseLayout activePath="/templates" title={`${entry.data.title} · 生产力模板库`}>
+<BaseLayout activePath="/templates" title={`${entry.data.title} · 生产力脚手架`}>
+  <!-- Top Reading Progress Indicator -->
+  <div id="read-progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-500 to-amber-400 z-50 transition-all duration-150 w-0"></div>
+
   <article class="pt-10 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
-    <!-- Back button -->
-    <a href="/templates" class="text-xs font-mono text-cinema-400 hover:text-emerald-400 mb-6 inline-flex items-center gap-1">
-      ← 返回模板与工具库
-    </a>
+    <!-- Top Breadcrumb & Actions Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 text-xs">
+      <a href="/templates" class="font-mono text-cinema-400 hover:text-emerald-400 inline-flex items-center gap-1 transition-colors">
+        ← 返回模板与工具库
+      </a>
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          id="btn-download-tpl-txt"
+          class="px-3 py-1.5 rounded-lg bg-cinema-900 hover:bg-cinema-850 text-cinema-300 hover:text-white border border-cinema-800 font-mono transition-colors flex items-center gap-1 cursor-pointer"
+        >
+          <span>📥 下载 .txt</span>
+        </button>
+        <button
+          type="button"
+          id="btn-copy-tpl-content"
+          class="px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold transition-colors flex items-center gap-1 cursor-pointer active:scale-95"
+        >
+          <span>📋 复制全文</span>
+        </button>
+      </div>
+    </div>
 
     <!-- Header info -->
     <header class="pb-8 border-b border-cinema-800">
-      <div class="flex items-center gap-2 mb-3">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
         <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          {entry.data.type}
+          {entry.data.category || entry.data.type}
         </span>
-        <span class="text-xs text-cinema-400 font-mono">
-          格式: {entry.data.fileFormat} · 权限: {entry.data.access === 'free' ? '免费开放' : entry.data.access === 'email' ? '邮箱换取' : 'PRO专享'}
+        <span class="text-xs text-cinema-400 font-mono bg-cinema-900 px-2 py-0.5 rounded border border-cinema-800">
+          格式: {entry.data.fileFormat}
+        </span>
+        <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono uppercase">
+          {entry.data.access === 'free' ? '免费开放' : entry.data.access === 'email' ? '邮箱换取' : 'PRO专享'}
         </span>
       </div>
+
       <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif">
         {entry.data.title}
       </h1>
-      <p class="mt-4 text-sm sm:text-base text-cinema-300 leading-relaxed bg-cinema-900/80 p-4 rounded-xl border border-cinema-800">
-        💡 <strong>亮点提要</strong>：{entry.data.highlight}
-      </p>
+
+      <div class="mt-4 p-4 rounded-xl bg-cinema-900/80 border border-cinema-800 text-xs sm:text-sm text-amber-300 leading-relaxed flex items-start gap-2.5">
+        <span class="text-base">💡</span>
+        <div>
+          <strong>手艺亮点：</strong>{entry.data.highlight}
+        </div>
+      </div>
     </header>
 
     <!-- Markdown Article Content -->
-    <div class="prose prose-invert max-w-none mt-10 text-cinema-200 leading-loose space-y-6 text-sm sm:text-base">
+    <div id="tpl-markdown-body" class="prose prose-invert max-w-none mt-10 text-cinema-200 leading-loose space-y-6 text-sm sm:text-base font-mono">
       <Content />
     </div>
 
+    <!-- Cross-Link to Studio -->
+    <div class="mt-14 p-6 rounded-2xl bg-gradient-to-r from-cinema-900 via-cinema-900 to-emerald-950/30 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="space-y-1">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>⚡</span> 想要在实战项目中快速套用？
+        </h4>
+        <p class="text-xs text-cinema-400">
+          无需从零手打，进入在线工作台，一键填充结构骨架或运行网文视听脱水。
+        </p>
+      </div>
+      <a
+        href="/studio"
+        class="shrink-0 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-1.5 active:scale-95"
+      >
+        <span>前往在线工作台实操</span>
+        <span>➔</span>
+      </a>
+    </div>
+
     <!-- Article Footer CTA -->
-    <div class="mt-16 pt-8 border-t border-cinema-800 bg-gradient-to-br from-cinema-900 to-cinema-950 p-6 sm:p-8 rounded-2xl border border-cinema-700 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="mt-8 pt-8 border-t border-cinema-800 bg-gradient-to-br from-cinema-900 to-cinema-950 p-6 sm:p-8 rounded-2xl border border-cinema-700 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
       <div>
         <h4 class="text-white font-bold text-base flex items-center gap-2">
-          <span>🎁</span> 索取高清脑图 / 工程源文件
+          <span>🎁</span> 索取高清脑图 / XMind 工程源文件
         </h4>
         <p class="text-xs sm:text-sm text-cinema-300 mt-1.5 leading-relaxed">
-          添加岛主个人微信 <strong class="text-amber-400 font-mono font-bold select-all">bl-free</strong>（备注「模板源件」），免费获取《短剧爽点_全景图.xmind》、Notion 协同脚手架及实战案例库。
+          添加岛主个人微信 <strong class="text-amber-400 font-mono font-bold select-all">bl-free</strong>（备注「模板源件」），免费索取原版《短剧爽点_全景图.xmind》、Notion 协同脚手架及实战案例库。
         </p>
       </div>
       <button
@@ -59,8 +112,91 @@ const { Content } = await entry.render();
         onclick="window.copyToClipboard('bl-free', '已成功复制微信号【bl-free】！添加时请备注「模板源件」或「创作咨询」。')"
         class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-xs shrink-0 transition-all shadow-md active:scale-95 cursor-pointer"
       >
-        一键复制微信号
+        一键复制微信号 (bl-free)
       </button>
     </div>
+
+    <!-- Previous / Next Navigation Strip -->
+    <div class="mt-10 pt-6 border-t border-cinema-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium">
+      {prevTemplate ? (
+        <a
+          href={`/templates/${prevTemplate.slug}`}
+          class="w-full sm:w-auto p-3 rounded-xl bg-cinema-900 hover:bg-cinema-850 border border-cinema-800 hover:border-emerald-500/30 text-cinema-300 hover:text-white transition-all flex items-center gap-2"
+        >
+          <span class="text-emerald-400">←</span>
+          <div class="text-left">
+            <span class="text-[10px] text-cinema-400 block font-mono">上一个模板</span>
+            <span class="font-bold line-clamp-1">{prevTemplate.data.title}</span>
+          </div>
+        </a>
+      ) : (
+        <div class="hidden sm:block"></div>
+      )}
+
+      <a href="/templates" class="text-cinema-400 hover:text-emerald-400 font-mono text-center">
+        查看全部 5 大脚手架 ➔
+      </a>
+
+      {nextTemplate ? (
+        <a
+          href={`/templates/${nextTemplate.slug}`}
+          class="w-full sm:w-auto p-3 rounded-xl bg-cinema-900 hover:bg-cinema-850 border border-cinema-800 hover:border-emerald-500/30 text-cinema-300 hover:text-white transition-all flex items-center justify-end gap-2 text-right"
+        >
+          <div class="text-right">
+            <span class="text-[10px] text-cinema-400 block font-mono">下一个模板</span>
+            <span class="font-bold line-clamp-1">{nextTemplate.data.title}</span>
+          </div>
+          <span class="text-emerald-400">→</span>
+        </a>
+      ) : (
+        <div class="hidden sm:block"></div>
+      )}
+    </div>
   </article>
+
+  <!-- Interactive Script for Copy, Download, and Progress -->
+  <script is:inline>
+    // Reading Progress
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      const bar = document.getElementById('read-progress-bar');
+      if (bar) {
+        bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      }
+    });
+
+    // Copy Content
+    const btnCopy = document.getElementById('btn-copy-tpl-content');
+    if (btnCopy) {
+      btnCopy.addEventListener('click', () => {
+        const bodyEl = document.getElementById('tpl-markdown-body');
+        const text = bodyEl ? bodyEl.innerText : '';
+        window.copyToClipboard?.(text, '✅ 模板全文已复制！可在 Notion、飞书或文档中直接粘贴！');
+      });
+    }
+
+    // Download TXT
+    const btnDownload = document.getElementById('btn-download-tpl-txt');
+    if (btnDownload) {
+      btnDownload.addEventListener('click', () => {
+        const bodyEl = document.getElementById('tpl-markdown-body');
+        const h1 = document.querySelector('h1');
+        const title = h1 ? h1.innerText.trim() : 'daozhu-template';
+        const text = bodyEl ? bodyEl.innerText : '';
+
+        const filename = `${title.replace(/[\/\\:\*\?"<>\|]/g, '_')}.txt`;
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        window.showToast?.(`已成功导出模板文件：${filename}`, 'success');
+      });
+    }
+  </script>
 </BaseLayout>

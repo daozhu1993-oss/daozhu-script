@@ -299,9 +299,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="text-xs font-mono text-amber-400 font-bold flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> 全剧三大付费浪涌波峰推演图
                 </span>
-                <button type="button" id="btn-copy-paywall" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-cinema-850 hover:bg-amber-500/20 text-cinema-300 hover:text-amber-400 border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95">
-                  <span id="btn-copy-paywall-label">📋 复制推演卡</span>
-                </button>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="btn-download-paywall" class="text-xs font-mono px-2.5 py-1.5 rounded-lg bg-cinema-850 hover:bg-cinema-800 text-cinema-300 hover:text-white border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer" title="下载付费卡位推演为本地 TXT 文件">
+                    <span>📥 下载 .txt</span>
+                  </button>
+                  <button type="button" id="btn-copy-paywall" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-cinema-850 hover:bg-amber-500/20 text-cinema-300 hover:text-amber-400 border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer">
+                    <span id="btn-copy-paywall-label">📋 复制推演卡</span>
+                  </button>
+                </div>
               </div>
 
               <!-- Content Area -->
@@ -617,13 +622,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 </div>
               </div>
 
-              <textarea id="doctor-input" rows="15" class="w-full px-3.5 py-3 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-cinema-200 font-mono leading-relaxed focus:outline-none focus:border-amber-400" placeholder="在此粘贴你的单集剧本（含场口、动作描写与对白），系统将基于 6 维正规军指标进行体检：
+              <textarea id="doctor-input" rows="12" class="w-full px-3.5 py-3 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-cinema-200 font-mono leading-relaxed focus:outline-none focus:border-amber-400" placeholder="在此粘贴你的单集剧本（含场口、动作描写与对白），系统将基于 6 维正规军指标进行体检：
 1. 3秒视觉奇观与入场钩子（拒绝大段铺垫与旁白交代）
 2. 大卫·马密三问（谁想要什么？得不到会怎样？为什么是现在？）
 3. 比利·怀尔德反派自洽律（拒绝弱智反派，反派越强胜利越珍贵）
 4. 希区柯克悬念炸弹（观众是否提前看到危机倒计时）
 5. 台词潜台词与去注水（杜绝把心理活动直白念出来）
 6. 单集 90 秒断崖付费卡点（是否卡在情绪爆发前一秒）..."></textarea>
+
+              <!-- Pre-flight Self-Check Pills -->
+              <div class="p-3.5 rounded-xl bg-cinema-900/90 border border-cinema-800 text-xs space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-amber-400 font-mono text-[11px] flex items-center gap-1.5">
+                    <span>⚡</span> 编剧交稿前 6 维速查自检：
+                  </span>
+                  <span class="text-[10px] text-cinema-500 font-mono">排查确认</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-cinema-300 text-[11px]">
+                  <label class="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+                    <input type="checkbox" class="doctor-precheck accent-amber-500 rounded" />
+                    <span>前 3 秒有视听奇观或冲突</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+                    <input type="checkbox" class="doctor-precheck accent-amber-500 rounded" />
+                    <span>确立了生杀级目标与倒计时</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+                    <input type="checkbox" class="doctor-precheck accent-amber-500 rounded" />
+                    <span>反派拥有不可抗筹码(非脑残)</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+                    <input type="checkbox" class="doctor-precheck accent-amber-500 rounded" />
+                    <span>观众提前知晓底牌(桌下炸弹)</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+                    <input type="checkbox" class="doctor-precheck accent-amber-500 rounded" />
+                    <span>对白简练在12字内(潜台词)</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+                    <input type="checkbox" class="doctor-precheck accent-amber-500 rounded" />
+                    <span>卡在最高潮前一秒断崖切黑</span>
+                  </label>
+                </div>
+              </div>
 
               <button type="button" id="btn-run-doctor" class="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-cinema-950 font-bold text-xs sm:text-sm shadow-xl shadow-amber-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer">
                 <span id="btn-run-doctor-text">🩺 运行正规军 6 维剧作挑刺体检</span>
@@ -1627,6 +1668,19 @@ ${rawText}
           label.innerText = '✅ 已复制推演卡！';
           setTimeout(() => { label.innerText = '📋 复制推演卡'; }, 2000);
         }
+      });
+    }
+
+    const downloadPaywallBtn = document.getElementById('btn-download-paywall');
+    if (downloadPaywallBtn) {
+      downloadPaywallBtn.addEventListener('click', () => {
+        const text = paywallOutput ? paywallOutput.innerText : '';
+        if (!text || !text.trim()) {
+          window.showToast?.('暂无可下载的推演结果，请先点击推演！', 'warning');
+          return;
+        }
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadTextAsFile(`daozhu-paywall-surge-plan-${dateStr}.txt`, text);
       });
     }
 
