@@ -5,7 +5,7 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
 // https://astro.build/config
 export default defineConfig({
-  site: isGitHubPages ? 'https://daozhu1993-oss.github.io' : 'https://daozhu-script.pages.dev',
+  site: isGitHubPages ? 'https://daozhu1993-oss.github.io' : 'https://daozhuai.cn',
   base: isGitHubPages ? '/daozhu-script' : '/',
   server: {
     port: 3001,
