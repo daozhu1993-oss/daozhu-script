@@ -137,10 +137,24 @@ const services = [
             </a>
           </div>
 
-          <div class="flex flex-col sm:flex-row sm:items-center gap-2 p-3.5 rounded-xl bg-cinema-950 border border-cinema-800">
-            <span class="text-cinema-400 w-28 shrink-0 font-medium">📮 官方邮箱:</span>
-            <span class="text-cinema-200 font-mono select-all">contact@daozhu.script</span>
-            <span class="text-xs text-cinema-400 sm:ml-auto">(商业项目/台本发件)</span>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-cinema-950 border border-cinema-800">
+            <div class="flex items-center gap-2.5">
+              <span class="text-cinema-400 font-medium">📮 官方邮箱:</span>
+              <a
+                href="mailto:daozhu1993@gmail.com"
+                class="text-cinema-200 hover:text-amber-400 font-mono font-bold text-base select-all transition-colors"
+              >
+                daozhu1993@gmail.com
+              </a>
+              <span class="text-xs text-cinema-400 hidden sm:inline">(商业项目 / 台本发件)</span>
+            </div>
+            <button
+              type="button"
+              onclick="navigator.clipboard.writeText('daozhu1993@gmail.com').then(() => alert('已复制岛主谷歌邮箱【daozhu1993@gmail.com】到剪贴板！'))"
+              class="px-4 py-1.5 rounded-lg bg-cinema-800 hover:bg-cinema-700 text-cinema-300 text-xs font-bold transition-all shrink-0 self-start sm:self-auto border border-cinema-700"
+            >
+              复制邮箱
+            </button>
           </div>
         </div>
       </div>
