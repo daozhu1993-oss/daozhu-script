@@ -15,12 +15,20 @@ const topics = [
   'AI漫剧工作流',
   '平台与过审',
 ];
+
+// Count per topic
+const topicCounts: Record<string, number> = {
+  全部: sortedGuides.length,
+};
+topics.slice(1).forEach((t) => {
+  topicCounts[t] = sortedGuides.filter((g) => g.data.topic === t).length;
+});
 ---
 
 <BaseLayout activePath="/guides" title="方法论库 · 岛主编剧工坊">
   <section class="pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
     <!-- Header -->
-    <div class="max-w-2xl mb-10">
+    <div class="max-w-3xl mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-3">
         📖 EVERGREEN KNOWLEDGE BASE
       </div>
@@ -28,30 +36,54 @@ const topics = [
         短剧与 AI 漫剧方法论库
       </h1>
       <p class="mt-3 text-sm sm:text-base text-cinema-300 leading-relaxed">
-        不按发布日期，按知识体系组织。十年职业编剧把底层结构、爽感节拍、留人钩子讲透，一次写好，长期复用。
+        不按发布日期，按知识体系组织。十年职业影视编剧将底层结构力学、爽感多巴胺节拍、付费点断章讲透，一次写好，长期复用。
       </p>
     </div>
 
-    <!-- Topic Badges Filter (Static) -->
-    <div class="flex flex-wrap gap-2 pb-8 border-b border-cinema-800/80 mb-8">
-      {topics.map((topic, i) => (
-        <span
-          class:list={[
-            'px-3.5 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-colors',
-            i === 0
-              ? 'bg-amber-500 text-cinema-950 font-bold shadow-sm'
-              : 'bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-850 border border-cinema-800',
-          ]}
-        >
-          {topic}
+    <!-- Search & Filter Controls -->
+    <div class="mb-8 space-y-4">
+      <!-- Search Input -->
+      <div class="relative max-w-md">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-cinema-400 text-sm">
+          🔍
         </span>
-      ))}
+        <input
+          type="text"
+          id="guide-search-input"
+          placeholder="搜索方法论关键词（如：付费点、反转、卡点、麦格芬、潜台词）..."
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-cinema-900 border border-cinema-700 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 placeholder:text-cinema-500 transition-all"
+        />
+      </div>
+
+      <!-- Topic Filter Badges -->
+      <div class="flex flex-wrap gap-2 pb-6 border-b border-cinema-800/80" id="topic-filters">
+        {topics.map((topic, i) => (
+          <button
+            type="button"
+            data-topic={topic}
+            class:list={[
+              'topic-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer',
+              i === 0
+                ? 'bg-amber-500 text-cinema-950 font-bold shadow-sm ring-1 ring-amber-400'
+                : 'bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-850 border border-cinema-800',
+            ]}
+          >
+            <span>{topic}</span>
+            <span class="text-[10px] opacity-70 font-mono">({topicCounts[topic] || 0})</span>
+          </button>
+        ))}
+      </div>
     </div>
 
     <!-- Guides Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="guides-grid">
       {sortedGuides.map((guide) => (
-        <article class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 hover:bg-cinema-850/60 transition-all flex flex-col justify-between">
+        <article
+          data-topic={guide.data.topic}
+          data-title={guide.data.title.toLowerCase()}
+          data-summary={guide.data.summary.toLowerCase()}
+          class="guide-card p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 hover:bg-cinema-850/60 transition-all flex flex-col justify-between group"
+        >
           <div>
             <div class="flex items-center gap-2.5 mb-3">
               <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
@@ -61,7 +93,7 @@ const topics = [
                 {guide.data.level} · 预计阅读 {guide.data.readTime}
               </span>
             </div>
-            <h2 class="text-lg font-bold text-white mb-2.5 hover:text-amber-400 transition-colors">
+            <h2 class="text-lg font-bold text-white mb-2.5 group-hover:text-amber-400 transition-colors literary-serif">
               <a href={`/guides/${guide.slug}`}>
                 {guide.data.title}
               </a>
@@ -73,12 +105,97 @@ const topics = [
 
           <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs">
             <span class="text-cinema-400 font-mono">手艺更新 · {guide.data.updated}</span>
-            <a href={`/guides/${guide.slug}`} class="text-amber-400 font-medium hover:underline flex items-center gap-1">
-              进入深度学习 ➔
+            <a href={`/guides/${guide.slug}`} class="text-amber-400 font-medium hover:underline flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              进入深度研读 ➔
             </a>
           </div>
         </article>
       ))}
     </div>
+
+    <!-- Empty State -->
+    <div id="guides-empty-state" class="hidden p-12 text-center rounded-2xl bg-cinema-900/50 border border-cinema-800 my-8">
+      <div class="text-4xl mb-3">🔍</div>
+      <h3 class="text-base font-bold text-white mb-1">未检索到匹配的方法论篇目</h3>
+      <p class="text-xs text-cinema-400 max-w-sm mx-auto mb-4">
+        请尝试更换其他关键词，或重置筛选标签查看全部 12 篇核心剧作指南。
+      </p>
+      <button
+        type="button"
+        id="btn-reset-filters"
+        class="px-4 py-2 rounded-xl bg-amber-500 text-cinema-950 font-bold text-xs hover:bg-amber-400 transition-all cursor-pointer"
+      >
+        重置筛选条件
+      </button>
+    </div>
   </section>
+
+  <script is:inline>
+    // Client-side search and topic filtering
+    const searchInput = document.getElementById('guide-search-input');
+    const topicButtons = document.querySelectorAll('.topic-btn');
+    const cards = document.querySelectorAll('.guide-card');
+    const emptyState = document.getElementById('guides-empty-state');
+    const btnReset = document.getElementById('btn-reset-filters');
+
+    let currentTopic = '全部';
+    let searchQuery = '';
+
+    function filterGuides() {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const cardTopic = card.getAttribute('data-topic');
+        const cardTitle = card.getAttribute('data-title') || '';
+        const cardSummary = card.getAttribute('data-summary') || '';
+
+        const matchesTopic = currentTopic === '全部' || cardTopic === currentTopic;
+        const matchesSearch = !searchQuery || cardTitle.includes(searchQuery) || cardSummary.includes(searchQuery);
+
+        if (matchesTopic && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (emptyState) {
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+        }
+      }
+    }
+
+    topicButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        topicButtons.forEach((b) => {
+          b.className = 'topic-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-850 border border-cinema-800';
+        });
+
+        btn.className = 'topic-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-amber-500 text-cinema-950 font-bold shadow-sm ring-1 ring-amber-400';
+        currentTopic = btn.getAttribute('data-topic') || '全部';
+        filterGuides();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = (e.target.value || '').trim().toLowerCase();
+        filterGuides();
+      });
+    }
+
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        currentTopic = '全部';
+        const allBtn = document.querySelector('.topic-btn[data-topic="全部"]');
+        if (allBtn) allBtn.click();
+      });
+    }
+  </script>
 </BaseLayout>

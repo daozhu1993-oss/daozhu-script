@@ -149,9 +149,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                   </button>
                 </div>
 
-                <button type="button" id="btn-copy-current" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 transition-colors flex items-center gap-1 active:scale-95">
-                  <span id="btn-copy-label">📋 一键复制当前内容</span>
-                </button>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="btn-download-current" class="text-xs font-mono px-2.5 py-1.5 rounded-lg bg-cinema-850 hover:bg-cinema-800 text-cinema-300 hover:text-white border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer" title="下载当前生成文本为本地 TXT 文件">
+                    <span>📥 下载 .txt</span>
+                  </button>
+                  <button type="button" id="btn-copy-current" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer">
+                    <span id="btn-copy-label">📋 一键复制当前内容</span>
+                  </button>
+                </div>
               </div>
 
               <!-- Generation Success Notification Badge -->
@@ -317,6 +322,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <button type="button" class="novel-demo-btn px-2.5 py-1 rounded-lg bg-cinema-800 hover:bg-amber-500/20 text-cinema-200 hover:text-amber-400 border border-cinema-700 transition-colors" data-demo="period">
               年代女频后妈片段
             </button>
+            <button type="button" id="btn-clear-novel" class="px-2.5 py-1 rounded-lg bg-cinema-900 hover:bg-rose-950/40 text-cinema-400 hover:text-rose-400 border border-cinema-800 hover:border-rose-500/30 transition-colors cursor-pointer" title="清空当前输入与草稿缓存">
+              清空
+            </button>
           </div>
         </div>
 
@@ -382,9 +390,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="text-xs font-mono text-blue-400 font-bold flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> 影视标准剧本排版 (Screenplay Format)
                 </span>
-                <button type="button" id="btn-copy-script" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-cinema-850 hover:bg-blue-500/20 text-cinema-300 hover:text-blue-400 border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95">
-                  <span id="btn-copy-script-label">📋 复制剧本</span>
-                </button>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="btn-download-script" class="text-xs font-mono px-2.5 py-1.5 rounded-lg bg-cinema-850 hover:bg-cinema-800 text-cinema-300 hover:text-white border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer" title="下载脱水剧本为本地 TXT 文件">
+                    <span>📥 下载 .txt</span>
+                  </button>
+                  <button type="button" id="btn-copy-script" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-cinema-850 hover:bg-blue-500/20 text-cinema-300 hover:text-blue-400 border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer">
+                    <span id="btn-copy-script-label">📋 复制剧本</span>
+                  </button>
+                </div>
               </div>
 
               <!-- Generation Success Notification Badge -->
@@ -918,6 +931,40 @@ ${antagName}，你刚才说，要废了谁？
     const copyBtn = document.getElementById('btn-copy-current');
     if (copyBtn) copyBtn.addEventListener('click', copyCurrent);
 
+    // 通用纯文本文件下载助手
+    function downloadTextAsFile(filename, text) {
+      if (!text || !text.trim()) {
+        window.showToast?.('当前暂无可下载的剧本内容，请先生成！', 'warning');
+        return;
+      }
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      window.showToast?.(`已成功导出文件：${filename}`, 'success');
+    }
+
+    const downloadCurrentBtn = document.getElementById('btn-download-current');
+    if (downloadCurrentBtn) {
+      downloadCurrentBtn.addEventListener('click', () => {
+        let textToDownload = '';
+        if (currentBeatView === 'script') {
+          textToDownload = document.getElementById('script-full-content')?.innerText || '';
+        } else if (currentBeatView === 'beat') {
+          textToDownload = document.getElementById('beat-output-content')?.innerText || '';
+        } else {
+          textToDownload = document.getElementById('prompt-output-content')?.innerText || '';
+        }
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadTextAsFile(`daozhu-screenplay-${currentBeatView}-${dateStr}.txt`, textToDownload);
+      });
+    }
+
     // Tab 2 Novel Slicer Logic
     const demoNovels = {
       urban: `林远走出天华集团大楼的时候，天空正下着瓢泼大雨。
@@ -1305,6 +1352,35 @@ ${leadName}
             label.innerText = old;
           }, 2000);
         }
+      });
+    }
+
+    const downloadScriptBtn = document.getElementById('btn-download-script');
+    if (downloadScriptBtn) {
+      downloadScriptBtn.addEventListener('click', () => {
+        const text = document.getElementById('script-output-content')?.innerText || '';
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadTextAsFile(`daozhu-novel-screenplay-${dateStr}.txt`, text);
+      });
+    }
+
+    // 小说输入框草稿本地自动保存与清空
+    const novelInputEl = document.getElementById('novel-input');
+    const clearNovelBtn = document.getElementById('btn-clear-novel');
+    if (novelInputEl) {
+      const savedNovel = localStorage.getItem('daozhu_novel_draft');
+      if (savedNovel && !novelInputEl.value) {
+        novelInputEl.value = savedNovel;
+      }
+      novelInputEl.addEventListener('input', () => {
+        localStorage.setItem('daozhu_novel_draft', novelInputEl.value);
+      });
+    }
+    if (clearNovelBtn && novelInputEl) {
+      clearNovelBtn.addEventListener('click', () => {
+        novelInputEl.value = '';
+        localStorage.removeItem('daozhu_novel_draft');
+        window.showToast?.('已清空小说草稿！', 'success');
       });
     }
 

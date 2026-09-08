@@ -4,31 +4,43 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides');
-  return guides.map((entry) => ({
+  const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order);
+
+  return sortedGuides.map((entry, index) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: {
+      entry,
+      prevGuide: index > 0 ? sortedGuides[index - 1] : null,
+      nextGuide: index < sortedGuides.length - 1 ? sortedGuides[index + 1] : null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevGuide, nextGuide } = Astro.props;
 const { Content } = await entry.render();
 ---
 
 <BaseLayout activePath="/guides" title={`${entry.data.title} · 方法论库`}>
+  <!-- Top Reading Progress Bar -->
+  <div id="reading-progress" class="fixed top-[29px] left-0 h-[2.5px] bg-gradient-to-r from-amber-400 to-amber-500 z-50 transition-all duration-75 w-0"></div>
+
   <article class="pt-10 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
-    <!-- Back button -->
-    <a href="/guides" class="text-xs font-mono text-cinema-400 hover:text-amber-400 mb-6 inline-flex items-center gap-1">
-      ← 返回方法论库列表
-    </a>
+    <!-- Back button & Breadcrumb -->
+    <div class="flex items-center justify-between mb-6 text-xs font-mono text-cinema-400">
+      <a href="/guides" class="hover:text-amber-400 inline-flex items-center gap-1 transition-colors">
+        ← 返回方法论库目录
+      </a>
+      <span class="hidden sm:inline">岛主正规军手艺手册</span>
+    </div>
 
     <!-- Header info -->
     <header class="pb-8 border-b border-cinema-800">
       <div class="flex items-center gap-2 mb-3">
-        <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+        <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
           {entry.data.topic}
         </span>
         <span class="text-xs text-cinema-400 font-mono">
-          难度: {entry.data.level} · 阅读时间: {entry.data.readTime}
+          难度: {entry.data.level} · 预计阅读: {entry.data.readTime}
         </span>
       </div>
       <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug literary-serif">
@@ -44,15 +56,75 @@ const { Content } = await entry.render();
       <Content />
     </div>
 
-    <!-- Article Footer CTA -->
-    <div class="mt-16 pt-8 border-t border-cinema-800 bg-cinema-900/60 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+    <!-- Interactive Cross-Link Toolbox -->
+    <div class="mt-14 p-6 rounded-2xl bg-gradient-to-br from-cinema-900 to-cinema-950 border border-cinema-800 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>
-        <h4 class="text-white font-bold text-sm">学完了想要马上实操？</h4>
-        <p class="text-xs text-cinema-400 mt-1">下载岛主同款标准脚手架与分镜节拍卡，省去 90% 排版排表时间。</p>
+        <h4 class="text-white font-bold text-sm flex items-center gap-2">
+          <span>⚡</span> 实操验证：把理论立刻转成剧本
+        </h4>
+        <p class="text-xs text-cinema-400 mt-1">
+          学完本篇后，可直接在「在线编剧工作台」输入你的故事，一键验证 90 秒节拍与反派自洽律。
+        </p>
       </div>
-      <a href="/templates" class="px-5 py-2.5 rounded-xl bg-amber-500 text-cinema-950 font-bold text-xs shrink-0 hover:bg-amber-400 transition-colors shadow-sm">
-        前往模板工具库 ➔
-      </a>
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="/studio" class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-bold transition-all">
+          进入工作台实操 ➔
+        </a>
+        <a href="/templates" class="px-4 py-2 rounded-xl bg-cinema-800 hover:bg-cinema-700 text-white text-xs font-bold border border-cinema-700 transition-all">
+          复制配套模板
+        </a>
+      </div>
+    </div>
+
+    <!-- Prev / Next Navigation Strip -->
+    <div class="mt-10 pt-8 border-t border-cinema-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {prevGuide ? (
+        <a
+          href={`/guides/${prevGuide.slug}`}
+          class="p-4 rounded-xl bg-cinema-900/60 border border-cinema-800 hover:border-amber-500/40 hover:bg-cinema-900 transition-all flex flex-col justify-between group"
+        >
+          <span class="text-[11px] font-mono text-cinema-400 mb-1 group-hover:text-amber-400 transition-colors">
+            ← 上一篇
+          </span>
+          <span class="text-sm font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1 literary-serif">
+            {prevGuide.data.title}
+          </span>
+        </a>
+      ) : (
+        <div class="p-4 rounded-xl border border-cinema-850/50 bg-cinema-950 text-cinema-500 text-xs flex items-center">
+          已是第一篇
+        </div>
+      )}
+
+      {nextGuide ? (
+        <a
+          href={`/guides/${nextGuide.slug}`}
+          class="p-4 rounded-xl bg-cinema-900/60 border border-cinema-800 hover:border-amber-500/40 hover:bg-cinema-900 transition-all flex flex-col justify-between text-right group"
+        >
+          <span class="text-[11px] font-mono text-cinema-400 mb-1 group-hover:text-amber-400 transition-colors">
+            下一篇 →
+          </span>
+          <span class="text-sm font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1 literary-serif">
+            {nextGuide.data.title}
+          </span>
+        </a>
+      ) : (
+        <div class="p-4 rounded-xl border border-cinema-850/50 bg-cinema-950 text-cinema-500 text-xs flex items-center justify-end">
+          已是最新一篇
+        </div>
+      )}
     </div>
   </article>
+
+  <script is:inline>
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const bar = document.getElementById('reading-progress');
+      if (!bar) return;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const current = window.scrollY;
+      const percentage = total > 0 ? (current / total) * 100 : 0;
+      bar.style.width = percentage + '%';
+    });
+  </script>
 </BaseLayout>
