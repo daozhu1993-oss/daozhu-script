@@ -164,6 +164,20 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       }
+
+      // 兼容 GitHub Pages 子路径 (/daozhu-script) 自动前缀路由补全
+      if (window.location.hostname.includes('github.io') && window.location.pathname.startsWith('/daozhu-script')) {
+        document.addEventListener('click', (e) => {
+          const a = e.target.closest('a');
+          if (a) {
+            const href = a.getAttribute('href');
+            if (href && href.startsWith('/') && !href.startsWith('//') && !href.startsWith('/daozhu-script')) {
+              e.preventDefault();
+              window.location.href = '/daozhu-script' + href;
+            }
+          }
+        });
+      }
     </script>
   </body>
 </html>

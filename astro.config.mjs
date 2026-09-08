@@ -1,9 +1,12 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
+const isGitHubPages = process.env.GITHUB_PAGES === 'true';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://daozhu-script.pages.dev',
+  site: isGitHubPages ? 'https://daozhu1993-oss.github.io' : 'https://daozhu-script.pages.dev',
+  base: isGitHubPages ? '/daozhu-script' : '/',
   server: {
     port: 3001,
     host: true,
