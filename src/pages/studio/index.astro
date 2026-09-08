@@ -904,18 +904,15 @@ ${antagName}，你刚才说，要废了谁？
         textToCopy = document.getElementById('prompt-output-content').innerText;
       }
 
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        const label = document.getElementById('btn-copy-label');
-        if (label) {
-          const old = label.innerText;
-          label.innerText = '✅ 已复制到剪贴板！';
-          setTimeout(() => {
-            label.innerText = old;
-          }, 2000);
-        }
-      }).catch(() => {
-        alert('复制成功！');
-      });
+      window.copyToClipboard(textToCopy, '✅ 视听分集剧本已复制到剪贴板！可在文档中直接粘贴！');
+      const label = document.getElementById('btn-copy-label');
+      if (label) {
+        const old = label.innerText;
+        label.innerText = '✅ 已复制到剪贴板！';
+        setTimeout(() => {
+          label.innerText = old;
+        }, 2000);
+      }
     };
 
     const copyBtn = document.getElementById('btn-copy-current');
@@ -1206,7 +1203,7 @@ ${leadName}
       btnSlice.addEventListener('click', async () => {
         const text = document.getElementById('novel-input').value.trim();
         if (!text) {
-          alert('请先在左侧输入小说内容，或点击上方“载入示例”！');
+          window.showToast?.('请先在左侧输入小说内容，或点击上方“载入示例”！', 'warning');
           return;
         }
 
@@ -1299,16 +1296,15 @@ ${leadName}
     if (copyScriptBtn) {
       copyScriptBtn.addEventListener('click', () => {
         const text = document.getElementById('script-output-content').innerText;
-        navigator.clipboard.writeText(text).then(() => {
-          const label = document.getElementById('btn-copy-script-label');
-          if (label) {
-            const old = label.innerText;
-            label.innerText = '✅ 剧本已复制！';
-            setTimeout(() => {
-              label.innerText = old;
-            }, 2000);
-          }
-        });
+        window.copyToClipboard(text, '✅ 脱水短剧剧本已复制！可在文档中直接粘贴！');
+        const label = document.getElementById('btn-copy-script-label');
+        if (label) {
+          const old = label.innerText;
+          label.innerText = '✅ 剧本已复制！';
+          setTimeout(() => {
+            label.innerText = old;
+          }, 2000);
+        }
       });
     }
 
@@ -1318,7 +1314,7 @@ ${leadName}
       copyNovelPromptBtn.addEventListener('click', () => {
         const rawText = (document.getElementById('novel-input')?.value || '').trim();
         if (!rawText) {
-          alert('请先在左侧输入小说内容，或载入示例！');
+          window.showToast?.('请先在左侧输入小说内容，或载入示例！', 'warning');
           return;
         }
 
@@ -1337,9 +1333,7 @@ ${rawText}
 3. 单句台词严禁超过 15 个字，短促有力，具有刺向对方心脏的刀刃感；
 4. 输出标准影视剧本格式（场口INT/EXT、场景描写、人物名居中、情绪潜台词提示）。`;
 
-        navigator.clipboard.writeText(prompt).then(() => {
-          alert('🤖 已将您的小说原文与《DeepSeek-R1 80集全套指令》打包复制！\n可以直接在 DeepSeek / ChatGPT 对话框中粘贴发送！');
-        });
+        window.copyToClipboard(prompt, '🤖 已将您的小说原文与《DeepSeek-R1 80集全套指令》打包复制！可以直接在 DeepSeek / ChatGPT 对话框中粘贴发送！');
       });
     }
 
@@ -1460,13 +1454,12 @@ ${rawText}
 第 3 浪（大结局全本决战）：第 ${parseInt(totalEps, 10) - 4}~${totalEps} 集终极打脸释放
 铁律：付费卡点绝不卡在打脸后，只卡在反转前半秒！`;
 
-        navigator.clipboard.writeText(text).then(() => {
-          const label = document.getElementById('btn-copy-paywall-label');
-          if (label) {
-            label.innerText = '✅ 已复制推演卡！';
-            setTimeout(() => { label.innerText = '📋 复制推演卡'; }, 2000);
-          }
-        });
+        window.copyToClipboard(text, '✅ 已复制推演卡！可在微信或文档直接粘贴！');
+        const label = document.getElementById('btn-copy-paywall-label');
+        if (label) {
+          label.innerText = '✅ 已复制推演卡！';
+          setTimeout(() => { label.innerText = '📋 复制推演卡'; }, 2000);
+        }
       });
     }
 
@@ -1526,7 +1519,7 @@ ${rawText}
       btnRunCompliance.addEventListener('click', () => {
         const text = (complianceInput?.value || '').trim();
         if (!text) {
-          alert('请先在左侧粘贴剧本内容！');
+          window.showToast?.('请先在左侧粘贴剧本内容！', 'warning');
           return;
         }
 
@@ -1613,9 +1606,7 @@ ${rawText}
 反派垄断权力：${document.getElementById('char-antag-power').value}
 反派极端折辱：${document.getElementById('char-antag-action').value}
 反派虚伪面具：${document.getElementById('char-antag-mask').value}`;
-        navigator.clipboard.writeText(text).then(() => {
-          alert('🎭 角色张力卡已复制！');
-        });
+        window.copyToClipboard(text, '🎭 角色对立张力卡已复制！可在文档中直接粘贴！');
       });
     }
   </script>

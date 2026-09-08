@@ -111,8 +111,8 @@ const services = [
             </div>
             <button
               type="button"
-              onclick="navigator.clipboard.writeText('bl-free').then(() => alert('已复制岛主微信【bl-free】到剪贴板！添加时请备注「重度创作」或「项目合作」。'))"
-              class="px-4 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-bold transition-all shrink-0 self-start sm:self-auto"
+              onclick="window.copyToClipboard('bl-free', '已成功复制微信号【bl-free】！添加时请备注「重度创作」或「项目合作」。')"
+              class="px-4 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-bold transition-all shrink-0 self-start sm:self-auto cursor-pointer"
             >
               复制微信号
             </button>
@@ -150,8 +150,8 @@ const services = [
             </div>
             <button
               type="button"
-              onclick="navigator.clipboard.writeText('daozhu1993@gmail.com').then(() => alert('已复制岛主谷歌邮箱【daozhu1993@gmail.com】到剪贴板！'))"
-              class="px-4 py-1.5 rounded-lg bg-cinema-800 hover:bg-cinema-700 text-cinema-300 text-xs font-bold transition-all shrink-0 self-start sm:self-auto border border-cinema-700"
+              onclick="window.copyToClipboard('daozhu1993@gmail.com', '已成功复制官方谷歌邮箱【daozhu1993@gmail.com】！')"
+              class="px-4 py-1.5 rounded-lg bg-cinema-800 hover:bg-cinema-700 text-cinema-300 text-xs font-bold transition-all shrink-0 self-start sm:self-auto border border-cinema-700 cursor-pointer"
             >
               复制邮箱
             </button>

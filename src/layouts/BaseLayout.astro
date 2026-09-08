@@ -44,5 +44,96 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
     </main>
     
     <Footer />
+
+    <!-- Global Toast Container (Zero Alert Blocking, 100% Reliable Copy) -->
+    <div id="global-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
+      <div class="px-5 py-3 rounded-2xl bg-cinema-900/95 border border-amber-500/40 text-white shadow-2xl shadow-amber-500/20 backdrop-blur-md flex items-center gap-3 text-sm font-medium">
+        <span id="global-toast-icon" class="text-lg">✅</span>
+        <span id="global-toast-msg" class="leading-snug">已复制到剪贴板！可在微信或文档直接粘贴！</span>
+      </div>
+    </div>
+
+    <script is:inline>
+      // 全局通用高可用剪贴板复制函数（支持 Modern Clipboard API 与 Safari / WebKit execCommand 降级容灾）
+      window.copyToClipboard = async function(text, successMsg) {
+        if (text === undefined || text === null) text = '';
+        text = String(text);
+        const defaultMsg = '已复制到剪贴板！可在微信或文档直接粘贴！';
+        const msg = successMsg || defaultMsg;
+        let success = false;
+
+        // 策略 1: 现代 Async Clipboard API (需安全上下文)
+        if (navigator.clipboard && window.isSecureContext) {
+          try {
+            await navigator.clipboard.writeText(text);
+            success = true;
+          } catch (err) {
+            console.warn('navigator.clipboard.writeText 异常，启动降级策略:', err);
+          }
+        }
+
+        // 策略 2: 经典 execCommand('copy') 纯同步降级方案（兼容非HTTPS、Safari、微信内置浏览器）
+        if (!success) {
+          try {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.top = '0';
+            textarea.style.left = '-9999px';
+            textarea.style.width = '2em';
+            textarea.style.height = '2em';
+            textarea.style.padding = '0';
+            textarea.style.border = 'none';
+            textarea.style.outline = 'none';
+            textarea.style.boxShadow = 'none';
+            textarea.style.background = 'transparent';
+            document.body.appendChild(textarea);
+
+            textarea.focus();
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+
+            success = document.execCommand('copy');
+            document.body.removeChild(textarea);
+          } catch (err) {
+            console.error('execCommand copy 降级异常:', err);
+          }
+        }
+
+        // 无论何种情况，坚决不用阻塞式的 window.alert()（避免中断 macOS/Safari 剪贴板会话）
+        if (success) {
+          window.showToast(msg, 'success');
+        } else {
+          window.showToast('自动复制受限，已为您打开复制窗口', 'warning');
+          window.prompt('请手动按 Command+C (Mac) 或 Ctrl+C (Win) 复制内容：', text);
+        }
+
+        return success;
+      };
+
+      // 非阻塞优雅 Toast 提示条
+      let toastTimer = null;
+      window.showToast = function(message, type) {
+        const toast = document.getElementById('global-toast');
+        const msgEl = document.getElementById('global-toast-msg');
+        const iconEl = document.getElementById('global-toast-icon');
+        if (!toast || !msgEl) return;
+
+        msgEl.innerText = message;
+        if (iconEl) {
+          iconEl.innerText = type === 'warning' ? '⚠️' : type === 'error' ? '❌' : '✅';
+        }
+
+        toast.classList.remove('opacity-0', 'translate-y-4');
+        toast.classList.add('opacity-100', 'translate-y-0');
+
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'translate-y-4');
+        }, 3000);
+      };
+    </script>
   </body>
 </html>

@@ -85,8 +85,8 @@ const sortedTemplates = templates.sort((a, b) => a.data.order - b.data.order);
                 </a>
                 <button
                   type="button"
-                  onclick="alert('已复制该模板脚手架到剪贴板！你也可以在上方获取完整高清工程文件包。')"
-                  class="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-bold transition-all flex items-center gap-1.5"
+                  onclick={`const el = this.closest('.flex-col').querySelector('.font-mono'); if (el) window.copyToClipboard(el.innerText, '✅ 已复制「${tpl.data.title.replace(/'/g, "\\'")}」模板内容！可在 Notion 或文档中直接粘贴！');`}
+                  class="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
                 >
                   <span>📋</span>
                   <span>复制模板</span>
