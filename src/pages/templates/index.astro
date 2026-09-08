@@ -5,97 +5,212 @@ import { getCollection } from 'astro:content';
 
 const templates = await getCollection('templates');
 const sortedTemplates = templates.sort((a, b) => a.data.order - b.data.order);
+
+// Collect unique categories with counts
+const categoryCounts: Record<string, number> = { 全部: sortedTemplates.length };
+sortedTemplates.forEach((t) => {
+  const cat = t.data.category || '通用';
+  categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+});
+const categoryList = Object.keys(categoryCounts);
 ---
 
 <BaseLayout activePath="/templates" title="模板与工具库 · 岛主编剧工坊">
   <section class="pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
     <!-- Header -->
-    <div class="max-w-2xl mb-10">
+    <div class="max-w-3xl mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono mb-3">
         🧰 SCRIPTWRITING ARSENAL
       </div>
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight literary-serif">
-        生产力模板 & 工具库
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight literary-serif">
+        生产力模板 & 工业脚手架
       </h1>
       <p class="mt-3 text-sm sm:text-base text-cinema-300 leading-relaxed">
-        告别从零手搓。提供十年一线编剧自用的工业化脚手架：分集断章节奏卡、人物欲望冲突表、以及直接复制进绘图工具的 Prompt 字典。
+        告别从零手搓。提供十年一线编剧自用的工业化脚手架：分集断章节奏卡、人物欲望冲突表、小说转剧本脱水指令及直接复制进绘图工具的 Prompt 字典。
       </p>
     </div>
 
     <!-- Lead Magnet Banner for Email / Pack -->
-    <div class="mb-14">
+    <div class="mb-12">
       <LeadMagnetCard />
     </div>
 
-    <!-- Templates Grid -->
-    <div class="space-y-6">
-      <div class="flex items-center justify-between pb-3 border-b border-cinema-800">
-        <h3 class="text-lg font-bold text-white">
-          📦 精选模板与脚手架卡片
-        </h3>
-        <span class="text-xs text-cinema-400">持续更新 · 支持一键复制</span>
+    <!-- Category Filter Tabs -->
+    <div class="mb-8 pb-4 border-b border-cinema-800">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <span class="text-xs font-mono text-cinema-400 uppercase tracking-wider">按制作阶段筛选：</span>
+        <span class="text-xs text-cinema-400 font-mono" id="tpl-count-indicator">
+          共收录 {sortedTemplates.length} 个工业模板
+        </span>
       </div>
+      <div class="flex flex-wrap gap-2" id="category-filters">
+        {categoryList.map((cat, idx) => (
+          <button
+            type="button"
+            class:list={[
+              'tpl-category-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer',
+              idx === 0
+                ? 'bg-emerald-500 text-cinema-950 font-bold shadow-sm ring-1 ring-emerald-400'
+                : 'bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-800 border border-cinema-800',
+            ]}
+            data-category={cat}
+          >
+            <span>{cat}</span>
+            <span class="text-[10px] opacity-80 px-1 py-0.2 rounded bg-black/20">
+              {categoryCounts[cat]}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {sortedTemplates.map(async (tpl) => {
-          const { Content } = await tpl.render();
-          return (
-            <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-3">
+    <!-- Templates Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="templates-grid">
+      {sortedTemplates.map(async (tpl) => {
+        const { Content } = await tpl.render();
+        return (
+          <div
+            class="tpl-card p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between shadow-xl"
+            data-template-cat={tpl.data.category}
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
                   <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    {tpl.data.category}
+                  </span>
+                  <span class="text-xs font-mono text-cinema-400">
                     {tpl.data.type}
                   </span>
-                  <div class="flex items-center gap-2">
-                    <span class="text-xs font-mono text-cinema-400">
-                      {tpl.data.fileFormat}
-                    </span>
-                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
-                      {tpl.data.access === 'free' ? '免费' : tpl.data.access === 'email' ? '换邮箱' : 'PRO'}
-                    </span>
-                  </div>
                 </div>
-
-                <h4 class="text-lg font-bold text-white mb-2">
-                  {tpl.data.title}
-                </h4>
-
-                <p class="text-xs text-cinema-300 mb-4 leading-relaxed">
-                  {tpl.data.description}
-                </p>
-
-                <div class="p-3 rounded-xl bg-cinema-950/80 border border-cinema-800 text-xs text-amber-300 mb-4 flex items-start gap-2">
-                  <span>💡</span>
-                  <span>{tpl.data.highlight}</span>
-                </div>
-
-                <!-- Markdown Content Snippet inside -->
-                <div class="p-4 rounded-xl bg-cinema-950 border border-cinema-850 text-xs text-cinema-200 overflow-x-auto max-h-56 overflow-y-auto font-mono">
-                  <Content />
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-mono text-cinema-400">
+                    {tpl.data.fileFormat}
+                  </span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+                    {tpl.data.access === 'free' ? '免费开箱' : tpl.data.access === 'email' ? '换邮箱' : 'PRO'}
+                  </span>
                 </div>
               </div>
 
-              <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between">
+              <h4 class="text-lg font-bold text-white mb-2 literary-serif hover:text-emerald-400 transition-colors">
+                <a href={`/templates/${tpl.slug}`}>{tpl.data.title}</a>
+              </h4>
+
+              <p class="text-xs text-cinema-300 mb-4 leading-relaxed">
+                {tpl.data.description}
+              </p>
+
+              <div class="p-3 rounded-xl bg-cinema-950/80 border border-cinema-800 text-xs text-amber-300 mb-4 flex items-start gap-2">
+                <span>💡</span>
+                <span>{tpl.data.highlight}</span>
+              </div>
+
+              <!-- Markdown Content Snippet inside -->
+              <div class="tpl-content-box p-4 rounded-xl bg-cinema-950 border border-cinema-850 text-xs text-cinema-200 overflow-x-auto max-h-56 overflow-y-auto font-mono">
+                <Content />
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-cinema-800/80 flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-3 text-xs">
                 <a
                   href={`/templates/${tpl.slug}`}
-                  class="text-xs text-amber-400 font-bold hover:underline flex items-center gap-1"
+                  class="text-amber-400 font-bold hover:underline flex items-center gap-1"
                 >
-                  <span>阅读完整版 / 脑图</span>
+                  <span>阅读完整版</span>
                   <span>➔</span>
                 </a>
+                <a
+                  href="/studio"
+                  class="text-cinema-400 hover:text-emerald-300 transition-colors"
+                >
+                  在工作台套用 ➔
+                </a>
+              </div>
+
+              <div class="flex items-center gap-2">
                 <button
                   type="button"
-                  onclick={`const el = this.closest('.flex-col').querySelector('.font-mono'); if (el) window.copyToClipboard(el.innerText, '✅ 已复制「${tpl.data.title.replace(/'/g, "\\'")}」模板内容！可在 Notion 或文档中直接粘贴！');`}
+                  class="btn-tpl-download px-2.5 py-1.5 rounded-xl bg-cinema-800 hover:bg-cinema-750 text-cinema-300 hover:text-white border border-cinema-700 text-xs font-mono transition-all flex items-center gap-1 cursor-pointer"
+                  title="下载模板为纯文本 TXT"
+                >
+                  <span>📥 TXT</span>
+                </button>
+                <button
+                  type="button"
+                  onclick={`const el = this.closest('.tpl-card').querySelector('.tpl-content-box'); if (el) window.copyToClipboard(el.innerText, '✅ 已复制「${tpl.data.title.replace(/'/g, "\\'")}」模板内容！可在 Notion 或文档中直接粘贴！');`}
                   class="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
                 >
-                  <span>📋</span>
-                  <span>复制模板</span>
+                  <span>📋 复制模板</span>
                 </button>
               </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   </section>
+
+  <!-- Interactive Filter and Download Script -->
+  <script is:inline>
+    const filterBtns = document.querySelectorAll('.tpl-category-btn');
+    const cards = document.querySelectorAll('.tpl-card');
+    const countIndicator = document.getElementById('tpl-count-indicator');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => {
+          b.className = 'tpl-category-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-800 border border-cinema-800';
+        });
+
+        btn.className = 'tpl-category-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-emerald-500 text-cinema-950 font-bold shadow-sm ring-1 ring-emerald-400';
+
+        const selectedCat = btn.getAttribute('data-category');
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const cat = card.getAttribute('data-template-cat');
+          if (selectedCat === '全部' || cat === selectedCat) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (countIndicator) {
+          countIndicator.innerText = `显示 ${visibleCount} 个模板`;
+        }
+      });
+    });
+
+    // TXT download for templates
+    document.querySelectorAll('.btn-tpl-download').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const card = btn.closest('.tpl-card');
+        const titleEl = card?.querySelector('h4');
+        const contentEl = card?.querySelector('.tpl-content-box');
+        const title = titleEl ? titleEl.innerText.trim() : 'template';
+        const text = contentEl ? contentEl.innerText : '';
+
+        if (!text.trim()) {
+          window.showToast?.('暂无可下载内容！', 'warning');
+          return;
+        }
+
+        const filename = `${title.replace(/[\/\\:\*\?"<>\|]/g, '_')}.txt`;
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        window.showToast?.(`已成功导出模板：${filename}`, 'success');
+      });
+    });
+  </script>
 </BaseLayout>

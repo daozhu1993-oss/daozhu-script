@@ -1,6 +1,7 @@
 ---
 title: "《AI 漫剧剧本 ➡️ 分镜提示词工业字典》"
 type: "Prompt字典"
+category: "AI漫剧Prompt"
 access: "free"
 fileFormat: "Markdown / Prompt Cheatsheet"
 description: "专为 AI 漫剧创作者打造。解决文学词汇无法转成 Midjourney/Flux/ComfyUI 镜头的痛点。涵盖 50+ 种短剧打脸、威压、神级反转的高清 Prompt 预设。"

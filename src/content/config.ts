@@ -33,6 +33,13 @@ const teardownsCollection = defineCollection({
     takeaways: z.array(z.string()),
     poster: z.string().optional(),
     featured: z.boolean().default(false),
+    beats: z.array(z.object({
+      timing: z.string(),
+      phase: z.enum(['钩子', '压抑', '反转', '卡点']),
+      title: z.string(),
+      desc: z.string(),
+      dopamineLevel: z.number().default(4),
+    })).optional(),
   }),
 });
 
@@ -48,6 +55,7 @@ const templatesCollection = defineCollection({
       '人物小传',
       '小说转剧本',
     ]),
+    category: z.string().default('大纲与节拍卡'),
     access: z.enum(['free', 'email', 'pro']),
     fileFormat: z.string().default('Markdown / Notion'),
     description: z.string(),
@@ -68,6 +76,7 @@ const worksCollection = defineCollection({
     highlight: z.string(),
     poster: z.string().optional(),
     order: z.number().default(99),
+    track: z.string().default('全部赛道'),
   }),
 });
 

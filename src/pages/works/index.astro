@@ -4,29 +4,69 @@ import { getCollection } from 'astro:content';
 
 const works = await getCollection('works');
 const sortedWorks = works.sort((a, b) => a.data.order - b.data.order);
+
+// Collect unique tracks with counts
+const trackCounts: Record<string, number> = { 全部: sortedWorks.length };
+sortedWorks.forEach((w) => {
+  const t = w.data.track || '其他';
+  trackCounts[t] = (trackCounts[t] || 0) + 1;
+});
+const trackList = Object.keys(trackCounts);
 ---
 
 <BaseLayout activePath="/works" title="原创手稿与剧本库 · 岛主编剧工坊">
   <section class="pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto">
     <!-- Header -->
-    <div class="max-w-2xl mb-12">
+    <div class="max-w-3xl mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-3">
         📑 PORTFOLIO & SPEC SCRIPTS
       </div>
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight literary-serif">
-        原创手稿与剧本案头
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight literary-serif">
+        原创手稿与商业案头库
       </h1>
       <p class="mt-3 text-sm sm:text-base text-cinema-300 leading-relaxed">
         手艺靠真案头说话，拒绝虚假包装。这里公开展示岛主原创开发的短剧项目全案策划、分集大纲与标准分镜脚本样章，供创作者与平台资方参考工业级案头交付的标准与规范。
       </p>
     </div>
 
+    <!-- Track Filter Tabs -->
+    <div class="mb-10 pb-4 border-b border-cinema-800">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <span class="text-xs font-mono text-cinema-400 uppercase tracking-wider">按题材赛道筛选：</span>
+        <span class="text-xs text-cinema-400 font-mono" id="works-count-indicator">
+          共收录 {sortedWorks.length} 部工业案头
+        </span>
+      </div>
+      <div class="flex flex-wrap gap-2" id="track-filters">
+        {trackList.map((track, idx) => (
+          <button
+            type="button"
+            class:list={[
+              'work-track-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer',
+              idx === 0
+                ? 'bg-amber-500 text-cinema-950 font-bold shadow-sm ring-1 ring-amber-400'
+                : 'bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-800 border border-cinema-800',
+            ]}
+            data-track={track}
+          >
+            <span>{track}</span>
+            <span class="text-[10px] opacity-80 px-1 py-0.2 rounded bg-black/20">
+              {trackCounts[track]}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+
     <!-- Works Grid -->
-    <div class="space-y-10">
-      {works.map(async (work) => {
+    <div class="space-y-10" id="works-container">
+      {sortedWorks.map(async (work) => {
         const { Content } = await work.render();
         return (
-          <article class="p-6 sm:p-8 rounded-3xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col md:flex-row gap-8 relative overflow-hidden shadow-2xl">
+          <article
+            class="work-card p-6 sm:p-8 rounded-3xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col md:flex-row gap-8 relative overflow-hidden shadow-2xl"
+            data-work-track={work.data.track}
+          >
             <!-- Status badge -->
             <div class="absolute top-0 right-0 px-4 py-1.5 bg-amber-500/15 text-amber-400 border-b border-l border-amber-500/20 text-xs font-mono rounded-bl-2xl font-bold backdrop-blur-sm z-10">
               {work.data.status}
@@ -35,25 +75,28 @@ const sortedWorks = works.sort((a, b) => a.data.order - b.data.order);
             <!-- Poster Column -->
             {work.data.poster && (
               <div class="w-full md:w-60 sm:w-64 shrink-0">
-                <div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-cinema-800 bg-cinema-950 group">
+                <a href={`/works/${work.slug}`} class="block aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-cinema-800 bg-cinema-950 group">
                   <img
                     src={work.data.poster}
                     alt={work.data.title}
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                </div>
+                </a>
               </div>
             )}
 
             <!-- Content Column -->
             <div class="flex-1 flex flex-col justify-between">
               <div>
-                <div class="flex items-center gap-2 mb-3">
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    {work.data.track}
+                  </span>
                   <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-cinema-800 text-cinema-300 border border-cinema-700">
                     {work.data.format} · {work.data.episodes} 集规格
                   </span>
-                  <span class="text-xs text-amber-400 font-mono">
+                  <span class="text-xs text-cinema-400 font-mono">
                     担任: {work.data.role}
                   </span>
                 </div>
@@ -79,14 +122,19 @@ const sortedWorks = works.sort((a, b) => a.data.order - b.data.order);
               <div class="mt-6 pt-4 border-t border-cinema-800 flex flex-wrap items-center justify-between gap-3 text-xs">
                 <a
                   href={`/works/${work.slug}`}
-                  class="px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 font-bold border border-amber-500/30 transition-colors flex items-center gap-1.5"
+                  class="px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 font-bold border border-amber-500/30 transition-colors flex items-center gap-1.5 active:scale-95"
                 >
                   <span>📖 研读完整案头与节拍</span>
                   <span>➔</span>
                 </a>
-                <a href="/about#contact" class="text-cinema-400 hover:text-amber-400 font-medium transition-colors">
-                  项目授权 / 微信合作咨询 (bl-free) ➔
-                </a>
+                <button
+                  type="button"
+                  onclick={`window.copyToClipboard('bl-free', '已复制微信号【bl-free】！可加微信洽谈《${work.data.title.replace(/'/g, "\\'")}》项目商业授权与完整剧本。');`}
+                  class="text-cinema-400 hover:text-amber-400 font-medium transition-colors cursor-pointer flex items-center gap-1"
+                >
+                  <span>📋 授权咨询 / 复制微信 (bl-free)</span>
+                  <span>➔</span>
+                </button>
               </div>
             </div>
           </article>
@@ -94,4 +142,38 @@ const sortedWorks = works.sort((a, b) => a.data.order - b.data.order);
       })}
     </div>
   </section>
+
+  <!-- Interactive Filter Script -->
+  <script is:inline>
+    const filterBtns = document.querySelectorAll('.work-track-btn');
+    const cards = document.querySelectorAll('.work-card');
+    const countIndicator = document.getElementById('works-count-indicator');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => {
+          b.className = 'work-track-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-cinema-900 text-cinema-300 hover:text-white hover:bg-cinema-800 border border-cinema-800';
+        });
+
+        btn.className = 'work-track-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-amber-500 text-cinema-950 font-bold shadow-sm ring-1 ring-amber-400';
+
+        const selectedTrack = btn.getAttribute('data-track');
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const track = card.getAttribute('data-work-track');
+          if (selectedTrack === '全部' || track === selectedTrack) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (countIndicator) {
+          countIndicator.innerText = `显示 ${visibleCount} 部案头`;
+        }
+      });
+    });
+  </script>
 </BaseLayout>

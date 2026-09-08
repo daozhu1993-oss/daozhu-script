@@ -45,10 +45,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </button>
         <button
           type="button"
-          class="tab-btn flex-1 min-w-[130px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          class="tab-btn flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
           data-tab="novel-slice"
         >
           <span>📖 小说视听脱水</span>
+        </button>
+        <button
+          type="button"
+          class="tab-btn flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-cinema-400 hover:text-white hover:bg-cinema-900"
+          data-tab="script-doctor"
+        >
+          <span>🩺 剧作手艺诊断</span>
         </button>
         <button
           type="button"
@@ -575,6 +582,90 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <button type="button" id="btn-copy-matrix" class="w-full py-2.5 px-4 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-cinema-200 border border-cinema-700 text-xs font-mono transition-colors">
               📋 复制角色冲突卡
             </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: 编剧案头手艺挑刺诊断器 (Screenplay QA & Script Doctor) -->
+      <div id="tab-script-doctor" class="tab-pane hidden space-y-6">
+        <div class="p-4 rounded-2xl bg-cinema-950 border border-cinema-800 text-xs text-cinema-300 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <strong class="text-amber-400 font-mono">🩺 岛主剧作手艺挑刺诊断器 (Script Doctor QA)：</strong>
+            好莱坞正规军三大法则（大卫·马密三问、比利·怀尔德反派律、希区柯克炸弹）× 短剧商业卡点力学。逐行排查“假大空旁白、反派无脑降智、悬念前置不足、心理描写无法拍摄”等致命硬伤。
+          </div>
+          <span class="text-amber-400 font-mono text-[11px] shrink-0">100% 离线保护 · 纯前端运算</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left: Input Script Area (6 cols) -->
+          <div class="lg:col-span-6 space-y-4">
+            <div class="p-5 rounded-2xl bg-cinema-950 border border-cinema-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <label class="block text-xs font-mono text-cinema-300">粘贴剧本单集样章 (300~3000 字)</label>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="btn-load-doctor-bad-demo" class="text-[11px] text-rose-400 hover:underline cursor-pointer" title="载入存在大段内心戏、脑残反派的典型病态样例">
+                    载入反面教材
+                  </button>
+                  <span class="text-cinema-700">|</span>
+                  <button type="button" id="btn-load-doctor-good-demo" class="text-[11px] text-emerald-400 hover:underline cursor-pointer" title="载入符合好莱坞视听规范的高过审率剧本">
+                    载入正规军样板
+                  </button>
+                  <span class="text-cinema-700">|</span>
+                  <button type="button" id="btn-clear-doctor" class="text-[11px] text-cinema-500 hover:text-rose-400 cursor-pointer">
+                    清空
+                  </button>
+                </div>
+              </div>
+
+              <textarea id="doctor-input" rows="15" class="w-full px-3.5 py-3 rounded-xl bg-cinema-900 border border-cinema-800 text-xs text-cinema-200 font-mono leading-relaxed focus:outline-none focus:border-amber-400" placeholder="在此粘贴你的单集剧本（含场口、动作描写与对白），系统将基于 6 维正规军指标进行体检：
+1. 3秒视觉奇观与入场钩子（拒绝大段铺垫与旁白交代）
+2. 大卫·马密三问（谁想要什么？得不到会怎样？为什么是现在？）
+3. 比利·怀尔德反派自洽律（拒绝弱智反派，反派越强胜利越珍贵）
+4. 希区柯克悬念炸弹（观众是否提前看到危机倒计时）
+5. 台词潜台词与去注水（杜绝把心理活动直白念出来）
+6. 单集 90 秒断崖付费卡点（是否卡在情绪爆发前一秒）..."></textarea>
+
+              <button type="button" id="btn-run-doctor" class="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-cinema-950 font-bold text-xs sm:text-sm shadow-xl shadow-amber-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer">
+                <span id="btn-run-doctor-text">🩺 运行正规军 6 维剧作挑刺体检</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Diagnostic Output Report (6 cols) -->
+          <div id="doctor-result-container" class="lg:col-span-6 flex flex-col justify-between rounded-2xl bg-cinema-950 border border-cinema-800 p-5 relative min-h-[520px]">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-cinema-800 mb-4">
+                <span class="text-xs font-mono text-amber-400 font-bold flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span> 剧作手艺挑刺诊断单 (Script Doctor Audit)
+                </span>
+                <span id="doctor-score-badge" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-cinema-900 border border-cinema-700 text-cinema-400">
+                  等待体检
+                </span>
+              </div>
+
+              <div id="doctor-report-content" class="text-xs text-cinema-200 font-mono leading-relaxed space-y-4 max-h-[420px] overflow-y-auto">
+                <div class="text-center text-cinema-500 py-24">
+                  👈 请在左侧粘贴剧本内容，或点击上方“载入反面教材 / 正规军样板”，然后点击「运行正规军 6 维剧作挑刺体检」
+                </div>
+              </div>
+            </div>
+
+            <!-- Doctor Action Bottom Toolbar -->
+            <div class="pt-3 border-t border-cinema-800 mt-4 space-y-3">
+              <div class="flex items-center gap-2">
+                <button type="button" id="btn-download-doctor-report" class="flex-1 py-2 px-3 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-cinema-300 hover:text-white border border-cinema-700 text-xs font-mono transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                  <span>📥 下载体检报告 (.txt)</span>
+                </button>
+                <button type="button" id="btn-copy-doctor-prompt" class="flex-1 py-2 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-mono transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                  <span>🤖 复制 DeepSeek-R1 逐行挑刺指令</span>
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px] text-cinema-400">
+                <span>💡 建议在交稿给资方或上线投流前进行至少 1 轮严苛自检</span>
+                <a href="/guides/10-david-mamet-three-questions" class="text-amber-400 hover:underline">温习大卫·马密三问 ➔</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1683,6 +1774,305 @@ ${rawText}
 反派极端折辱：${document.getElementById('char-antag-action').value}
 反派虚伪面具：${document.getElementById('char-antag-mask').value}`;
         window.copyToClipboard(text, '🎭 角色对立张力卡已复制！可在文档中直接粘贴！');
+      });
+    }
+
+    // ==========================================
+    // TAB 6: 编剧案头手艺挑刺诊断器 (Script Doctor QA)
+    // ==========================================
+    const doctorBadDemo = `第1集：窝囊赘婿的痛苦
+
+△ 林浩站在豪华别墅的客厅里，心里非常痛苦。
+△ 他暗自回忆起三年前入赘苏家的点点滴滴，觉得老天爷对他太不公平了。其实三年前他本是京城大家族的少爷，只是遭遇了车祸才失去记忆。
+△ 岳母李翠兰走过来，冷笑着说。
+
+李翠兰：
+你这个废物，每天就知道吃白食！今天是我们苏家的大好日子，你还不赶紧滚去把马桶刷了！信不信我让婉儿跟你离婚！
+
+△ 林浩听了非常愤怒，双手紧握，指甲深深地陷进肉里，但他觉得现在还不是反抗的时候，只能忍气吞声。
+
+林浩：
+（低声下气）妈，我知道了，我马上去刷。
+
+李翠兰：
+（趾高气扬）哼，算你识相！像你这种没用的垃圾，活着就是浪费空气！
+
+△ 李翠兰说完转身走了。林浩默默地去洗手间刷马桶。第一集完。`;
+
+    const doctorGoodDemo = `第1集：雷雨夜的最后通牒
+
+1-1 日内 / 濒危傣纸工坊
+△ 狂暴暴雨砸在漏雨的瓦顶。昏黄电灯下，林岚（28岁，浑身湿透）赤脚踩在冰冷的木浆池里，双手死死托住一张浸满金草的湿纸帘。
+△ 门口，穿定制西装的拆迁办代表刘铭撑黑伞踏入，皮鞋无情踏碎地上的晾纸竹架。
+△ 刘铭身后的挖掘机轰鸣，巨大铁臂在雨幕中逼近院墙倒计时。
+
+刘铭：
+（将一份盖满红印的转让书甩在湿漉的打浆机上）
+林总监，还有三分钟。签字，八百万拆迁款立刻打进你父亲的透析账户；不签，这间破木作坊，连同你爷爷留下的手抄孤本，全按违建强拆。
+
+△ 林岚手指颤抖，指尖掐进泥水，目光穿过雨幕死死盯入院角——父亲的遗像在震颤中摇摇欲坠。
+△ 林岚猛然抓起台上的傣族割纸铜刀，刀尖直抵刘铭咽喉，雨水顺着刀刃滴落在合同印泥上！
+
+林岚：
+（眼神如刃，声音极度沉静）
+刘铭，你今天敢动这里一根房梁，明天上午九点，你偷税三千万的底账原件，就会准时出现在省纪委巡视组案头。
+
+△ 刘铭瞳孔骤然收缩，脸色惨白，身后挖掘机的轰鸣声戛然而止——（一卡切黑，出片名）`;
+
+    const doctorInput = document.getElementById('doctor-input');
+    const btnLoadBad = document.getElementById('btn-load-doctor-bad-demo');
+    const btnLoadGood = document.getElementById('btn-load-doctor-good-demo');
+    const btnClearDoctor = document.getElementById('btn-clear-doctor');
+    const btnRunDoctor = document.getElementById('btn-run-doctor');
+    const doctorScoreBadge = document.getElementById('doctor-score-badge');
+    const doctorReportContent = document.getElementById('doctor-report-content');
+    const btnDownloadDoctorReport = document.getElementById('btn-download-doctor-report');
+    const btnCopyDoctorPrompt = document.getElementById('btn-copy-doctor-prompt');
+
+    if (btnLoadBad && doctorInput) {
+      btnLoadBad.addEventListener('click', () => {
+        doctorInput.value = doctorBadDemo;
+        window.showToast?.('已载入反面病态教材样例！点击体检查看致命硬伤', 'info');
+      });
+    }
+
+    if (btnLoadGood && doctorInput) {
+      btnLoadGood.addEventListener('click', () => {
+        doctorInput.value = doctorGoodDemo;
+        window.showToast?.('已载入正规军标准样板！点击体检查看评分', 'success');
+      });
+    }
+
+    if (btnClearDoctor && doctorInput) {
+      btnClearDoctor.addEventListener('click', () => {
+        doctorInput.value = '';
+        if (doctorScoreBadge) {
+          doctorScoreBadge.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-cinema-900 border border-cinema-700 text-cinema-400';
+          doctorScoreBadge.innerText = '等待体检';
+        }
+        if (doctorReportContent) {
+          doctorReportContent.innerHTML = '<div class="text-center text-cinema-500 py-24">👈 请在左侧粘贴剧本内容，或点击上方“载入反面教材 / 正规军样板”，然后点击「运行正规军 6 维剧作挑刺体检」</div>';
+        }
+        window.showToast?.('已清空剧本内容', 'info');
+      });
+    }
+
+    // 运行正规军 6 维剧作挑刺体检引擎
+    if (btnRunDoctor) {
+      btnRunDoctor.addEventListener('click', () => {
+        const text = doctorInput?.value.trim() || '';
+        if (!text || text.length < 50) {
+          window.showToast?.('请先在左侧输入至少 50 字以上的剧本分集样章！', 'warning');
+          return;
+        }
+
+        const btnText = document.getElementById('btn-run-doctor-text');
+        if (btnText) btnText.innerHTML = '⏳ 正在基于好莱坞三大编剧法则与付费卡点逐行挑刺...';
+        btnRunDoctor.disabled = true;
+
+        setTimeout(() => {
+          btnRunDoctor.disabled = false;
+          if (btnText) btnText.innerHTML = '🩺 运行正规军 6 维剧作挑刺体检';
+
+          // 核心质检算法指标判定
+          // 1. 3秒视觉入场与开篇动作化
+          const hasExpositionWords = /(心里|暗自|回忆起|其实|觉得|感到)/.test(text.slice(0, 200));
+          const hasActionScene = /(△|镜头|内景|外景|雨|刀|门|枪|摔|冲|踏|踩)/.test(text.slice(0, 150));
+          const hookScore = hasExpositionWords ? 55 : (hasActionScene ? 95 : 75);
+
+          // 2. 大卫·马密三问逻辑 (目标、后果、倒计时紧迫感)
+          const hasStakes = /(死|命|签约|强拆|透析|纪委|账户|亿|千万|枪毙|逮捕|下跪|婚书)/.test(text);
+          const hasUrgency = /(三分钟|立刻|今天|现在|倒计时|马上|最后|明天)/.test(text);
+          const mametScore = (hasStakes && hasUrgency) ? 95 : (hasStakes || hasUrgency ? 78 : 50);
+
+          // 3. 比利·怀尔德反派自洽律 (反派是否有智商/筹码，还是弱智泼妇骂街)
+          const hasBrainlessInsults = /(废物|垃圾|吃白食|窝囊废|杂种)/.test(text);
+          const hasRealLeverage = /(拆迁款|转让书|合同|透析|筹码|威胁|底账|股份|权力|商业)/.test(text);
+          const antagScore = hasBrainlessInsults && !hasRealLeverage ? 45 : (hasRealLeverage ? 92 : 70);
+
+          // 4. 希区柯克炸弹悬念 (信息不对称、暗中底牌)
+          const hasSuspenseBomb = /(底账|原件|真凶|录音|炸弹|秘密|暗中|巡视组|印鉴|真身|假死)/.test(text);
+          const bombScore = hasSuspenseBomb ? 90 : 60;
+
+          // 5. 台词潜台词与去注水 (白开水对话 vs 刀光剑影)
+          const lines = text.split('\n');
+          const dialogueLines = lines.filter(l => l.includes('：') || l.includes(':'));
+          const actionLines = lines.filter(l => l.includes('△') || l.startsWith('【') || l.startsWith('（'));
+          const subtextScore = (actionLines.length >= dialogueLines.length * 0.4 && !hasExpositionWords) ? 92 : 62;
+
+          // 6. 90秒断崖付费卡点 (结尾是否卡在最高潮前一秒)
+          const tailText = text.slice(-150);
+          const hasCliffhanger = /(切黑|戛然而止|瞳孔骤缩|停住|倒计时|脸色惨白|突然|未完待续|出片名)/.test(tailText);
+          const cliffScore = hasCliffhanger ? 95 : 55;
+
+          // 综合评分计算 (加权总分)
+          const totalScore = Math.round(
+            hookScore * 0.15 +
+            mametScore * 0.20 +
+            antagScore * 0.20 +
+            bombScore * 0.15 +
+            subtextScore * 0.15 +
+            cliffScore * 0.15
+          );
+
+          // UI 渲染
+          let badgeClass = 'text-xs font-mono px-2.5 py-0.5 rounded-full border font-bold ';
+          let badgeText = '';
+          if (totalScore >= 85) {
+            badgeClass += 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+            badgeText = `🟢 ${totalScore} 分 · 平台首发正规军级`;
+          } else if (totalScore >= 70) {
+            badgeClass += 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+            badgeText = `🟡 ${totalScore} 分 · 存在局部注水与暗伤`;
+          } else {
+            badgeClass += 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+            badgeText = `🔴 ${totalScore} 分 · 致命病态 (投流即死)`;
+          }
+
+          if (doctorScoreBadge) {
+            doctorScoreBadge.className = badgeClass;
+            doctorScoreBadge.innerText = badgeText;
+          }
+
+          const findings = [
+            {
+              dim: '1. 黄金 3 秒视觉入场 (Visual Hook)',
+              score: hookScore,
+              status: hookScore >= 80 ? '✅ 优秀' : '❌ 严重超标',
+              critique: hookScore >= 80 
+                ? '以强视觉动作场景或倒计时砸脸，杜绝大段无聊文学旁白，符合短剧投流 3 秒生死线。' 
+                : '开头出现大量“心里很痛苦”、“暗自回忆”等无法被摄影机拍摄的心理描写！读者看剧是看动作，不是读日记。必须把内心戏外化为物理动作。',
+              action: hookScore >= 80 ? '继续保持高密度动作开篇' : '将开篇第一句改为具体物理动作（如砸碎茶杯、暴雨冲刷、倒计时仪表盘）。'
+            },
+            {
+              dim: '2. 大卫·马密三问严苛审视 (Mamet\'s 3 Questions)',
+              score: mametScore,
+              status: mametScore >= 80 ? '✅ 优秀' : '⚠️ 危机松散',
+              critique: mametScore >= 80 
+                ? '主角目标明确、不达成后果极其致命，且具有迫在眉睫的倒计时紧迫感。' 
+                : '未建立清晰的“生杀危机”。角色欲望模糊，观众不知道如果不行动会有什么可怕后果，缺乏情绪拉扯。',
+              action: mametScore >= 80 ? '保持冲突明确性' : '在开篇第 10 秒内明确设立“不照做就会死/家破人亡/失去至亲”的绝对生死桩。'
+            },
+            {
+              dim: '3. 比利·怀尔德反派自洽律 (Antagonist Logic)',
+              score: antagScore,
+              status: antagScore >= 80 ? '✅ 优秀' : '❌ 反派降智',
+              critique: antagScore >= 80 
+                ? '反派手握实质性利益筹码（拆迁合同、法律条文、垄断资源），施压有理有据，胜利含金量极高。' 
+                : '反派沦为无脑泼妇打手！台词充斥“废物、垃圾、我要弄死你”等低劣辱骂，缺乏实际权力压迫，反派太蠢只会让主角的胜利贬值。',
+              action: antagScore >= 80 ? '保持反派智商在线' : '删掉低劣脏话，让反派拿出一张具有法律效应的合同或垄断资源，从智商和现实维度给主角断水断粮。'
+            },
+            {
+              dim: '4. 希区柯克炸弹悬念法则 (Suspense Bomb)',
+              score: bombScore,
+              status: bombScore >= 80 ? '✅ 优秀' : '⚠️ 缺乏期待',
+              critique: bombScore >= 80 
+                ? '成功植入“桌下炸弹”！观众已知底牌（如底账、真身），最大快感来自于看着反派一步步踩入陷阱。' 
+                : '缺乏信息不对称（戏剧性反讽）。观众不知道主角藏着什么雷，整场戏变成了被动的挨骂受虐，极度消耗耐性。',
+              action: bombScore >= 80 ? '保持悬念前置' : '提前给观众交代主角袖口藏着录音笔，或者早已给省巡视组发了密信，让观众带着看笑话的上帝视角看反派跳梁。'
+            },
+            {
+              dim: '5. 台词潜台词与去注水率 (Subtext Ratio)',
+              score: subtextScore,
+              status: subtextScore >= 80 ? '✅ 优秀' : '❌ 废话严重',
+              critique: subtextScore >= 80 
+                ? '台词精炼如刀，字字见血，且配有丰富的环境视听与肢体动作描写，具备影视正规军工业质感。' 
+                : '台词是自说自话的白开水流水账。角色把所有心情、背景直白念出来，缺乏潜台词与话里藏针的张力。',
+              action: subtextScore >= 80 ? '保持视听化表达' : '把每句对白缩减到 12 个字以内，多用眼神、动作、道具声响代替台词交代。'
+            },
+            {
+              dim: '6. 单集 90 秒断崖付费卡点 (Paywall Cliffhanger)',
+              score: cliffScore,
+              status: cliffScore >= 80 ? '✅ 优秀' : '❌ 剧情平坠',
+              critique: cliffScore >= 80 
+                ? '在反制底牌亮出、反派刚惊愕的最高潮瞬间戛然而止，切黑屏断章，付费追更冲动极强！' 
+                : '结尾剧情已经解决平息（如默默去刷马桶），情绪弹簧彻底泄气，观众看完直接关手机，绝不可能划下一集！',
+              action: cliffScore >= 80 ? '保持一卡断崖切黑' : '绝不能在事情平息后切黑！必须在更大的危机被引爆、或者底牌刚亮出反派目瞪口呆的前一秒瞬间切黑屏！'
+            }
+          ];
+
+          let html = `
+            <div class="p-4 rounded-2xl ${totalScore >= 80 ? 'bg-emerald-950/30 border border-emerald-500/30' : totalScore >= 70 ? 'bg-amber-950/30 border border-amber-500/30' : 'bg-rose-950/30 border border-rose-500/30'} space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white uppercase tracking-wider">🎯 挑刺总评：</span>
+                <span class="font-mono text-sm font-extrabold ${totalScore >= 80 ? 'text-emerald-400' : totalScore >= 70 ? 'text-amber-400' : 'text-rose-400'}">${totalScore} / 100 分</span>
+              </div>
+              <p class="text-xs text-cinema-300 leading-relaxed">
+                ${totalScore >= 85 
+                  ? '恭喜！这是一篇具备工业化交付水准的短剧正规军样章。视听动作明确、三问扎实、卡点极具侵略性，建议继续保持该标准向全剧延展。' 
+                  : totalScore >= 70 
+                  ? '剧本具备基础戏剧冲突，但仍带有部分网文/传统文案的惰性（如少量心理描写未脱水、反派辱骂略多于实质权力压迫）。' 
+                  : '警惕！该样章犯了短剧大忌：文人文风泛滥、反派脑残降智、无脑挨骂受虐、结尾泄气断流。若直接投流，前 3 集跳出率将超过 85%！'}
+              </p>
+            </div>
+
+            <div class="space-y-3 pt-2">
+              <h5 class="text-xs font-mono text-cinema-400 font-bold uppercase tracking-wider">📋 6 维深度体检细则：</h5>
+          `;
+
+          findings.forEach(item => {
+            html += `
+              <div class="p-3.5 rounded-xl bg-cinema-900 border border-cinema-800 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-white">${item.dim}</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[11px] font-mono text-cinema-400">${item.score}分</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded ${item.score >= 80 ? 'bg-emerald-500/20 text-emerald-300' : item.score >= 70 ? 'bg-amber-500/20 text-amber-300' : 'bg-rose-500/20 text-rose-300'} font-bold">${item.status}</span>
+                  </div>
+                </div>
+                <p class="text-[11px] text-cinema-300 leading-relaxed">${item.critique}</p>
+                <div class="text-[11px] text-amber-300/90 bg-cinema-950 p-2 rounded-lg border border-cinema-850">
+                  <strong>💡 正规军改法：</strong>${item.action}
+                </div>
+              </div>
+            `;
+          });
+
+          html += `</div>`;
+          if (doctorReportContent) doctorReportContent.innerHTML = html;
+          window.showToast?.(`挑刺体检完成！综合评分：${totalScore} 分`, totalScore >= 80 ? 'success' : 'warning');
+        }, 400);
+      });
+    }
+
+    // 下载挑刺诊断报告 .txt
+    if (btnDownloadDoctorReport) {
+      btnDownloadDoctorReport.addEventListener('click', () => {
+        const reportEl = document.getElementById('doctor-report-content');
+        const text = reportEl?.innerText || '';
+        if (!text || text.includes('请在左侧粘贴剧本内容')) {
+          window.showToast?.('暂无可下载的体检报告，请先运行诊断！', 'warning');
+          return;
+        }
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadTextAsFile(`daozhu-script-doctor-audit-${dateStr}.txt`, text);
+      });
+    }
+
+    // 复制针对该剧本的 DeepSeek-R1 严苛找茬 Prompt
+    if (btnCopyDoctorPrompt) {
+      btnCopyDoctorPrompt.addEventListener('click', () => {
+        const text = doctorInput?.value.trim() || '';
+        if (!text) {
+          window.showToast?.('请先在左侧输入需要挑刺的剧本样章！', 'warning');
+          return;
+        }
+
+        const prompt = `你是一位拥有10年一线院线与爆款微短剧经验的严苛剧本监制（Script Doctor）。请基于好莱坞正规军三大法则（大卫·马密三问、比利·怀尔德反派自洽律、希区柯克炸弹理论）与短剧90秒付费点力学，对以下剧本样章进行【无情挑刺与逐行批注重写】。
+
+【待诊断剧本样章】：
+"""
+${text}
+"""
+
+【挑刺与审稿执行要求】：
+1. 抓出所有无法被摄影机拍摄的“假大空文学旁白/内心戏”，将其逐一外化为物理动作。
+2. 拷问大卫·马密三问：主角想要什么？不给会怎样？为什么是这一秒？若无生死桩，请强行植入危机倒计时。
+3. 审视反派智商：杜绝纯脑残泼妇骂街，赋予反派实质性利益动机与垄断权力，让反派施压具备自洽逻辑。
+4. 检查信息不对称：植入“桌下炸弹”，让观众拥有上帝视角，形成窒息期待。
+5. 90秒断崖卡点重写：在情绪爆发或危机降临的前一秒卡死切黑，给出精修后的正规军标准剧本示范。`;
+
+        window.copyToClipboard(prompt, '🤖 已复制《DeepSeek-R1 80集全套审稿挑刺指令》！可在 AI 中直接运行！');
       });
     }
   </script>

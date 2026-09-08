@@ -4,81 +4,178 @@ import LeadMagnetCard from '../../components/LeadMagnetCard.astro';
 
 const steps = [
   {
+    id: 'step-01',
     step: '01',
+    phase: '认知洗礼',
     title: '洗掉文人思维：建立“情绪多巴胺”认知',
-    desc: '不要总想着第一集就表达宏大的哲学思想。短剧观众看的是欲望代偿。先吃透“压抑→蓄势→爆发→反馈”这套像弹簧一样的爽感力学。',
-    actionLink: '/guides/02-dopamine-formula',
-    actionText: '必学：四步爽感公式剖析',
+    desc: '不要总想着第一集就表达宏大的哲学思想。短剧观众看的是欲望代偿。先吃透“压抑→蓄势→爆发→反馈”这套像弹簧一样的爽感力学，把读者当成多巴胺受体，而不是课堂学生。',
+    links: [
+      { text: '必学：四步爽感公式深度拆解', href: '/guides/02-dopamine-formula' },
+    ],
   },
   {
+    id: 'step-02',
     step: '02',
-    title: '掌握单集 90 秒的切片艺术',
-    desc: '短剧不是连续电影，而是 80 个高压情绪切片。学习如何在 10 秒内设立危机、在 50 秒内让观众咬牙切齿、并在 90 秒靴子落地前精准卡点切黑屏。',
-    actionLink: '/guides/01-short-drama-rhythm',
-    actionText: '必学：单集 90 秒微结构拆解',
+    phase: '骨架力学',
+    title: '掌握单集 90 秒微结构与“救猫咪”竖屏改良版',
+    desc: '短剧不是连续电影，而是 80 个高压情绪切片。学习如何在 10 秒内设立危机、在 50 秒内让观众咬牙切齿、并在 90 秒靴子落地前精准卡点切黑屏；同时掌握好莱坞救猫咪 15 节拍如何压缩为 80 集工业曲线。',
+    links: [
+      { text: '必学：单集 90 秒微结构拆解', href: '/guides/01-short-drama-rhythm' },
+      { text: '进阶：救猫咪 15 节拍短剧改良版', href: '/guides/09-save-the-cat-short-drama-beats' },
+    ],
   },
   {
+    id: 'step-03',
     step: '03',
-    title: '攻克生杀大权：黄金前 3 集',
-    desc: '90% 的短剧死在前 3 集的投流数据上。学习第 1 集的生存绝境、第 2 集的爽点预演、以及第 3 集的断崖式付费卡扣设计。',
-    actionLink: '/guides/03-first-three-episodes',
-    actionText: '必学：黄金前 3 集留人法',
+    phase: '生死卡点',
+    title: '攻克平台投流生死线：黄金前 3 集与付费断崖',
+    desc: '90% 的短剧死在前 3 集的流失率上。学习第 1 集的生存绝境、第 2 集的爽点预演、以及第 3 集的一卡断崖。掌握“希区柯克炸弹理论”，把炸弹提前藏在桌下，让观众替主角心惊肉跳。',
+    links: [
+      { text: '必学：黄金前 3 集留人法', href: '/guides/03-first-three-episodes' },
+      { text: '秘笈：希区柯克炸弹悬念法则', href: '/guides/08-hitchcock-bomb-theory' },
+      { text: '核心：付费点剧作学与卡点力学', href: '/guides/07-paywall-dramaturgy' },
+    ],
   },
   {
+    id: 'step-04',
     step: '04',
-    title: '借力 AI 工具：打通视听与分镜管线',
-    desc: '如果你做 AI 漫剧，千万别抽卡两小时生一堆废图。把剧本里的文学描写，精准翻译成 Midjourney / ComfyUI 能读懂的光影与景别提示词。',
-    actionLink: '/guides/04-ai-manga-workflow',
-    actionText: '必学：AI 漫剧工业化工作流',
+    phase: '降维避坑',
+    title: '严苛自检：反派自洽律与大卫·马密剧作三问',
+    desc: '短剧最忌讳把反派写成毫无智商的脸谱恶人。遵从比利·怀尔德法则“反派越强，胜利越珍贵”；下笔前用大卫·马密三问（谁想要什么？得不到会怎样？为什么是现在？）反复拷问每一场戏，拒绝垃圾注水。',
+    links: [
+      { text: '避坑：大卫·马密剧作三问审稿法', href: '/guides/10-david-mamet-three-questions' },
+      { text: '法则：比利·怀尔德反派自洽律', href: '/guides/11-billy-wilder-antagonist-rules' },
+    ],
   },
   {
+    id: 'step-05',
     step: '05',
-    title: '拿走脚手架：今天就写出你的第 1 个本子',
-    desc: '不要对着空白文档发呆。直接下载岛主自用的《前 3 集爽点节拍卡》与《人物欲望冲突表》，照着框架填空，两小时内产出你的第一个平台级大纲。',
-    actionLink: '/templates',
-    actionText: '必拿：免费开局脚手架',
+    phase: '真实案头',
+    title: '研读正规军真实案头：看商业剧本到底怎么写',
+    desc: '不要对着空白文档凭空猜测。去案头库实地研读岛主原创商业剧本《一纸还乡》（乡村非遗/治愈）与《替嫁香医》（现代都市/战神）的真实分集大纲与标准分镜样章，感受正规军交付标准的严谨度。',
+    links: [
+      { text: '研读：原创手稿与剧本案头库', href: '/works' },
+      { text: '模板：分集大纲与人物欲望冲突表', href: '/templates' },
+    ],
+  },
+  {
+    id: 'step-06',
+    step: '06',
+    phase: '工业实操',
+    title: '在线工作台脱水网文：产出你的第一个商用台本',
+    desc: '手艺必须靠打磨。拿一段你最喜欢的网文或者自己的灵感片段，进入「岛主在线编剧工作台」，一键剔除无法拍摄的心态旁白，生成标准视听剧本，并直接导出为本地 .txt 文本，迈出商业交付的第一步。',
+    links: [
+      { text: '实操：进入在线工作台生成并导出 TXT', href: '/studio' },
+      { text: '工作流：AI 漫剧工业化生产管线', href: '/guides/04-ai-manga-workflow' },
+    ],
   },
 ];
 ---
 
-<BaseLayout activePath="/start" title="新手从 0 到第一个本子 · 岛主编剧工坊">
+<BaseLayout activePath="/start" title="新手从 0 到第一个商用本子 · 岛主编剧工坊">
   <section class="pt-12 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
     <!-- Header -->
-    <div class="text-center max-w-2xl mx-auto mb-14">
+    <div class="text-center max-w-2xl mx-auto mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-3">
-        🚀 ZERO-TO-ONE LEARNING PATH
+        🚀 ZERO-TO-ONE LEARNING PIPELINE
       </div>
       <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight literary-serif">
-        从 0 到写出你的第一个商用本子
+        短剧商业出师六联进阶图谱
       </h1>
       <p class="mt-4 text-sm sm:text-base text-cinema-300 leading-relaxed">
-        专门为刚入行、或从网文/传统文案转型的朋友定制的五步通关路线。把零散的手艺串成一条线，不走任何弯路。
+        专为刚入行、或从网文/传统文案转型的创作者定制的六步通关路线。把十年影视正规军的剧作结构与短剧商业卡点串成流水线，学完即能产出商用本子。
       </p>
+    </div>
+
+    <!-- Interactive Learning Tracker Bar (Sticky / Prominent) -->
+    <div class="mb-12 p-5 rounded-2xl bg-cinema-900/90 border border-amber-500/30 shadow-xl backdrop-blur-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="text-lg">🎯</span>
+          <div>
+            <h3 class="text-sm font-bold text-white">学员通关进度打卡</h3>
+            <p class="text-xs text-cinema-400">阅读并完成每一步后勾选打卡，本地自动保存进度</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="progress-text" class="text-xs font-mono font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">
+            0 / 6 步完成 (0%)
+          </span>
+          <button
+            type="button"
+            id="btn-reset-progress"
+            class="text-[11px] text-cinema-500 hover:text-rose-400 font-mono transition-colors cursor-pointer"
+            title="重置打卡进度"
+          >
+            重置
+          </button>
+        </div>
+      </div>
+
+      <!-- Animated Progress Bar -->
+      <div class="w-full h-2.5 rounded-full bg-cinema-950 overflow-hidden p-0.5 border border-cinema-800">
+        <div
+          id="progress-fill"
+          class="h-full rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-emerald-400 transition-all duration-500 w-0 shadow-sm shadow-amber-500/50"
+        ></div>
+      </div>
+
+      <div id="progress-congrats" class="hidden mt-3 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs text-emerald-300 flex items-center justify-between animate-fadeIn">
+        <span class="flex items-center gap-1.5">
+          <span>🏆</span>
+          <span>恭喜！你已通关全部 6 步进阶流水线，已掌握商业短剧正规军核心骨架！</span>
+        </span>
+        <a href="/studio" class="text-emerald-400 font-bold hover:underline shrink-0">立即去工作台出稿 ➔</a>
+      </div>
     </div>
 
     <!-- Stepper Pipeline -->
     <div class="relative border-l-2 border-cinema-800 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
       {steps.map((item) => (
-        <div class="relative group">
+        <div class="relative group" id={`container-${item.id}`}>
           <!-- Step bubble -->
-          <div class="absolute -left-[35px] sm:-left-[51px] top-0 w-8 h-8 rounded-full bg-cinema-950 border-2 border-amber-500 text-amber-400 font-mono text-xs font-bold flex items-center justify-center shadow-md">
+          <div class="absolute -left-[35px] sm:-left-[51px] top-0 w-8 h-8 rounded-full bg-cinema-950 border-2 border-amber-500 text-amber-400 font-mono text-xs font-bold flex items-center justify-center shadow-md group-hover:scale-110 group-hover:border-amber-400 transition-transform">
             {item.step}
           </div>
 
-          <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all">
-            <h3 class="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
-              第 {item.step} 步：{item.title}
-            </h3>
-            <p class="text-sm text-cinema-300 leading-relaxed mb-4">
+          <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all shadow-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  {item.phase}
+                </span>
+                <h3 class="text-base sm:text-xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                  第 {item.step} 步：{item.title}
+                </h3>
+              </div>
+
+              <!-- Interactive Checkbox -->
+              <label class="inline-flex items-center gap-2 text-xs text-cinema-400 hover:text-white cursor-pointer bg-cinema-950 px-2.5 py-1 rounded-lg border border-cinema-800 hover:border-cinema-700 transition-colors select-none shrink-0">
+                <input
+                  type="checkbox"
+                  class="step-check accent-amber-500 cursor-pointer rounded"
+                  data-step-id={item.id}
+                />
+                <span class="step-check-label">已掌握打卡</span>
+              </label>
+            </div>
+
+            <p class="text-sm text-cinema-300 leading-relaxed mb-5">
               {item.desc}
             </p>
-            <a
-              href={item.actionLink}
-              class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 px-3.5 py-2 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-colors"
-            >
-              <span>➔</span>
-              <span>{item.actionText}</span>
-            </a>
+
+            <!-- Links grid -->
+            <div class="flex flex-wrap gap-2.5 pt-3 border-t border-cinema-800/80">
+              {item.links.map((link) => (
+                <a
+                  href={link.href}
+                  class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 px-3.5 py-2 rounded-xl border border-amber-500/25 hover:border-amber-500/40 transition-all active:scale-95"
+                >
+                  <span>➔</span>
+                  <span>{link.text}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       ))}
@@ -89,4 +186,100 @@ const steps = [
       <LeadMagnetCard />
     </div>
   </section>
+
+  <!-- Interactive Checklist Client Script -->
+  <script is:inline>
+    const STORAGE_KEY = 'daozhu_learning_pipeline_checks';
+
+    function getCompletedSteps() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCompletedSteps(steps) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(steps));
+      } catch (e) {
+        console.warn('localStorage error', e);
+      }
+    }
+
+    function updateProgressUI() {
+      const completed = getCompletedSteps();
+      const total = 6;
+      const count = completed.length;
+      const percent = Math.round((count / total) * 100);
+
+      const progressFill = document.getElementById('progress-fill');
+      const progressText = document.getElementById('progress-text');
+      const congratsEl = document.getElementById('progress-congrats');
+
+      if (progressFill) {
+        progressFill.style.width = `${percent}%`;
+      }
+      if (progressText) {
+        progressText.innerText = `${count} / ${total} 步完成 (${percent}%)`;
+      }
+      if (congratsEl) {
+        if (count === total) {
+          congratsEl.classList.remove('hidden');
+        } else {
+          congratsEl.classList.add('hidden');
+        }
+      }
+
+      // Checkboxes state
+      document.querySelectorAll('.step-check').forEach((checkbox) => {
+        const stepId = checkbox.getAttribute('data-step-id');
+        const isChecked = completed.includes(stepId);
+        checkbox.checked = isChecked;
+
+        const label = checkbox.closest('label')?.querySelector('.step-check-label');
+        if (label) {
+          label.innerText = isChecked ? '✓ 已通关' : '已掌握打卡';
+          if (isChecked) {
+            label.classList.add('text-emerald-400', 'font-bold');
+          } else {
+            label.classList.remove('text-emerald-400', 'font-bold');
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProgressUI();
+
+      document.querySelectorAll('.step-check').forEach((checkbox) => {
+        checkbox.addEventListener('change', (e) => {
+          const stepId = checkbox.getAttribute('data-step-id');
+          let completed = getCompletedSteps();
+
+          if (e.target.checked) {
+            if (!completed.includes(stepId)) completed.push(stepId);
+            window.showToast?.('打卡成功！离商用出师又近了一步 🚀', 'success');
+          } else {
+            completed = completed.filter((id) => id !== stepId);
+          }
+
+          saveCompletedSteps(completed);
+          updateProgressUI();
+        });
+      });
+
+      const resetBtn = document.getElementById('btn-reset-progress');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (confirm('确定要重置你的新手学习打卡进度吗？')) {
+            saveCompletedSteps([]);
+            updateProgressUI();
+            window.showToast?.('已重置学习打卡进度！', 'info');
+          }
+        });
+      }
+    });
+  </script>
 </BaseLayout>

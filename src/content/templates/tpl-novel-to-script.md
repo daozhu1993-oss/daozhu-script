@@ -1,6 +1,7 @@
 ---
 title: "《小说转短剧工业级 5 步指令流》（降维打击市面 AI 软件）"
 type: "小说转剧本"
+category: "网文脱水"
 access: "free"
 fileFormat: "Markdown / Notion / DeepSeek Direct"
 description: "网文作者转短剧、AI漫剧制作人必备。解决市面 AI 软件生成台词水、情节拖沓、过不了审的死穴，直接把小说切片重构为 90 秒快节奏工业分集台本。"

@@ -12,6 +12,27 @@ takeaways:
   - "短视频平台的破圈自传播逻辑：为观众提供巨大的二创与情绪宣泄载体"
 poster: "/images/posters/taochudaying.jpg"
 featured: true
+beats:
+  - timing: "00:04 秒"
+    phase: "钩子"
+    title: "文物拟人奇观"
+    desc: "伦敦异国街头，缠满胶带、满脸污泥的古风少女撞入中国记者怀中，直呼‘家人，我在找回家的路’。"
+    dopamineLevel: 5
+  - timing: "00:40 秒"
+    phase: "压抑"
+    title: "异国漂泊撕裂"
+    desc: "展厅玻璃柜内同胞文物沉默相望，女主护照遗失，异乡巡警步步逼近盘查，生存绝境压抑。"
+    dopamineLevel: 3
+  - timing: "01:15 秒"
+    phase: "反转"
+    title: "血脉同频共鸣"
+    desc: "热气腾腾的家乡红茶与中国街坊暗中接应，记者从质疑到震撼确认其玉壶真身，家国情绪引爆。"
+    dopamineLevel: 5
+  - timing: "01:45 秒"
+    phase: "卡点"
+    title: "归途断章悬念"
+    desc: "登机前夕警报大作，馆方保全封锁登机廊桥，记者紧护玉壶转身对峙，终极断章切黑屏。"
+    dopamineLevel: 4
 ---
 
 # 《逃出大英博物馆》拆解：微短剧如何跳出狗血泥潭，用‘家国羁绊’引爆百亿破圈流量？

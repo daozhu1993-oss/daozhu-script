@@ -1,6 +1,7 @@
 ---
 title: "《工业级影视分镜头脚本与 AI 漫剧机位表》（Shotlist & Continuity）"
 type: "结构模板"
+category: "分镜与台本"
 access: "free"
 fileFormat: "Markdown / Notion / Excel / Feishu"
 description: "直通现场拍摄与 AI 视频跑图的核心工程图纸。包含镜号、景别、运镜机位、纯动作视听描述、音效参数及 AI 生图 Prompt 转换列。"

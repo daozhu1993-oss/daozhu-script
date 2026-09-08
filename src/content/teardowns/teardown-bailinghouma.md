@@ -12,6 +12,27 @@ takeaways:
   - "烟火气与爽感的对冲：将狗血宅斗置于做包子、做生意等务实场景，增强真实代入感"
 poster: "/images/posters/bailinghouma.jpg"
 featured: true
+beats:
+  - timing: "00:04 秒"
+    phase: "钩子"
+    title: "反向掀桌夺权"
+    desc: "恶毒后妈逼嫁养猪汉，女主司念反手掀翻油锅当场索要三千彩礼，颠覆苦情受气人设。"
+    dopamineLevel: 5
+  - timing: "00:45 秒"
+    phase: "压抑"
+    title: "极品发难蓄势"
+    desc: "二婶带一众亲戚破门争抢抚养费与粮食，冷嘲热讽，女主孤立无援蓄积反击怒气值。"
+    dopamineLevel: 2
+  - timing: "01:25 秒"
+    phase: "反转"
+    title: "发疯掌掴糙汉护短"
+    desc: "女主开启机关枪式金句连环输出，糙汉男主周越深大步跨入一脚踹碎门槛，强势撑腰。"
+    dopamineLevel: 5
+  - timing: "01:50 秒"
+    phase: "卡点"
+    title: "断章悬念切黑"
+    desc: "男主前妻的闺蜜突然率居委会干部闯入院中，手持伪造文书声称要收回房产，悬念切黑屏。"
+    dopamineLevel: 4
 ---
 
 # 《我在八零年代当后妈》拆解：女频反套路与高能量‘反脆弱女主’的爆款密码

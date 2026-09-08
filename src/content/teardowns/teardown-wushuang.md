@@ -12,6 +12,27 @@ takeaways:
   - "情绪反馈留足 40 秒：不急于推进下一幕，让反派颤抖、悔恨、求饶的情绪充分发酵"
 poster: "/images/posters/wushuang.jpg"
 featured: true
+beats:
+  - timing: "00:03 秒"
+    phase: "钩子"
+    title: "极致羞辱筑底"
+    desc: "寿宴之上，前妻撕碎婚书，恶毒岳母当众将滚烫茶水泼在主角脸上，逼其净身出户。"
+    dopamineLevel: 1
+  - timing: "00:42 秒"
+    phase: "压抑"
+    title: "豪门群嘲施压"
+    desc: "江州首富带保镖封锁包厢，欲强占主角妹妹抵债，全场宾客冷眼讥笑，屈辱弹簧压至极限。"
+    dopamineLevel: 2
+  - timing: "01:10 秒"
+    phase: "反转"
+    title: "黑龙令现战神归"
+    desc: "主角摔碎酒杯亮出黑龙令，窗外三千黑甲武装直升机空降，省城首富破门而入当众向主角下跪求饶。"
+    dopamineLevel: 5
+  - timing: "01:48 秒"
+    phase: "卡点"
+    title: "身世杀机断章"
+    desc: "主角冷眼扫视全场，手机突然接通绝密内线：“主帅，当年毒害老王爷的真凶，正在江州！”"
+    dopamineLevel: 5
 ---
 
 # 《无双》(充值破亿神话) 拆解：男频极致压抑与多级蓄势的教科书范本

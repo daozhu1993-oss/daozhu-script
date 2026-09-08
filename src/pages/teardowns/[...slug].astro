@@ -5,22 +5,34 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const teardowns = await getCollection('teardowns');
-  return teardowns.map((entry) => ({
+  return teardowns.map((entry, index) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: {
+      entry,
+      prevTeardown: index > 0 ? teardowns[index - 1] : null,
+      nextTeardown: index < teardowns.length - 1 ? teardowns[index + 1] : null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevTeardown, nextTeardown } = Astro.props;
 const { Content } = await entry.render();
 ---
 
 <BaseLayout activePath="/teardowns" title={`${entry.data.title} · 爆款拆解`}>
+  <!-- Reading Progress Bar -->
+  <div id="read-progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-amber-400 z-50 transition-all duration-150 w-0"></div>
+
   <article class="pt-10 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
-    <!-- Back button -->
-    <a href="/teardowns" class="text-xs font-mono text-cinema-400 hover:text-blue-400 mb-6 inline-flex items-center gap-1">
-      ← 返回爆款拆解列表
-    </a>
+    <!-- Back button & Meta breadcrumb -->
+    <div class="flex items-center justify-between mb-6 text-xs font-mono">
+      <a href="/teardowns" class="text-cinema-400 hover:text-blue-400 inline-flex items-center gap-1 transition-colors">
+        ← 返回爆款拆解列表
+      </a>
+      <span class="text-cinema-500">
+        十年正规军工业解剖刀
+      </span>
+    </div>
 
     <!-- Header info with Poster -->
     <header class="pb-8 border-b border-cinema-800">
@@ -92,10 +104,11 @@ const { Content } = await entry.render();
       </div>
     </header>
 
-    <!-- Visualizer Component -->
+    <!-- Visualizer Component with Real Custom Beats -->
     <div class="mt-8">
       <BeatVisualizer
-        episodeName={`${entry.data.title} · 核心节奏解剖`}
+        episodeName={`${entry.data.title} · 真实秒级节奏解剖`}
+        beats={entry.data.beats}
       />
     </div>
 
@@ -104,14 +117,79 @@ const { Content } = await entry.render();
       <Content />
     </div>
 
-    <!-- Bottom CTA -->
-    <div class="mt-16 pt-8 border-t border-cinema-800 flex items-center justify-between">
-      <a href="/teardowns" class="text-xs text-cinema-400 hover:text-white">
-        ← 查看其他拉片拆解
+    <!-- Cross-Link Toolbox -->
+    <div class="mt-14 p-6 rounded-2xl bg-cinema-900/80 border border-cinema-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="space-y-1">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>⚙️</span> 想要实战跑出同款节奏？
+        </h4>
+        <p class="text-xs text-cinema-400">
+          去在线工作台套用 90 秒四相位节拍器，或直接在模板库复制开局脚手架。
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <a
+          href="/studio"
+          class="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold transition-colors"
+        >
+          打开工作台实操 ➔
+        </a>
+        <a
+          href="/templates"
+          class="px-3.5 py-2 rounded-xl bg-cinema-800 hover:bg-cinema-700 text-cinema-200 text-xs font-medium transition-colors"
+        >
+          查看模板库
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation (Prev / Next) -->
+    <div class="mt-10 pt-6 border-t border-cinema-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium">
+      {prevTeardown ? (
+        <a
+          href={`/teardowns/${prevTeardown.slug}`}
+          class="w-full sm:w-auto p-3 rounded-xl bg-cinema-900 hover:bg-cinema-850 border border-cinema-800 hover:border-blue-500/30 text-cinema-300 hover:text-white transition-all flex items-center gap-2"
+        >
+          <span class="text-blue-400">←</span>
+          <div class="text-left">
+            <span class="text-[10px] text-cinema-400 block font-mono">上一篇拆解</span>
+            <span class="font-bold line-clamp-1">{prevTeardown.data.title}</span>
+          </div>
+        </a>
+      ) : (
+        <div class="hidden sm:block"></div>
+      )}
+
+      <a href="/teardowns" class="text-cinema-400 hover:text-blue-400 font-mono text-center">
+        查看全部拆解 ➔
       </a>
-      <a href="/templates" class="text-xs text-amber-400 hover:underline">
-        去模板库复制同款节奏卡 ➔
-      </a>
+
+      {nextTeardown ? (
+        <a
+          href={`/teardowns/${nextTeardown.slug}`}
+          class="w-full sm:w-auto p-3 rounded-xl bg-cinema-900 hover:bg-cinema-850 border border-cinema-800 hover:border-blue-500/30 text-cinema-300 hover:text-white transition-all flex items-center justify-end gap-2 text-right"
+        >
+          <div class="text-right">
+            <span class="text-[10px] text-cinema-400 block font-mono">下一篇拆解</span>
+            <span class="font-bold line-clamp-1">{nextTeardown.data.title}</span>
+          </div>
+          <span class="text-blue-400">→</span>
+        </a>
+      ) : (
+        <div class="hidden sm:block"></div>
+      )}
     </div>
   </article>
+
+  <!-- Reading Progress Script -->
+  <script is:inline>
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      const bar = document.getElementById('read-progress-bar');
+      if (bar) {
+        bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      }
+    });
+  </script>
 </BaseLayout>

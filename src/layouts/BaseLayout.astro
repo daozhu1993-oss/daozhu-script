@@ -45,6 +45,19 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
     
     <Footer />
 
+    <!-- Global Back to Top Button -->
+    <button
+      id="btn-back-to-top"
+      type="button"
+      class="fixed bottom-8 right-6 sm:right-8 z-40 p-3 rounded-2xl bg-cinema-900/90 hover:bg-cinema-800 text-amber-400 border border-cinema-700 hover:border-amber-500/50 shadow-2xl backdrop-blur-md transition-all duration-300 opacity-0 pointer-events-none translate-y-3 cursor-pointer active:scale-95 group"
+      title="回到顶部"
+      aria-label="回到顶部"
+    >
+      <svg class="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+
     <!-- Global Toast Container (Zero Alert Blocking, 100% Reliable Copy) -->
     <div id="global-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
       <div class="px-5 py-3 rounded-2xl bg-cinema-900/95 border border-amber-500/40 text-white shadow-2xl shadow-amber-500/20 backdrop-blur-md flex items-center gap-3 text-sm font-medium">
@@ -134,6 +147,23 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
           toast.classList.add('opacity-0', 'translate-y-4');
         }, 3000);
       };
+
+      // 全局回到顶部按钮控制
+      const bttBtn = document.getElementById('btn-back-to-top');
+      if (bttBtn) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 400) {
+            bttBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+            bttBtn.classList.add('opacity-100', 'translate-y-0');
+          } else {
+            bttBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+            bttBtn.classList.remove('opacity-100', 'translate-y-0');
+          }
+        });
+        bttBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
     </script>
   </body>
 </html>

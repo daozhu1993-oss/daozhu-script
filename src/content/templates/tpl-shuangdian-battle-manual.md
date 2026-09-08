@@ -1,6 +1,7 @@
 ---
 title: "《短剧爽点作战手册 · v1》（20 赛道情绪配方与避坑指南）"
 type: "爽点节奏表"
+category: "大纲与节拍卡"
 access: "free"
 fileFormat: "Markdown / Notion / 配套 XMind 脑图"
 description: "先查体系定打法，再查配方表定赛道，再翻作战卡落到集。独家总结4种底层情绪货币、3-30-90节奏尺、7大塌房诊断与20大男女频/海外赛道爆款配方。"

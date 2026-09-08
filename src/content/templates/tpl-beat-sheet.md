@@ -1,6 +1,7 @@
 ---
 title: "《短剧黄金前 3 集爽点节拍表》（开局引流核心品）"
 type: "爽点节奏表"
+category: "大纲与节拍卡"
 access: "free"
 fileFormat: "Markdown / Notion / Excel"
 description: "开局必备。严格精确到 0-10s、10-40s、40-70s、70-90s 的标准化分集断章节奏卡，直接套用即可写出过审高留存分集。"
