@@ -20,7 +20,7 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
 ---
 
 <!doctype html>
-<html lang="zh-CN" class="scroll-smooth">
+<html lang="zh-CN" class="scroll-smooth bg-cinema-950">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,28 +28,46 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     
+    <!-- Cinematic Google Fonts: Noto Serif SC, Courier Prime, Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@400;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="岛主编剧工坊" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#07090c" />
   </head>
-  <body class="min-h-screen bg-cinema-950 text-cinema-100 flex flex-col font-sans selection:bg-amber-500 selection:text-cinema-950">
+  <body class="min-h-screen bg-cinema-950 text-cinema-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200 relative">
+    <!-- 35mm 胶片质感噪点覆盖层 (Film Grain Layer) -->
+    <div class="film-grain" aria-hidden="true"></div>
+
+    <!-- 电影暖光透镜光晕 (Anamorphic Tungsten Ambient Light) -->
+    <div class="cinema-ambient-light fixed inset-0 pointer-events-none -z-10" aria-hidden="true"></div>
+
+    <!-- 顶部生态矩阵与电影场记板 HUD -->
     <EcosystemBar />
     <Header activePath={activePath} />
     
-    <main class="flex-grow">
+    <!-- 主体内容 -->
+    <main class="flex-grow relative z-10">
       <slot />
     </main>
     
+    <!-- 底部 -->
     <Footer />
 
-    <!-- Global Back to Top Button -->
+    <!-- 回到顶部按钮 -->
     <button
       id="btn-back-to-top"
       type="button"
-      class="fixed bottom-8 right-6 sm:right-8 z-40 p-3 rounded-2xl bg-cinema-900/90 hover:bg-cinema-800 text-amber-400 border border-cinema-700 hover:border-amber-500/50 shadow-2xl backdrop-blur-md transition-all duration-300 opacity-0 pointer-events-none translate-y-3 cursor-pointer active:scale-95 group"
+      class="fixed bottom-8 right-6 sm:right-8 z-40 p-3 rounded-2xl bg-cinema-900/95 hover:bg-cinema-850 text-amber-400 border border-cinema-750 hover:border-amber-500/60 shadow-2xl backdrop-blur-md transition-all duration-300 opacity-0 pointer-events-none translate-y-3 cursor-pointer active:scale-95 group"
       title="回到顶部"
       aria-label="回到顶部"
     >
@@ -58,16 +76,47 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
       </svg>
     </button>
 
-    <!-- Global Toast Container (Zero Alert Blocking, 100% Reliable Copy) -->
+    <!-- 全局非阻塞优雅 Toast 提示条 -->
     <div id="global-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
-      <div class="px-5 py-3 rounded-2xl bg-cinema-900/95 border border-amber-500/40 text-white shadow-2xl shadow-amber-500/20 backdrop-blur-md flex items-center gap-3 text-sm font-medium">
-        <span id="global-toast-icon" class="text-lg">✅</span>
-        <span id="global-toast-msg" class="leading-snug">已复制到剪贴板！可在微信或文档直接粘贴！</span>
+      <div class="px-5 py-3 rounded-2xl bg-cinema-900/98 border border-amber-500/50 text-white shadow-2xl shadow-amber-500/20 backdrop-blur-md flex items-center gap-3 text-sm font-medium">
+        <span id="global-toast-icon" class="text-lg">🎬</span>
+        <span id="global-toast-msg" class="leading-snug">操作已完成！</span>
       </div>
     </div>
 
+    <!-- 注入纯前端 Web Audio 引擎与聚光灯鼠标追踪器 -->
+    <script>
+      import { CinemaAudioEngine } from '../scripts/cinema-audio.js';
+      // 挂载全局音频引擎实例
+      if (typeof window !== 'undefined') {
+        window.cinemaAudio = new CinemaAudioEngine();
+
+        // 为全局所有主要交互按钮挂载触感打板音效
+        document.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement | null;
+          if (!target) return;
+          const clickable = target.closest('button, a.btn, [data-sfx="clapper"]');
+          if (clickable && !clickable.id?.includes('btn-cinema-audio')) {
+            window.cinemaAudio?.playClapper();
+          }
+        });
+      }
+    </script>
+
     <script is:inline>
-      // 全局通用高可用剪贴板复制函数（支持 Modern Clipboard API 与 Safari / WebKit execCommand 降级容灾）
+      // 鼠标移动聚光灯追踪算法（Card Spotlight Tracking）
+      document.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.spotlight-card');
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+
+      // 全局高可用剪贴板复制函数（支持 Modern Clipboard API 与 Safari 降级容灾）
       window.copyToClipboard = async function(text, successMsg) {
         if (text === undefined || text === null) text = '';
         text = String(text);
@@ -75,7 +124,7 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
         const msg = successMsg || defaultMsg;
         let success = false;
 
-        // 策略 1: 现代 Async Clipboard API (需安全上下文)
+        // 策略 1: 现代 Async Clipboard API
         if (navigator.clipboard && window.isSecureContext) {
           try {
             await navigator.clipboard.writeText(text);
@@ -85,7 +134,7 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
           }
         }
 
-        // 策略 2: 经典 execCommand('copy') 纯同步降级方案（兼容非HTTPS、Safari、微信内置浏览器）
+        // 策略 2: 经典 execCommand('copy') 同步降级方案
         if (!success) {
           try {
             const textarea = document.createElement('textarea');
@@ -114,9 +163,9 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
           }
         }
 
-        // 无论何种情况，坚决不用阻塞式的 window.alert()（避免中断 macOS/Safari 剪贴板会话）
         if (success) {
           window.showToast(msg, 'success');
+          window.cinemaAudio?.playCue();
         } else {
           window.showToast('自动复制受限，已为您打开复制窗口', 'warning');
           window.prompt('请手动按 Command+C (Mac) 或 Ctrl+C (Win) 复制内容：', text);
@@ -135,7 +184,7 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
 
         msgEl.innerText = message;
         if (iconEl) {
-          iconEl.innerText = type === 'warning' ? '⚠️' : type === 'error' ? '❌' : '✅';
+          iconEl.innerText = type === 'warning' ? '⚠️' : type === 'error' ? '❌' : '🎬';
         }
 
         toast.classList.remove('opacity-0', 'translate-y-4');
@@ -148,7 +197,7 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
         }, 3000);
       };
 
-      // 全局回到顶部按钮控制
+      // 全局回到顶部控制
       const bttBtn = document.getElementById('btn-back-to-top');
       if (bttBtn) {
         window.addEventListener('scroll', () => {

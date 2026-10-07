@@ -15,42 +15,52 @@ const works = await getCollection('works');
 const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout activePath="/" title="岛主编剧工坊 · 短剧与AI漫剧变现手艺库">
-  <!-- Hero Section -->
+<BaseLayout activePath="/" title="岛主编剧工坊 · 影视正规军手艺 × 短剧商业规则">
+  <!-- Hero Section with Film Slate HUD & Cinematic Lighting -->
   <section class="relative pt-12 pb-20 px-4 sm:px-6 overflow-hidden border-b border-cinema-800/80">
     <!-- Ambient glowing spotlight -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[130px] pointer-events-none rounded-full"></div>
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[380px] bg-amber-500/10 blur-[140px] pointer-events-none rounded-full" aria-hidden="true"></div>
 
     <div class="max-w-4xl mx-auto text-center relative z-10">
-      <!-- Authority Badge -->
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cinema-900 border border-amber-500/30 text-xs font-mono text-amber-400 mb-6 shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-        <span>10 年职业影视编剧 · 带着正规军手艺降维实战</span>
+      <!-- Authority Film Slate HUD Badge -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cinema-900/95 border border-amber-500/35 text-xs font-mono text-cinema-300 mb-6 shadow-xl backdrop-blur-md">
+        <span class="flex items-center gap-1.5 text-rose-400 font-bold">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-rec"></span>
+          <span>REC</span>
+        </span>
+        <span class="text-cinema-700">|</span>
+        <span class="text-amber-400 font-semibold">ROLL A01</span>
+        <span class="text-cinema-700">|</span>
+        <span>SCENE 01 · TAKE 04</span>
+        <span class="text-cinema-700 hidden sm:inline">|</span>
+        <span class="text-emerald-400 font-medium hidden sm:inline">10年职业影视编剧降维实战</span>
       </div>
 
-      <!-- Main Headline -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] literary-serif">
+      <!-- Main Headline with Golden Editorial Serif -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.18] literary-serif">
         影视正规军手艺 × 短剧商业规则<br />
-        <span class="text-amber-400 bg-clip-text">写出能过审、能起量的硬核剧本</span>
+        <span class="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
+          写出能过审、能起量的硬核剧本
+        </span>
       </h1>
 
       <!-- Value Subtitle -->
-      <p class="mt-6 text-base sm:text-xl text-cinema-300 max-w-2xl mx-auto leading-relaxed">
+      <p class="mt-6 text-base sm:text-xl text-cinema-300 max-w-2xl mx-auto leading-relaxed font-light">
         十年案头沉淀。把影视工业级的结构力学与竖屏短剧的「付费墙力学」严密咬合。不讲三天速成玄学，只拆解有据可循、可精准复现的剧作工程图纸。
       </p>
 
-      <!-- Primary Action CTAs -->
+      <!-- Primary Action CTAs with Magnetic Clapperboard Audio Feedback -->
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
           href="/start"
-          class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm sm:text-base shadow-lg shadow-amber-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+          class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm sm:text-base shadow-xl shadow-amber-500/25 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>🚀</span>
           <span>从 0 到第一个本子 · 新手路径</span>
         </a>
         <a
           href="/guides"
-          class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-cinema-900 hover:bg-cinema-850 text-white font-medium text-sm sm:text-base border border-cinema-700 hover:border-amber-400/40 transition-all flex items-center justify-center gap-2"
+          class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-cinema-900/90 hover:bg-cinema-850 text-white font-medium text-sm sm:text-base border border-cinema-700 hover:border-amber-400/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>📖</span>
           <span>系统方法论库</span>
@@ -58,7 +68,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       </div>
 
       <!-- Social Proof Strip (Authentic & Professional) -->
-      <div class="mt-12 pt-8 border-t border-cinema-850/80 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs sm:text-sm text-cinema-400 font-mono">
+      <div class="mt-12 pt-8 border-t border-cinema-850/80 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-cinema-400 font-mono">
         <div class="flex items-center gap-2">
           <span class="text-amber-400 font-bold">10 年</span>
           <span>职业影视剧作内功</span>
@@ -88,12 +98,12 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
   </section>
 
   <!-- Studio Banner Callout (在线剧作工作台入口) -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 -mt-2 mb-8">
-    <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-cinema-900 via-cinema-900 to-amber-950/40 border border-amber-500/30 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="space-y-2 text-left">
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 -mt-2 mb-10">
+    <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-cinema-900 via-cinema-900 to-amber-950/40 border border-amber-500/35 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 spotlight-card">
+      <div class="space-y-2 text-left relative z-10">
         <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-mono">
           <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-          <span>⚡ 实操工具 · 纯前端零隐私泄露</span>
+          <span>⚡ 工业级在线工具 · 纯前端零隐私泄露</span>
         </div>
         <h3 class="text-xl sm:text-2xl font-bold text-white literary-serif">
           拒绝假大空流水账！体验「岛主在线编剧工作台」
@@ -104,7 +114,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       </div>
       <a
         href="/studio"
-        class="shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2"
+        class="shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm shadow-xl shadow-amber-500/20 transition-all flex items-center gap-2 relative z-10 cursor-pointer"
       >
         <span>立即免费体验工作台</span>
         <span>➔</span>
@@ -113,7 +123,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
   </section>
 
   <!-- Three Master Tracks (三大核心入口) -->
-  <section class="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
+  <section class="py-14 px-4 sm:px-6 max-w-6xl mx-auto">
     <div class="text-center max-w-2xl mx-auto mb-12">
       <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">
         THREE PILLARS · 核心支柱
@@ -127,13 +137,13 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       <!-- Track 1: Guides -->
       <a
         href="/guides"
-        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+        class="group p-6 rounded-2xl spotlight-card flex flex-col justify-between"
       >
         <div>
-          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
             📖
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+          <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2 literary-serif">
             学方法 · 方法论库
           </h3>
           <p class="text-sm text-cinema-400 leading-relaxed">
@@ -149,13 +159,13 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       <!-- Track 2: Teardowns -->
       <a
         href="/teardowns"
-        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-blue-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+        class="group p-6 rounded-2xl spotlight-card flex flex-col justify-between"
       >
         <div>
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/25 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
             🔬
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-2">
+          <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-2 literary-serif">
             拆爆款 · 深度拉片
           </h3>
           <p class="text-sm text-cinema-400 leading-relaxed">
@@ -171,13 +181,13 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       <!-- Track 3: Templates -->
       <a
         href="/templates"
-        class="group p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-emerald-500/50 hover:bg-cinema-850/80 transition-all flex flex-col justify-between"
+        class="group p-6 rounded-2xl spotlight-card flex flex-col justify-between"
       >
         <div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
             🧰
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2 literary-serif">
             拿模板 · 工具脚手架
           </h3>
           <p class="text-sm text-cinema-400 leading-relaxed">
@@ -192,23 +202,24 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
     </div>
   </section>
 
-  <!-- Live Demonstration: Real Screenplay Craft -->
+  <!-- Live Demonstration: Real Screenplay Craft & Oscilloscope -->
   <section class="py-12 px-4 sm:px-6 max-w-4xl mx-auto">
-    <div class="border border-cinema-800 rounded-2xl p-6 sm:p-8 bg-cinema-900/60">
+    <div class="border border-cinema-750 rounded-3xl p-6 sm:p-8 bg-cinema-900/80 shadow-2xl spotlight-card">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-2">
-          <span class="text-amber-400 text-lg">🖋️</span>
-          <h3 class="text-base sm:text-lg font-bold text-white">
+          <span class="text-amber-400 text-xl">🖋️</span>
+          <h3 class="text-base sm:text-lg font-bold text-white literary-serif">
             什么是正规军编剧手艺？
           </h3>
         </div>
-        <span class="text-xs font-mono text-cinema-400">从台词潜台词到镜头语言</span>
+        <span class="text-xs font-mono text-cinema-400">从台词潜台词到视听镜头语言</span>
       </div>
 
-      <p class="text-sm text-cinema-300 mb-4 leading-relaxed">
-        业余写手写台词，把心里话直接吼出来；职业编剧写台词，<strong class="text-amber-300">字面越平静，底下风暴越烈</strong>。看看下面的标准剧本示范：
+      <p class="text-sm text-cinema-300 mb-4 leading-relaxed font-light">
+        业余写手写台词，把心里话直接吼出来；职业编剧写台词，<strong class="text-amber-300 font-medium">字面越平静，底下风暴越烈</strong>。支持切换「视听台本」、「导演分镜」与「AI Prompt」三种专业模式：
       </p>
 
+      <!-- Upgraded Multi-View Screenplay Block -->
       <ScreenplayBlock
         sceneHeading="INT. 顾氏宗祠 - 夜 [暴雪]"
         actionText="寒风卷着碎雪撞击棂窗。族长顾廷威端坐高堂，手旁搁着已除名的朱笔族谱。顾淮跪在冰冷青砖上，肩头积雪未化，衣衫单薄。"
@@ -218,6 +229,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
         note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，世俗规则约束已失效，接下来将是降维维度的复仇。"
       />
 
+      <!-- Upgraded Dynamic SVG Oscilloscope Beat Waveform -->
       <BeatVisualizer
         episodeName="爆款微短剧第一集 · 黄金生死卡点"
       />
@@ -244,7 +256,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       {featuredTeardowns.map((item) => (
         <a
           href={`/teardowns/${item.slug}`}
-          class="group rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/50 hover:bg-cinema-850/80 transition-all flex flex-col overflow-hidden shadow-lg hover:shadow-amber-500/10"
+          class="group rounded-2xl spotlight-card flex flex-col overflow-hidden shadow-xl"
         >
           <!-- Poster Container with Overlay -->
           <div class="relative aspect-[3/4] w-full overflow-hidden bg-cinema-950">
@@ -262,14 +274,14 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
             )}
             
             <!-- Gradient Overlay for Legibility -->
-            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/25 to-transparent"></div>
             
             <!-- Top Tags -->
             <div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-              <span class="text-[11px] font-bold px-2.5 py-1 rounded-md bg-cinema-950/80 text-amber-400 border border-amber-500/30 backdrop-blur-md shadow-sm">
+              <span class="text-[11px] font-bold px-2.5 py-1 rounded-md bg-cinema-950/85 text-amber-400 border border-amber-500/30 backdrop-blur-md shadow-sm font-mono">
                 {item.data.format}
               </span>
-              <span class="text-[11px] font-mono px-2 py-1 rounded-md bg-cinema-950/80 text-cinema-300 border border-cinema-800 backdrop-blur-md">
+              <span class="text-[11px] font-mono px-2 py-1 rounded-md bg-cinema-950/85 text-cinema-300 border border-cinema-800 backdrop-blur-md">
                 {item.data.episodesOrDuration}
               </span>
             </div>
@@ -322,7 +334,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       {sortedGuides.map((guide) => (
         <a
           href={`/guides/${guide.slug}`}
-          class="p-5 rounded-xl bg-cinema-900 border border-cinema-800 hover:border-cinema-700 hover:bg-cinema-850 transition-all flex flex-col justify-between"
+          class="p-5 rounded-2xl spotlight-card flex flex-col justify-between"
         >
           <div>
             <div class="flex items-center gap-2 mb-2">
@@ -333,16 +345,16 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
                 {guide.data.level} · {guide.data.readTime}
               </span>
             </div>
-            <h4 class="text-base font-bold text-white hover:text-amber-400 transition-colors line-clamp-2">
+            <h4 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2 literary-serif">
               {guide.data.title}
             </h4>
-            <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed">
+            <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed font-light">
               {guide.data.summary}
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
             <span>更新于 {guide.data.updated}</span>
-            <span class="text-amber-400">阅读全文 ➔</span>
+            <span class="text-amber-400 font-medium">阅读全文 ➔</span>
           </div>
         </a>
       ))}
@@ -359,7 +371,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
         <h3 class="text-2xl font-bold text-white literary-serif">
           原创剧本案头 · 工业样板库
         </h3>
-        <p class="text-xs sm:text-sm text-cinema-400 mt-1">
+        <p class="text-xs sm:text-sm text-cinema-400 mt-1 font-light">
           手艺靠真案头说话，拒绝虚假包装。全套大纲、人物小传与黄金前三集视听节拍卡已脱水公开。
         </p>
       </div>
@@ -372,7 +384,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
       {featuredWorks.map((work) => (
         <a
           href={`/works/${work.slug}`}
-          class="group rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col overflow-hidden shadow-xl"
+          class="group rounded-2xl spotlight-card flex flex-col overflow-hidden shadow-xl"
         >
           {work.data.poster && (
             <div class="aspect-[3/4] overflow-hidden bg-cinema-950 relative">
@@ -382,7 +394,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-cinema-950/80 border border-amber-500/30 text-[10px] text-amber-400 font-mono font-bold backdrop-blur-sm">
+              <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-cinema-950/85 border border-amber-500/30 text-[10px] text-amber-400 font-mono font-bold backdrop-blur-sm">
                 {work.data.episodes} 集
               </div>
             </div>
@@ -400,7 +412,7 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
               <h4 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1 literary-serif">
                 {work.data.title}
               </h4>
-              <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed">
+              <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed font-light">
                 {work.data.logline}
               </p>
             </div>

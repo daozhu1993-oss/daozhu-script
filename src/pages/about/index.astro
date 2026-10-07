@@ -26,7 +26,7 @@ const services = [
 <BaseLayout activePath="/about" title="关于岛主与合作 · 岛主编剧工坊">
   <section class="pt-12 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
     <!-- Bio Header -->
-    <div class="p-8 rounded-3xl bg-cinema-900 border border-cinema-800 mb-12 relative overflow-hidden">
+    <div class="p-8 rounded-3xl spotlight-card mb-12 relative overflow-hidden">
       <div class="relative z-10">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono mb-4">
           🎬 ABOUT THE CREATOR
@@ -64,7 +64,7 @@ const services = [
 
       <div class="grid grid-cols-1 gap-4">
         {services.map((item) => (
-          <div class="p-6 rounded-2xl bg-cinema-900/90 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="p-6 rounded-2xl spotlight-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div class="flex items-center gap-2.5 mb-2">
                 <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/25">
@@ -93,7 +93,7 @@ const services = [
     </div>
 
     <!-- Contact & Community Card -->
-    <div id="contact" class="p-8 rounded-3xl bg-gradient-to-br from-cinema-900 to-cinema-950 border border-cinema-700 shadow-xl">
+    <div id="contact" class="p-8 rounded-3xl spotlight-card shadow-2xl">
       <div class="max-w-xl">
         <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 literary-serif">
           联系岛主 · 开启合作

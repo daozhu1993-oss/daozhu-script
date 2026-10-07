@@ -16,24 +16,26 @@ const navLinks = [
 ];
 ---
 
-<header class="w-full bg-cinema-900/95 border-b border-cinema-800 backdrop-blur-md sticky top-[29px] z-40">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <!-- Brand Logo -->
-    <a href="/" class="flex items-center gap-3 group">
-      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-cinema-950 font-bold shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
-        <span class="text-lg">🎬</span>
+<header class="w-full bg-cinema-900/95 border-b border-cinema-800 backdrop-blur-md sticky top-[29px] z-40 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <!-- Brand Logo with Clapperboard Slate Micro-Interaction -->
+    <a href="/" class="flex items-center gap-3 group" title="岛主编剧工坊 首页">
+      <div class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-cinema-950 font-bold shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-all">
+        <span class="text-xl group-hover:rotate-[-14deg] transition-transform origin-bottom-left inline-block">🎬</span>
+        <!-- Film slate edge indicator -->
+        <div class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-300 border border-cinema-950"></div>
       </div>
       <div>
         <div class="flex items-center gap-2">
-          <span class="text-base font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors">
+          <span class="text-base sm:text-lg font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors literary-serif">
             岛主编剧工坊
           </span>
-          <span class="text-[10px] font-mono tracking-wider uppercase px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+          <span class="text-[10px] font-mono tracking-wider uppercase px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold">
             10年职业剧作
           </span>
         </div>
-        <p class="text-[11px] text-cinema-400 hidden sm:block">
-          影视正规军 · 降维拆解短剧与AI漫剧
+        <p class="text-[11px] text-cinema-400 hidden sm:block tracking-wide">
+          影视正规军 · 降维拆解短剧与AI漫剧视听
         </p>
       </div>
     </a>
@@ -46,15 +48,15 @@ const navLinks = [
           <a
             href={item.href}
             class:list={[
-              'px-2.5 py-1.5 rounded-md text-sm font-medium transition-all relative inline-flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-lg text-sm font-medium transition-all relative inline-flex items-center gap-1.5',
               isActive
-                ? 'text-amber-400 bg-amber-500/10 font-semibold'
+                ? 'text-amber-400 bg-amber-500/15 font-semibold border border-amber-500/20 shadow-sm'
                 : 'text-cinema-300 hover:text-white hover:bg-cinema-800/60',
             ]}
           >
             {item.label}
             {item.isNew && (
-              <span class="px-1.5 py-0.5 text-[9px] font-mono rounded bg-gradient-to-r from-amber-400 to-amber-500 text-cinema-950 font-extrabold tracking-tighter">
+              <span class="px-1.5 py-0.2 text-[9px] font-mono rounded bg-gradient-to-r from-amber-400 to-amber-500 text-cinema-950 font-black tracking-tighter shadow-sm animate-pulse">
                 HOT
               </span>
             )}
@@ -63,28 +65,47 @@ const navLinks = [
       })}
     </nav>
 
-    <!-- Header Action Button -->
-    <div class="flex items-center gap-3">
+    <!-- Header Action Button & Sound FX Equalizer Toggle -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Web Audio SFX Toggle Button -->
+      <button
+        id="btn-cinema-audio"
+        type="button"
+        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono text-cinema-400 hover:text-amber-400 hover:bg-cinema-800/80 border border-cinema-750 transition-all cursor-pointer"
+        title="开启/关闭电影拟真音效（打字机、场记板）"
+        aria-label="切换电影音效"
+      >
+        <span id="audio-icon" class="text-sm">🔈</span>
+        <span id="audio-label" class="hidden sm:inline">SFX: OFF</span>
+        <!-- Animated Equalizer bars when audio is ON -->
+        <span id="audio-eq" class="hidden items-end gap-0.5 h-3 ml-0.5">
+          <span class="w-0.5 bg-amber-400 rounded-full animate-eq-1"></span>
+          <span class="w-0.5 bg-amber-400 rounded-full animate-eq-2"></span>
+          <span class="w-0.5 bg-amber-400 rounded-full animate-eq-3"></span>
+        </span>
+      </button>
+
+      <!-- Primary Action CTA -->
       <a
         href="/templates#lead-pack"
-        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-cinema-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-sm shadow-amber-500/20 active:scale-95"
+        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-cinema-950 bg-gradient-to-r from-amber-400 via-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md shadow-amber-500/25 active:scale-95 cursor-pointer"
       >
         <span>🎁</span>
-        <span>免费领开局包</span>
+        <span class="hidden sm:inline">免费领</span><span>开局手艺包</span>
       </a>
     </div>
   </div>
 
   <!-- Mobile Secondary Nav -->
-  <div class="md:hidden flex items-center justify-between px-4 py-2 border-t border-cinema-800/60 overflow-x-auto text-xs space-x-3 bg-cinema-950/60">
+  <div class="md:hidden flex items-center justify-between px-4 py-2 border-t border-cinema-800/60 overflow-x-auto text-xs space-x-3 bg-cinema-950/70">
     {navLinks.map((item) => {
       const isActive = activePath === item.href;
       return (
         <a
           href={item.href}
           class:list={[
-            'shrink-0 py-1 px-2 rounded',
-            isActive ? 'text-amber-400 font-bold bg-amber-500/10' : 'text-cinema-400',
+            'shrink-0 py-1 px-2.5 rounded-lg text-xs',
+            isActive ? 'text-amber-400 font-bold bg-amber-500/15 border border-amber-500/20' : 'text-cinema-400 hover:text-white',
           ]}
         >
           {item.label}
@@ -93,3 +114,44 @@ const navLinks = [
     })}
   </div>
 </header>
+
+<script is:inline>
+  // 绑定全局音效开关控件与状态显示
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btn-cinema-audio');
+    const icon = document.getElementById('audio-icon');
+    const label = document.getElementById('audio-label');
+    const eq = document.getElementById('audio-eq');
+
+    function updateAudioUI(isMuted) {
+      if (!icon || !label || !eq) return;
+      if (isMuted) {
+        icon.textContent = '🔈';
+        label.textContent = 'SFX: OFF';
+        eq.classList.add('hidden');
+        eq.classList.remove('flex');
+        btn?.classList.remove('border-amber-500/50', 'text-amber-400');
+      } else {
+        icon.textContent = '🔊';
+        label.textContent = 'SFX: ON';
+        eq.classList.remove('hidden');
+        eq.classList.add('flex');
+        btn?.classList.add('border-amber-500/50', 'text-amber-400');
+      }
+    }
+
+    // 从全局音频引擎或 localStorage 读取初始状态
+    const initialMuted = localStorage.getItem('cinema_sfx_muted') !== 'false';
+    updateAudioUI(initialMuted);
+
+    btn?.addEventListener('click', () => {
+      if (window.cinemaAudio) {
+        const isMuted = !window.cinemaAudio.toggle();
+        updateAudioUI(isMuted);
+        if (!isMuted && window.showToast) {
+          window.showToast('🎬 电影拟真音效已开启（打字机、场记板）', 'success');
+        }
+      }
+    });
+  });
+</script>

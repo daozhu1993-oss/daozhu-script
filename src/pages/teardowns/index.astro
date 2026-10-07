@@ -82,7 +82,7 @@ const categories = Object.keys(catCounts);
         const itemCat = getTeardownCategory(item);
         return (
           <article
-            class="teardown-card p-6 sm:p-7 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-blue-500/40 hover:bg-cinema-850/70 transition-all flex flex-col md:flex-row gap-6 shadow-xl"
+            class="teardown-card p-6 sm:p-7 rounded-2xl spotlight-card transition-all flex flex-col md:flex-row gap-6 shadow-xl"
             data-td-category={itemCat}
             data-td-title={item.data.title.toLowerCase()}
             data-td-hook={item.data.hookTiming.toLowerCase()}

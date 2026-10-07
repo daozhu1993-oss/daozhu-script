@@ -160,6 +160,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                   <button type="button" id="btn-download-current" class="text-xs font-mono px-2.5 py-1.5 rounded-lg bg-cinema-850 hover:bg-cinema-800 text-cinema-300 hover:text-white border border-cinema-700 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer" title="下载当前生成文本为本地 TXT 文件">
                     <span>📥 下载 .txt</span>
                   </button>
+                  <button type="button" id="btn-download-fountain" class="text-xs font-mono px-2.5 py-1.5 rounded-lg bg-cinema-850 hover:bg-cinema-800 text-amber-400 hover:text-amber-300 border border-amber-500/30 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer" title="导出行业标准 .fountain 剧本文件（支持 Highland / Final Draft / WriterDuet）">
+                    <span>🎞️ 导出 .fountain</span>
+                  </button>
                   <button type="button" id="btn-copy-current" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer">
                     <span id="btn-copy-label">📋 一键复制当前内容</span>
                   </button>
@@ -1084,6 +1087,7 @@ ${antagName}，你刚才说，要废了谁？
     const downloadCurrentBtn = document.getElementById('btn-download-current');
     if (downloadCurrentBtn) {
       downloadCurrentBtn.addEventListener('click', () => {
+        window.cinemaAudio?.playCue();
         let textToDownload = '';
         if (currentBeatView === 'script') {
           textToDownload = document.getElementById('script-full-content')?.innerText || '';
@@ -1094,6 +1098,24 @@ ${antagName}，你刚才说，要废了谁？
         }
         const dateStr = new Date().toISOString().slice(0, 10);
         downloadTextAsFile(`daozhu-screenplay-${currentBeatView}-${dateStr}.txt`, textToDownload);
+      });
+    }
+
+    const downloadFountainBtn = document.getElementById('btn-download-fountain');
+    if (downloadFountainBtn) {
+      downloadFountainBtn.addEventListener('click', () => {
+        window.cinemaAudio?.playCue();
+        const rawScript = document.getElementById('script-full-content')?.innerText || '';
+        const titleVal = document.getElementById('beat-title')?.value || '未命名短剧';
+        const fountainHeader = `Title: 《${titleVal}》· 第1集\nCredit: 原创视听分集台本\nAuthor: 岛主编剧工坊 (script.daozhuai.cn)\nFormat: 90s Vertical Screenplay\nDraft date: ${new Date().toLocaleDateString()}\n\n`;
+        const fountainBody = rawScript
+          .replace(/【短剧.+?】/g, '')
+          .replace(/场口：/g, 'INT. ')
+          .replace(/人物：/g, 'CHARACTERS: ')
+          .replace(/【视听动作】：/g, '')
+          .replace(/\[音效\]：/g, '.SFX: ');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadTextAsFile(`daozhu-${titleVal}-${dateStr}.fountain`, fountainHeader + fountainBody);
       });
     }
 

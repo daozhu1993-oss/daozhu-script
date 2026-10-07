@@ -138,7 +138,7 @@ const steps = [
             {item.step}
           </div>
 
-          <div class="p-6 rounded-2xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all shadow-lg">
+          <div class="p-6 rounded-2xl spotlight-card transition-all shadow-xl">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
               <div class="flex items-center gap-2">
                 <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
@@ -261,6 +261,7 @@ const steps = [
           if (e.target.checked) {
             if (!completed.includes(stepId)) completed.push(stepId);
             window.showToast?.('打卡成功！离商用出师又近了一步 🚀', 'success');
+            window.cinemaAudio?.playCue();
           } else {
             completed = completed.filter((id) => id !== stepId);
           }

@@ -1,10 +1,12 @@
 ---
 interface BeatItem {
   timing: string;
+  seconds: number;
   phase: '钩子' | '压抑' | '反转' | '卡点';
   title: string;
   desc: string;
   dopamineLevel: number; // 1 to 5
+  tensionPercent: number; // 0 to 100
 }
 
 interface Props {
@@ -17,31 +19,39 @@ const {
   beats = [
     {
       timing: '00:03 秒',
+      seconds: 3,
       phase: '钩子',
       title: '生死危机 / 奇观砸脸',
       desc: '拒绝慢热前戏，主角陷入绝境或遭受侮辱，迅速建立主角同情与生存欲望。',
       dopamineLevel: 4,
+      tensionPercent: 85,
     },
     {
       timing: '00:30 秒',
+      seconds: 30,
       phase: '压抑',
       title: '绝境筑底 / 蓄势加压',
       desc: '反派施压升级，周围人冷嘲热讽，观众情绪被极度压抑，期待值拉满。',
       dopamineLevel: 2,
+      tensionPercent: 35,
     },
     {
       timing: '01:10 秒',
+      seconds: 70,
       phase: '反转',
       title: '身份显露 / 爽点初释',
       desc: '金手指觉醒或隐藏身份反常识亮相，完成第一次情绪解压与初级打脸。',
       dopamineLevel: 5,
+      tensionPercent: 98,
     },
     {
       timing: '01:45 秒',
+      seconds: 105,
       phase: '卡点',
       title: '断章留白 / 强扣悬念',
       desc: '在更大危机爆发的前一秒切黑屏，逼迫观众无法自拔划向下一集。',
       dopamineLevel: 4,
+      tensionPercent: 92,
     },
   ],
 } = Astro.props;
@@ -52,36 +62,142 @@ const phaseColors: Record<string, string> = {
   反转: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
   卡点: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
 };
+
+const visualizerId = `beat-vis-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
-<div class="my-6 p-5 rounded-xl bg-cinema-900 border border-cinema-750 shadow-md">
-  <div class="flex items-center justify-between pb-4 mb-4 border-b border-cinema-800">
-    <div class="flex items-center gap-2">
-      <span class="text-amber-400 font-bold text-sm">⚡ 爽感节拍波形</span>
-      <span class="text-cinema-400 text-xs">({episodeName})</span>
+<div id={visualizerId} class="my-8 p-6 rounded-2xl bg-cinema-900 border border-cinema-750 shadow-2xl spotlight-card">
+  <!-- Top Header with Audio/Waveform info -->
+  <div class="flex flex-wrap items-center justify-between pb-4 mb-5 border-b border-cinema-800 gap-3">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 text-sm font-bold">
+        ⚡
+      </div>
+      <div>
+        <h4 class="text-white font-bold text-sm sm:text-base flex items-center gap-2">
+          <span>90秒黄金爽感节拍波形</span>
+          <span class="text-cinema-400 text-xs font-normal font-mono">({episodeName})</span>
+        </h4>
+        <p class="text-[11px] text-cinema-400 font-mono">
+          “前3秒抓眼球 → 30秒情绪窒息 → 70秒痛快释放 → 90秒扣死悬念”
+        </p>
+      </div>
     </div>
-    <div class="text-[11px] text-cinema-400 font-mono">
-      “压抑→蓄势→爆发→反馈”闭环
+
+    <!-- Interactive Replay Timeline Sweep -->
+    <button
+      type="button"
+      class="btn-sweep-play px-3 py-1.5 rounded-lg bg-cinema-800 hover:bg-amber-500 hover:text-cinema-950 text-cinema-200 border border-cinema-700 hover:border-amber-400 transition-all text-xs font-mono flex items-center gap-1.5 cursor-pointer active:scale-95"
+      title="动态回放 90 秒情绪波形演进"
+    >
+      <span class="play-icon">▶</span>
+      <span>推演情绪波形</span>
+    </button>
+  </div>
+
+  <!-- Real Dynamic SVG Tension Oscilloscope Curve (情绪张力动态示波图) -->
+  <div class="relative w-full h-32 mb-6 bg-cinema-950/80 rounded-xl border border-cinema-800 p-2 overflow-hidden">
+    <!-- Grid lines -->
+    <div class="absolute inset-0 grid grid-cols-4 grid-rows-3 opacity-15 pointer-events-none">
+      <div class="border-r border-b border-cinema-400"></div>
+      <div class="border-r border-b border-cinema-400"></div>
+      <div class="border-r border-b border-cinema-400"></div>
+      <div class="border-b border-cinema-400"></div>
+      <div class="border-r border-b border-cinema-400"></div>
+      <div class="border-r border-b border-cinema-400"></div>
+      <div class="border-r border-b border-cinema-400"></div>
+      <div class="border-b border-cinema-400"></div>
+      <div class="border-r border-cinema-400"></div>
+      <div class="border-r border-cinema-400"></div>
+      <div class="border-r border-cinema-400"></div>
+      <div></div>
+    </div>
+
+    <!-- Tension Curve SVG -->
+    <svg viewBox="0 0 800 120" preserveAspectRatio="none" class="w-full h-full relative z-10 overflow-visible">
+      <defs>
+        <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#3b82f6" />
+          <stop offset="30%" stop-color="#a855f7" />
+          <stop offset="70%" stop-color="#10b981" />
+          <stop offset="100%" stop-color="#f59e0b" />
+        </linearGradient>
+        <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#07090c" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+
+      <!-- Fill area under curve -->
+      <path
+        d="M 20 110 L 40 30 C 120 25, 180 95, 240 85 C 360 80, 480 12, 560 12 C 640 12, 700 25, 760 22 L 760 110 Z"
+        fill="url(#areaGradient)"
+      />
+
+      <!-- Main Tension Bezier Line -->
+      <path
+        id="tension-line"
+        d="M 20 110 L 40 30 C 120 25, 180 95, 240 85 C 360 80, 480 12, 560 12 C 640 12, 700 25, 760 22"
+        fill="none"
+        stroke="url(#curveGradient)"
+        stroke-width="3.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+
+      <!-- Interactive Beat Points on Curve -->
+      <!-- Point 1: 00:03 Hook (40, 30) -->
+      <circle cx="40" cy="30" r="5" fill="#3b82f6" stroke="#ffffff" stroke-width="2" class="cursor-pointer hover:r-7 transition-all" />
+      <text x="40" y="18" text-anchor="middle" fill="#3b82f6" font-family="monospace" font-size="11" font-weight="bold">00:03s 奇观</text>
+
+      <!-- Point 2: 00:30 Pressure (240, 85) -->
+      <circle cx="240" cy="85" r="5" fill="#a855f7" stroke="#ffffff" stroke-width="2" class="cursor-pointer hover:r-7 transition-all" />
+      <text x="240" y="104" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="11" font-weight="bold">00:30s 绝境</text>
+
+      <!-- Point 3: 01:10 Twist (560, 12) -->
+      <circle cx="560" cy="12" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2" class="cursor-pointer hover:r-8 transition-all animate-pulse" />
+      <text x="560" y="28" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold">01:10s 爆发</text>
+
+      <!-- Point 4: 01:45 Cliffhanger (760, 22) -->
+      <circle cx="760" cy="22" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" class="cursor-pointer hover:r-7 transition-all" />
+      <text x="760" y="40" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="11" font-weight="bold">01:45s 卡点</text>
+
+      <!-- Dynamic Laser Playhead Scan Line -->
+      <line id="laser-head" x1="20" y1="0" x2="20" y2="120" stroke="#f59e0b" stroke-width="2" stroke-dasharray="2,2" class="opacity-0 transition-opacity" />
+    </svg>
+
+    <!-- Bottom Scale Info -->
+    <div class="absolute bottom-1.5 left-4 right-4 flex justify-between text-[9px] font-mono text-cinema-400 select-none">
+      <span>00:00 (开局)</span>
+      <span>00:30 (蓄压)</span>
+      <span>01:00 (蓄能满)</span>
+      <span>01:30 (高潮释放)</span>
+      <span>02:00 (断章)</span>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-    {beats.map((beat) => (
-      <div class="p-3.5 rounded-lg bg-cinema-850 border border-cinema-800 flex flex-col justify-between hover:border-cinema-700 transition-colors">
+  <!-- Four Beats Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+    {beats.map((beat, idx) => (
+      <div class={`beat-card p-4 rounded-xl bg-cinema-850 border border-cinema-800 flex flex-col justify-between hover:border-amber-500/40 transition-all relative overflow-hidden group/card`} data-idx={idx}>
+        <!-- Top index indicator -->
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="font-mono text-xs font-bold text-cinema-300">{beat.timing}</span>
+          <span class={`text-[10px] font-bold px-2 py-0.5 rounded border ${phaseColors[beat.phase]}`}>
+            {beat.phase}
+          </span>
+        </div>
+
         <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-mono text-xs text-cinema-400">{beat.timing}</span>
-            <span class={`text-[10px] font-semibold px-2 py-0.5 rounded border ${phaseColors[beat.phase]}`}>
-              {beat.phase}
-            </span>
-          </div>
-          <h5 class="text-white text-xs font-bold mb-1.5">{beat.title}</h5>
-          <p class="text-cinema-300 text-[11px] leading-relaxed">{beat.desc}</p>
+          <h5 class="text-white text-xs sm:text-sm font-bold mb-1.5 group-hover/card:text-amber-400 transition-colors">
+            {beat.title}
+          </h5>
+          <p class="text-cinema-300 text-xs leading-relaxed font-sans">{beat.desc}</p>
         </div>
         
-        <div class="mt-3 pt-2 border-t border-cinema-800/80 flex items-center justify-between text-[10px]">
-          <span class="text-cinema-400">多巴胺刺激指数:</span>
-          <div class="flex gap-0.5 text-amber-400">
+        <div class="mt-4 pt-2.5 border-t border-cinema-800/80 flex items-center justify-between text-[11px]">
+          <span class="text-cinema-400 text-[10px]">情绪多巴胺:</span>
+          <div class="flex gap-0.5 text-amber-400 text-xs">
             {Array.from({ length: 5 }).map((_, i) => (
               <span>{i < beat.dopamineLevel ? '★' : '☆'}</span>
             ))}
@@ -91,3 +207,72 @@ const phaseColors: Record<string, string> = {
     ))}
   </div>
 </div>
+
+<script is:inline define:vars={{ visualizerId }}>
+  (function setupBeatSweep() {
+    const root = document.getElementById(visualizerId);
+    if (!root) return;
+
+    const playBtn = root.querySelector('.btn-sweep-play');
+    const laserHead = root.querySelector('#laser-head');
+    const cards = root.querySelectorAll('.beat-card');
+    let isPlaying = false;
+
+    playBtn?.addEventListener('click', () => {
+      if (isPlaying) return;
+      isPlaying = true;
+      laserHead.classList.remove('opacity-0');
+      laserHead.classList.add('opacity-100');
+
+      window.cinemaAudio?.playClapper();
+
+      let progress = 0;
+      const duration = 2400; // 2.4s sweep
+      const startTime = performance.now();
+
+      function animateSweep(time) {
+        const elapsed = time - startTime;
+        progress = Math.min(elapsed / duration, 1);
+        const xPos = 20 + progress * 740;
+        laserHead.setAttribute('x1', xPos);
+        laserHead.setAttribute('x2', xPos);
+
+        // Highlight cards as playhead crosses them
+        if (progress > 0.05 && progress < 0.25) {
+          highlightCard(0);
+        } else if (progress >= 0.25 && progress < 0.55) {
+          highlightCard(1);
+        } else if (progress >= 0.55 && progress < 0.85) {
+          highlightCard(2);
+        } else if (progress >= 0.85) {
+          highlightCard(3);
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(animateSweep);
+        } else {
+          setTimeout(() => {
+            laserHead.classList.add('opacity-0');
+            laserHead.classList.remove('opacity-100');
+            cards.forEach(c => c.classList.remove('ring-2', 'ring-amber-400', 'bg-cinema-800'));
+            isPlaying = false;
+            window.cinemaAudio?.playCue();
+          }, 400);
+        }
+      }
+
+      function highlightCard(index) {
+        cards.forEach((card, i) => {
+          if (i === index) {
+            card.classList.add('ring-2', 'ring-amber-400', 'bg-cinema-800');
+          } else {
+            card.classList.remove('ring-2', 'ring-amber-400', 'bg-cinema-800');
+          }
+        });
+        window.cinemaAudio?.playTypewriter();
+      }
+
+      requestAnimationFrame(animateSweep);
+    });
+  })();
+</script>

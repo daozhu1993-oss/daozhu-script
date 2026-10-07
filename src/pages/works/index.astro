@@ -64,7 +64,7 @@ const trackList = Object.keys(trackCounts);
         const { Content } = await work.render();
         return (
           <article
-            class="work-card p-6 sm:p-8 rounded-3xl bg-cinema-900 border border-cinema-800 hover:border-amber-500/40 transition-all flex flex-col md:flex-row gap-8 relative overflow-hidden shadow-2xl"
+            class="work-card p-6 sm:p-8 rounded-3xl spotlight-card flex flex-col md:flex-row gap-8 relative overflow-hidden shadow-2xl"
             data-work-track={work.data.track}
           >
             <!-- Status badge -->
@@ -156,6 +156,7 @@ const trackList = Object.keys(trackCounts);
         });
 
         btn.className = 'work-track-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer bg-amber-500 text-cinema-950 font-bold shadow-sm ring-1 ring-amber-400';
+        window.cinemaAudio?.playTypewriter();
 
         const selectedTrack = btn.getAttribute('data-track');
         let visibleCount = 0;

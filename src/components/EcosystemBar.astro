@@ -1,38 +1,98 @@
 ---
-// Ecosystem navigation bar connecting the 3 sites
+// Ecosystem navigation bar connecting the Digital Archipelago with live Cinema Production Slate HUD
 ---
-<div class="w-full bg-cinema-950/90 border-b border-cinema-800/80 text-xs py-1.5 px-4 backdrop-blur-sm sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto flex items-center justify-between text-cinema-400">
-    <div class="flex items-center space-x-2">
-      <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-      <span class="text-cinema-300 font-medium">岛主数字工坊矩阵:</span>
-    </div>
-    <div class="flex items-center space-x-4 md:space-x-6 overflow-x-auto">
+<div class="w-full bg-cinema-950/95 border-b border-cinema-800/80 text-xs py-1.5 px-4 backdrop-blur-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex items-center justify-between text-cinema-400">
+    <!-- Left: Ecosystem Archipelago Network -->
+    <div class="flex items-center space-x-3 overflow-x-auto text-[11px] sm:text-xs">
+      <a href="https://daozhuai.cn/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors flex items-center gap-1 shrink-0 font-medium text-cinema-300">
+        <span>🌟</span>
+        <span class="hidden md:inline">母港 ·</span> 主站
+      </a>
+      <span class="text-cinema-800">/</span>
+      <a href="https://me.daozhuai.cn/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors flex items-center gap-1 shrink-0">
+        <span>🏝️</span>
+        <span class="hidden sm:inline">思想 ·</span> 个站
+      </a>
+      <span class="text-cinema-800">/</span>
       <a 
-        href="https://daozhu-ai-daily.daozhu1993.workers.dev/" 
+        href="https://dailyone.daozhuai.cn/" 
         target="_blank" 
         rel="noopener noreferrer"
         class="hover:text-amber-400 transition-colors flex items-center gap-1 shrink-0"
       >
         <span>🛰️</span>
-        <span class="hidden sm:inline">时代雷达 ·</span> AI资讯日报
+        <span class="hidden sm:inline">情报 ·</span> AI日刊
       </a>
-      <span class="text-cinema-700">/</span>
+      <span class="text-cinema-800">/</span>
       <a 
-        href="https://daozhu1993-oss.github.io/daozhu-inspo/" 
+        href="https://inspo.daozhuai.cn/" 
         target="_blank" 
         rel="noopener noreferrer"
         class="hover:text-amber-400 transition-colors flex items-center gap-1 shrink-0"
       >
         <span>🎨</span>
-        <span class="hidden sm:inline">视觉审美 ·</span> 设计动效灵感
+        <span class="hidden sm:inline">审美 ·</span> 设计灵感
       </a>
-      <span class="text-cinema-700">/</span>
+      <span class="text-cinema-800">/</span>
       <span class="text-amber-400 font-semibold flex items-center gap-1 shrink-0">
         <span>🎬</span>
-        <span class="hidden sm:inline">叙事变现 ·</span> 编剧手艺工坊
-        <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/30">当前</span>
+        <span class="hidden sm:inline">叙事 ·</span> 编剧工坊
+        <span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded border border-amber-500/30">当前</span>
       </span>
+    </div>
+
+    <!-- Right: Cinema HUD Production Timecode & Camera Slate -->
+    <div class="hidden lg:flex items-center space-x-4 font-mono text-[11px] text-cinema-400 tracking-wider">
+      <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-cinema-900 border border-cinema-800">
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-rec"></span>
+        <span class="text-rose-400 font-bold">REC</span>
+        <span id="hud-timecode" class="text-white font-mono">01:24:36:18</span>
+      </div>
+
+      <div class="flex items-center gap-2 text-cinema-400">
+        <span>FPS 24</span>
+        <span class="text-cinema-800">|</span>
+        <span>35mm T1.5</span>
+        <span class="text-cinema-800">|</span>
+        <span class="text-amber-400/90 font-medium">WB 3200K</span>
+      </div>
     </div>
   </div>
 </div>
+
+<script is:inline>
+  // 电影摄影机真实跳动时间码（24 FPS Timecode Simulation）
+  (function initTimecode() {
+    let frames = 18;
+    let seconds = 36;
+    let minutes = 24;
+    let hours = 1;
+
+    function updateHUD() {
+      frames++;
+      if (frames >= 24) {
+        frames = 0;
+        seconds++;
+        if (seconds >= 60) {
+          seconds = 0;
+          minutes++;
+          if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+          }
+        }
+      }
+      const el = document.getElementById('hud-timecode');
+      if (el) {
+        const hh = String(hours).padStart(2, '0');
+        const mm = String(minutes).padStart(2, '0');
+        const ss = String(seconds).padStart(2, '0');
+        const ff = String(frames).padStart(2, '0');
+        el.textContent = `${hh}:${mm}:${ss}:${ff}`;
+      }
+    }
+
+    setInterval(updateHUD, 1000 / 24);
+  })();
+</script>

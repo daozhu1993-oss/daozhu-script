@@ -6,6 +6,8 @@ interface Props {
   parenthetical?: string;
   dialogue: string;
   note?: string;
+  lensInfo?: string;
+  aiPrompt?: string;
 }
 
 const {
@@ -14,46 +16,203 @@ const {
   character,
   parenthetical,
   dialogue,
-  note,
+  note = '字面上在说敬语与旧账，实则向反派宣告：我已不在乎被逐出宗族，世俗规则约束已失效，接下来将是降维维度的复仇。',
+  lensInfo = '特写 50mm T1.8 → 极慢速推镜头；冷调蓝灰月光 5600K 侧逆光勾勒，背景族谱残页在浅景深中轻微焦外虚化。',
+  aiPrompt = 'cinematic still, close up of a dignified lone man in ruined ancestral hall, cold rim light, anamorphic lens flare, photorealistic, 8k, award winning cinematography --ar 9:16 --v 6.1',
 } = Astro.props;
+
+// Generate unique ID for this screenplay block
+const blockId = `script-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
-<div class="my-6 rounded-xl border border-cinema-700/70 bg-cinema-900/90 p-5 shadow-lg relative overflow-hidden group">
-  <div class="absolute top-0 right-0 px-3 py-1 bg-amber-500/10 text-amber-400 border-b border-l border-amber-500/20 text-[11px] font-mono rounded-bl-lg">
-    影视工业标准格式 · SCREENPLAY
+<div id={blockId} class="screenplay-container my-8 rounded-2xl border border-cinema-750 bg-cinema-900/90 shadow-2xl overflow-hidden spotlight-card group">
+  <!-- Top Bar: Cinema Slate & Controls -->
+  <div class="px-5 py-3 bg-cinema-950/90 border-b border-cinema-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/25 text-amber-400 font-mono text-[11px] font-bold">
+        <span>🎬</span>
+        <span>SCENE 01 / TAKE 01</span>
+      </div>
+      <span class="text-cinema-400 font-mono hidden sm:inline text-[11px]">35mm ANAMORPHIC</span>
+    </div>
+
+    <!-- Interactive Mode Switcher Tabs -->
+    <div class="flex items-center gap-1 p-1 bg-cinema-900 rounded-lg border border-cinema-800 text-[11px] font-mono">
+      <button
+        type="button"
+        class="mode-btn px-2.5 py-1 rounded-md text-amber-400 bg-amber-500/15 font-bold transition-all cursor-pointer"
+        data-mode="screenplay"
+        title="标准编剧视听台本"
+      >
+        📜 视听台本
+      </button>
+      <button
+        type="button"
+        class="mode-btn px-2.5 py-1 rounded-md text-cinema-400 hover:text-white transition-all cursor-pointer"
+        data-mode="director"
+        title="导演机位与灯光分镜表"
+      >
+        🎥 导演分镜
+      </button>
+      <button
+        type="button"
+        class="mode-btn px-2.5 py-1 rounded-md text-cinema-400 hover:text-white transition-all cursor-pointer"
+        data-mode="ai"
+        title="AI 绘图与视频提示词"
+      >
+        🤖 AI 视听Prompt
+      </button>
+    </div>
+
+    <!-- Quick Copy Action Button -->
+    <button
+      type="button"
+      class="btn-copy-script px-2.5 py-1 rounded-lg bg-cinema-850 hover:bg-amber-500 hover:text-cinema-950 text-cinema-300 border border-cinema-750 hover:border-amber-400 transition-all font-mono text-[11px] flex items-center gap-1 cursor-pointer active:scale-95"
+      title="一键复制当前格式剧本"
+    >
+      <span>📋</span>
+      <span>复制台本</span>
+    </button>
   </div>
 
-  <div class="screenplay-font text-cinema-200 text-sm leading-relaxed space-y-3 pt-2">
-    <!-- 场景标头 -->
-    <div class="font-bold text-amber-400 tracking-wider">
-      {sceneHeading}
-    </div>
-
-    <!-- 动作提示 -->
-    <div class="text-cinema-300 text-[13px] leading-normal pl-2 border-l-2 border-cinema-700">
-      {actionText}
-    </div>
-
-    <!-- 角色与台词 -->
-    <div class="max-w-md mx-auto pt-2 text-center space-y-1">
-      <div class="font-bold text-white tracking-widest uppercase text-xs">
-        {character}
+  <!-- Content Panes -->
+  <div class="p-6 relative">
+    <!-- View 1: Standard Industry Screenplay -->
+    <div class="view-screenplay space-y-4">
+      <!-- 场景标头 (Scene Heading: Slugline) -->
+      <div class="font-mono font-bold text-amber-400 tracking-wider text-sm flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+        <span>{sceneHeading}</span>
       </div>
-      {parenthetical && (
-        <div class="text-cinema-400 text-xs italic">
-          ({parenthetical})
+
+      <!-- 动作描写 (Action Block with courier styling) -->
+      <div class="screenplay-font text-cinema-200 text-sm leading-relaxed pl-3 border-l-2 border-amber-500/30 py-0.5">
+        {actionText}
+      </div>
+
+      <!-- 角色名与台词 (Character & Centered Dialogue with Hollywood Margins) -->
+      <div class="max-w-md mx-auto pt-4 pb-2 text-center space-y-1.5">
+        <div class="font-mono font-bold text-white tracking-[0.25em] uppercase text-xs">
+          {character}
         </div>
-      )}
-      <div class="text-cinema-100 text-left px-4 pt-1 font-normal leading-relaxed bg-cinema-850/50 py-2 rounded border border-cinema-800/80">
-        “{dialogue}”
+        {parenthetical && (
+          <div class="screenplay-font text-cinema-400 text-xs italic tracking-wide">
+            ({parenthetical})
+          </div>
+        )}
+        <div class="screenplay-font text-cinema-100 text-sm font-normal leading-relaxed bg-cinema-950/70 p-4 rounded-xl border border-cinema-800 text-left relative group-hover:border-amber-500/30 transition-colors shadow-inner">
+          <span class="text-amber-500/60 font-serif text-lg leading-none select-none">“</span>
+          <span>{dialogue}</span>
+          <span class="text-amber-500/60 font-serif text-lg leading-none select-none">”</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  {note && (
-    <div class="mt-4 pt-3 border-t border-cinema-800 text-xs text-cinema-400 flex items-start gap-2">
-      <span class="text-amber-400 font-semibold shrink-0">💡 编剧点评:</span>
-      <span>{note}</span>
+    <!-- View 2: Director Shot List & Technical Lighting -->
+    <div class="view-director hidden space-y-3 font-mono text-xs">
+      <div class="p-3.5 rounded-xl bg-cinema-950/80 border border-cinema-800 space-y-2">
+        <div class="flex items-center justify-between text-cinema-400 pb-2 border-b border-cinema-850">
+          <span class="text-amber-400 font-bold">机位调度与焦段：</span>
+          <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">50mm T1.8</span>
+        </div>
+        <p class="text-cinema-200 leading-relaxed font-sans">{lensInfo}</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+        <div class="p-2 rounded-lg bg-cinema-850 border border-cinema-800">
+          <span class="text-cinema-400 block text-[10px]">画幅比例</span>
+          <span class="text-white font-bold">9:16 (竖屏焦点)</span>
+        </div>
+        <div class="p-2 rounded-lg bg-cinema-850 border border-cinema-800">
+          <span class="text-cinema-400 block text-[10px]">快门开角</span>
+          <span class="text-white font-bold">180° (1/48s)</span>
+        </div>
+        <div class="p-2 rounded-lg bg-cinema-850 border border-cinema-800">
+          <span class="text-cinema-400 block text-[10px]">机动方式</span>
+          <span class="text-emerald-400 font-bold">极微缓推 (Push In)</span>
+        </div>
+        <div class="p-2 rounded-lg bg-cinema-850 border border-cinema-800">
+          <span class="text-cinema-400 block text-[10px]">情绪色温</span>
+          <span class="text-amber-300 font-bold">5600K 肃杀冷蓝</span>
+        </div>
+      </div>
     </div>
-  )}
+
+    <!-- View 3: AI Prompts -->
+    <div class="view-ai hidden space-y-3 font-mono text-xs">
+      <div class="p-3.5 rounded-xl bg-cinema-950/80 border border-cinema-800 space-y-2">
+        <div class="flex items-center justify-between text-cinema-400 pb-1.5 border-b border-cinema-850">
+          <span class="text-emerald-400 font-bold">Midjourney / ComfyUI 视听提示词：</span>
+          <span class="text-[10px] text-cinema-400">一键复现电影级光影</span>
+        </div>
+        <p class="text-emerald-300 font-mono text-xs leading-relaxed select-all bg-cinema-900/90 p-2.5 rounded-lg border border-cinema-800">
+          {aiPrompt}
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Editorial Note -->
+    {note && (
+      <div class="mt-4 pt-3.5 border-t border-cinema-800/80 text-xs text-cinema-300 flex items-start gap-2.5 bg-cinema-950/40 -mx-6 -mb-6 p-4 rounded-b-2xl">
+        <span class="text-amber-400 font-bold shrink-0 text-sm">💡 编剧点评:</span>
+        <span class="leading-relaxed font-sans text-cinema-300">{note}</span>
+      </div>
+    )}
+  </div>
 </div>
+
+<script is:inline define:vars={{ blockId, sceneHeading, actionText, character, parenthetical, dialogue, lensInfo, aiPrompt }}>
+  (function setupScreenplayBlock() {
+    const container = document.getElementById(blockId);
+    if (!container) return;
+
+    const modeBtns = container.querySelectorAll('.mode-btn');
+    const viewScreenplay = container.querySelector('.view-screenplay');
+    const viewDirector = container.querySelector('.view-director');
+    const viewAi = container.querySelector('.view-ai');
+    const copyBtn = container.querySelector('.btn-copy-script');
+
+    let currentMode = 'screenplay';
+
+    modeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode');
+        if (!mode) return;
+        currentMode = mode;
+
+        // Update button states
+        modeBtns.forEach((b) => {
+          b.classList.remove('text-amber-400', 'bg-amber-500/15', 'font-bold');
+          b.classList.add('text-cinema-400');
+        });
+        btn.classList.add('text-amber-400', 'bg-amber-500/15', 'font-bold');
+        btn.classList.remove('text-cinema-400');
+
+        // Toggle Views
+        viewScreenplay.classList.add('hidden');
+        viewDirector.classList.add('hidden');
+        viewAi.classList.add('hidden');
+
+        if (mode === 'screenplay') viewScreenplay.classList.remove('hidden');
+        if (mode === 'director') viewDirector.classList.remove('hidden');
+        if (mode === 'ai') viewAi.classList.remove('hidden');
+
+        window.cinemaAudio?.playTypewriter();
+      });
+    });
+
+    // Handle Copy
+    copyBtn?.addEventListener('click', () => {
+      let textToCopy = '';
+      if (currentMode === 'screenplay') {
+        textToCopy = `${sceneHeading}\n\n${actionText}\n\n${character}\n${parenthetical ? '(' + parenthetical + ')\n' : ''}“${dialogue}”`;
+      } else if (currentMode === 'director') {
+        textToCopy = `【分镜视听设计】\n机位：50mm T1.8 极微缓推\n视听描写：${lensInfo}`;
+      } else {
+        textToCopy = aiPrompt;
+      }
+
+      window.copyToClipboard(textToCopy, '已复制当前格式剧本与视听参数！');
+    });
+  })();
+</script>
