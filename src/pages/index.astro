@@ -258,23 +258,35 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
           href={`/teardowns/${item.slug}`}
           class="group rounded-2xl spotlight-card flex flex-col overflow-hidden shadow-xl"
         >
-          <!-- Poster Container with Overlay -->
-          <div class="relative aspect-[3/4] w-full overflow-hidden bg-cinema-950">
-            {item.data.poster ? (
+          <!-- Poster Container with Overlay & Film Slate Fallback -->
+          <div class="relative aspect-[3/4] w-full overflow-hidden bg-cinema-950 border-b border-cinema-850">
+            <!-- Cinema Slate Fallback Card -->
+            <div class="absolute inset-0 flex flex-col justify-between p-4 z-0 bg-gradient-to-b from-cinema-900 via-cinema-950 to-cinema-950 film-perforation">
+              <div class="flex items-center justify-between text-[10px] font-mono text-cinema-400">
+                <span class="text-amber-400/80">ROLL A01</span>
+                <span>35mm T1.5</span>
+              </div>
+              <div class="text-center py-6">
+                <span class="text-4xl block mb-2 opacity-70 group-hover:scale-110 transition-transform">🎬</span>
+                <span class="text-xs font-bold text-cinema-200 literary-serif block px-2 line-clamp-2">{item.data.title}</span>
+              </div>
+              <div class="text-[9px] font-mono text-cinema-400 text-center">
+                SCENE 01 · TAKE 01 · 24FPS
+              </div>
+            </div>
+
+            {item.data.poster && (
               <img
                 src={item.data.poster}
                 alt={item.data.title}
-                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
+                class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 z-10"
+                decoding="async"
+                onerror="this.style.display='none'"
               />
-            ) : (
-              <div class="w-full h-full flex items-center justify-center text-4xl bg-cinema-950">
-                🎬
-              </div>
             )}
             
             <!-- Gradient Overlay for Legibility -->
-            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/25 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/30 to-transparent z-20 pointer-events-none"></div>
             
             <!-- Top Tags -->
             <div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
@@ -386,19 +398,37 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
           href={`/works/${work.slug}`}
           class="group rounded-2xl spotlight-card flex flex-col overflow-hidden shadow-xl"
         >
-          {work.data.poster && (
-            <div class="aspect-[3/4] overflow-hidden bg-cinema-950 relative">
+          <div class="aspect-[3/4] overflow-hidden bg-cinema-950 relative border-b border-cinema-850">
+            <!-- Cinema Slate Fallback Card -->
+            <div class="absolute inset-0 flex flex-col justify-between p-3.5 z-0 bg-gradient-to-b from-cinema-900 via-cinema-950 to-cinema-950 film-perforation">
+              <div class="flex items-center justify-between text-[10px] font-mono text-cinema-400">
+                <span class="text-amber-400/80">SPEC SCRIPT</span>
+                <span>24FPS</span>
+              </div>
+              <div class="text-center py-4">
+                <span class="text-3xl block mb-1 opacity-70 group-hover:scale-110 transition-transform">🎞️</span>
+                <span class="text-xs font-bold text-cinema-200 literary-serif block line-clamp-2">{work.data.title}</span>
+              </div>
+              <div class="text-[9px] font-mono text-cinema-400 text-center">
+                正规军案头存证
+              </div>
+            </div>
+
+            {work.data.poster && (
               <img
                 src={work.data.poster}
                 alt={work.data.title}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
+                class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-10"
+                decoding="async"
+                onerror="this.style.display='none'"
               />
-              <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-cinema-950/85 border border-amber-500/30 text-[10px] text-amber-400 font-mono font-bold backdrop-blur-sm">
-                {work.data.episodes} 集
-              </div>
+            )}
+            
+            <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-cinema-950/85 border border-amber-500/30 text-[10px] text-amber-400 font-mono font-bold backdrop-blur-sm z-20">
+              {work.data.episodes} 集
             </div>
-          )}
+            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/20 to-transparent z-15 pointer-events-none"></div>
+          </div>
           <div class="p-4 flex-1 flex flex-col justify-between">
             <div>
               <div class="flex items-center gap-1.5 mb-2">

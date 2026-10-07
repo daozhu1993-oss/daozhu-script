@@ -19,9 +19,9 @@ const navLinks = [
 <header class="w-full bg-cinema-900/95 border-b border-cinema-800 backdrop-blur-md sticky top-[29px] z-40 transition-colors">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
     <!-- Brand Logo with Clapperboard Slate Micro-Interaction -->
-    <a href="/" class="flex items-center gap-3 group" title="岛主编剧工坊 首页">
-      <div class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-cinema-950 font-bold shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-all">
-        <span class="text-xl group-hover:rotate-[-14deg] transition-transform origin-bottom-left inline-block">🎬</span>
+    <a href="/" class="flex items-center gap-3 group" title="岛主编剧工坊 首页" id="brand-logo">
+      <div id="header-clapper-box" class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-cinema-950 font-bold shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-all cursor-pointer">
+        <span id="header-clapper-icon" class="text-xl inline-block origin-bottom-left transition-transform group-hover:rotate-[-14deg]">🎬</span>
         <!-- Film slate edge indicator -->
         <div class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-300 border border-cinema-950"></div>
       </div>
@@ -152,6 +152,18 @@ const navLinks = [
           window.showToast('🎬 电影拟真音效已开启（打字机、场记板）', 'success');
         }
       }
+    });
+
+    // 场记板点击打板交互动效与声效
+    const clapperBox = document.getElementById('header-clapper-box');
+    const clapperIcon = document.getElementById('header-clapper-icon');
+    clapperBox?.addEventListener('click', (e) => {
+      if (clapperIcon) {
+        clapperIcon.classList.remove('animate-clapper');
+        void clapperIcon.offsetWidth; // trigger reflow
+        clapperIcon.classList.add('animate-clapper');
+      }
+      window.cinemaAudio?.playClapper();
     });
   });
 </script>

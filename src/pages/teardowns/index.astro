@@ -91,19 +91,34 @@ const categories = Object.keys(catCounts);
             <!-- Poster Column -->
             <div class="w-full md:w-52 sm:w-60 shrink-0">
               <a href={`/teardowns/${item.slug}`} class="block aspect-[3/4] rounded-xl overflow-hidden bg-cinema-950 border border-cinema-800 relative group shadow-md">
-                {item.data.poster ? (
+                <!-- Cinema Slate Fallback Card -->
+                <div class="absolute inset-0 flex flex-col justify-between p-3.5 z-0 bg-gradient-to-b from-cinema-900 via-cinema-950 to-cinema-950 film-perforation">
+                  <div class="flex items-center justify-between text-[10px] font-mono text-cinema-400">
+                    <span class="text-blue-400">TEARDOWN</span>
+                    <span>24FPS</span>
+                  </div>
+                  <div class="text-center py-4">
+                    <span class="text-3xl block mb-1 opacity-70 group-hover:scale-110 transition-transform">🎬</span>
+                    <span class="text-xs font-bold text-cinema-200 literary-serif block line-clamp-2">{item.data.title}</span>
+                  </div>
+                  <div class="text-[9px] font-mono text-cinema-400 text-center">
+                    深度视听拉片
+                  </div>
+                </div>
+
+                {item.data.poster && (
                   <img
                     src={item.data.poster}
                     alt={item.data.title}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-10"
+                    decoding="async"
+                    onerror="this.style.display='none'"
                   />
-                ) : (
-                  <div class="w-full h-full flex items-center justify-center text-4xl">🎬</div>
                 )}
-                <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-cinema-950/80 text-[10px] font-bold text-amber-400 border border-amber-500/30 backdrop-blur-sm font-mono">
+                <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-cinema-950/80 text-[10px] font-bold text-amber-400 border border-amber-500/30 backdrop-blur-sm font-mono z-20">
                   {item.data.format}
                 </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/20 to-transparent z-15 pointer-events-none"></div>
               </a>
             </div>
 

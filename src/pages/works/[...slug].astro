@@ -38,15 +38,33 @@ const { Content } = await entry.render();
     <header class="pb-8 border-b border-cinema-800">
       <div class="flex flex-col md:flex-row gap-8 items-start">
         <!-- Poster Thumbnail -->
-        {entry.data.poster && (
-          <div class="w-full md:w-56 shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-cinema-800 bg-cinema-900 group">
+        <div class="w-full md:w-56 shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-cinema-800 bg-cinema-950 group relative aspect-[3/4]">
+          <!-- Cinema Slate Fallback Card -->
+          <div class="absolute inset-0 flex flex-col justify-between p-4 z-0 bg-gradient-to-b from-cinema-900 via-cinema-950 to-cinema-950 film-perforation">
+            <div class="flex items-center justify-between text-[10px] font-mono text-cinema-400">
+              <span class="text-amber-400">SPEC SCRIPT</span>
+              <span>24FPS</span>
+            </div>
+            <div class="text-center py-6">
+              <span class="text-4xl block mb-2 opacity-70 group-hover:scale-110 transition-transform">🎞️</span>
+              <span class="text-xs font-bold text-cinema-200 literary-serif block px-2 line-clamp-2">{entry.data.title}</span>
+            </div>
+            <div class="text-[9px] font-mono text-cinema-400 text-center">
+              商业案头存证
+            </div>
+          </div>
+
+          {entry.data.poster && (
             <img
               src={entry.data.poster}
               alt={entry.data.title}
-              class="w-full h-auto object-cover aspect-[3/4] group-hover:scale-102 transition-transform duration-500"
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 z-10"
+              decoding="async"
+              onerror="this.style.display='none'"
             />
-          </div>
-        )}
+          )}
+          <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/20 to-transparent z-15 pointer-events-none"></div>
+        </div>
 
         <!-- Meta and Title -->
         <div class="flex-1">
