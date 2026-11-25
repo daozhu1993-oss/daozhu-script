@@ -5,7 +5,7 @@ import BeatVisualizer from '../components/BeatVisualizer.astro';
 ---
 <BaseLayout title="宗祠对峙 · 一场戏的三种写法">
   <div class="max-w-4xl mx-auto px-5 py-12">
-    <a href="/" class="text-amber-300">← 编剧工坊</a>
+    <a href={import.meta.env.BASE_URL} class="text-amber-300">← 编剧工坊</a>
     <h1 class="literary-serif text-4xl mt-6">一场戏的三种写法</h1>
     <p class="mt-4 text-cinema-300">先读顾淮的台词，再切到导演分镜和 AI 提示词，看镜头如何接住这句对白。</p>
       <ScreenplayBlock
@@ -17,7 +17,34 @@ import BeatVisualizer from '../components/BeatVisualizer.astro';
         note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，世俗规则约束已失效，接下来将是降维维度的复仇。"
       />
 
-      <!-- Upgraded Dynamic SVG Oscilloscope Beat Waveform -->
+      <section class="my-8 space-y-4" aria-labelledby="rewrite-title">
+        <h2 id="rewrite-title" class="literary-serif text-2xl">让顾淮换一个目的，再写一次</h2>
+        <p>原场里他当众向族长讨债。如果他今晚只想拿走那本族谱，他还会直视族长吗？镜头该先拍他的眼睛，还是扣住书角的手？</p>
+        <form id="rewrite-sheet" class="grid gap-4">
+          {[
+            ['goal','此刻他最想得到什么？','拿走写着母亲名字的那页族谱'],
+            ['line','给他一句新的台词','族长，我只看一眼。'],
+            ['shot','把改变拍成一个镜头','近景。他松开握紧的拳头，指尖按住卷起的书角。']
+          ].map(([id,label,hint]) => <label class="grid gap-2">{label}<textarea name={id} required rows={2} placeholder={hint} class="w-full rounded border border-cinema-700 bg-cinema-900 p-3"></textarea></label>)}
+          <button type="submit" class="justify-self-start rounded border border-amber-300 px-4 py-2 text-amber-300">保存我的改写工作单</button>
+        </form>
+        <p id="sheet-status" role="status"></p>
+      </section>
+      <script>
+        const sheet = document.querySelector<HTMLFormElement>('#rewrite-sheet');
+        sheet?.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const fields = new FormData(sheet);
+          const text = ['顾氏宗祠 · 场景改写','原场目标：当众向族长讨债。','人物目标：'+fields.get('goal'),'新台词：'+fields.get('line'),'导演分镜：'+fields.get('shot')].join('\n\n');
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(new Blob([text], {type:'text/plain;charset=utf-8'}));
+          link.download = '顾氏宗祠-我的改写.txt';
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(link.href), 30000);
+          document.getElementById('sheet-status')!.textContent = '工作单已生成，可在浏览器下载中查看。';
+        });
+      </script>
+
       <BeatVisualizer
         episodeName="爆款微短剧第一集 · 黄金生死卡点"
       />
