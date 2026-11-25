@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScreenplayBlock from '../components/ScreenplayBlock.astro';
+import BeatVisualizer from '../components/BeatVisualizer.astro';
+---
+<BaseLayout title="宗祠对峙 · 一场戏的三种写法">
+  <div class="max-w-4xl mx-auto px-5 py-12">
+    <a href="/" class="text-amber-300">← 编剧工坊</a>
+    <h1 class="literary-serif text-4xl mt-6">一场戏的三种写法</h1>
+    <p class="mt-4 text-cinema-300">先读顾淮的台词，再切到导演分镜和 AI 提示词，看镜头如何接住这句对白。</p>
+      <ScreenplayBlock
+        sceneHeading="INT. 顾氏宗祠 - 夜 [暴雪]"
+        actionText="寒风卷着碎雪撞击棂窗。族长顾廷威端坐高堂，手旁搁着已除名的朱笔族谱。顾淮跪在冰冷青砖上，肩头积雪未化，衣衫单薄。"
+        character="顾淮"
+        parenthetical="抬起头，眼神平静得像一口古井，嘴角泛起微不可察的嘲弄"
+        dialogue="族长，这朱笔抹掉的，只是族谱上的两笔墨；可抹不掉的，是顾家欠我娘的一条命。"
+        note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，世俗规则约束已失效，接下来将是降维维度的复仇。"
+      />
+
+      <!-- Upgraded Dynamic SVG Oscilloscope Beat Waveform -->
+      <BeatVisualizer
+        episodeName="爆款微短剧第一集 · 黄金生死卡点"
+      />
+
+  </div>
+</BaseLayout>

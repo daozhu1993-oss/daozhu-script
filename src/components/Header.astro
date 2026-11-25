@@ -1,169 +1,31 @@
 ---
-interface Props {
-  activePath?: string;
-}
-
 const { activePath = '/' } = Astro.props;
-
-const navLinks = [
-  { href: '/guides', label: '方法论库', en: 'Guides' },
-  { href: '/teardowns', label: '拆爆款', en: 'Teardowns' },
-  { href: '/studio', label: '创作工作台', en: 'Studio', isNew: true },
-  { href: '/templates', label: '模板手艺包', en: 'Templates' },
-  { href: '/start', label: '新手路径', en: 'Start' },
-  { href: '/works', label: '原创样板', en: 'Works' },
-  { href: '/about', label: '关于岛主', en: 'About' },
-];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const primary = [['/digest', '日刊'], ['/studio', '工作台']];
+const library = [['/start','新手路径'],['/guides','编剧方法'],['/teardowns','拉片拆解'],['/templates','手艺模板'],['/works','原创样板'],['/about','关于岛主']];
 ---
-
-<header class="w-full bg-cinema-900/95 border-b border-cinema-800 backdrop-blur-md sticky top-[29px] z-40 transition-colors">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <!-- Brand Logo with Clapperboard Slate Micro-Interaction -->
-    <a href="/" class="flex items-center gap-3 group" title="岛主编剧工坊 首页" id="brand-logo">
-      <div id="header-clapper-box" class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-cinema-950 font-bold shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-all cursor-pointer">
-        <span id="header-clapper-icon" class="text-xl inline-block origin-bottom-left transition-transform group-hover:rotate-[-14deg]">🎬</span>
-        <!-- Film slate edge indicator -->
-        <div class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-300 border border-cinema-950"></div>
-      </div>
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="text-base sm:text-lg font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors literary-serif">
-            岛主编剧工坊
-          </span>
-          <span class="text-[10px] font-mono tracking-wider uppercase px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold">
-            10年职业剧作
-          </span>
-        </div>
-        <p class="text-[11px] text-cinema-400 hidden sm:block tracking-wide">
-          影视正规军 · 降维拆解短剧与AI漫剧视听
-        </p>
-      </div>
-    </a>
-
-    <!-- Desktop Navigation -->
-    <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
-      {navLinks.map((item) => {
-        const isActive = activePath.startsWith(item.href);
-        return (
-          <a
-            href={item.href}
-            class:list={[
-              'px-3 py-1.5 rounded-lg text-sm font-medium transition-all relative inline-flex items-center gap-1.5',
-              isActive
-                ? 'text-amber-400 bg-amber-500/15 font-semibold border border-amber-500/20 shadow-sm'
-                : 'text-cinema-300 hover:text-white hover:bg-cinema-800/60',
-            ]}
-          >
-            {item.label}
-            {item.isNew && (
-              <span class="px-1.5 py-0.2 text-[9px] font-mono rounded bg-gradient-to-r from-amber-400 to-amber-500 text-cinema-950 font-black tracking-tighter shadow-sm animate-pulse">
-                HOT
-              </span>
-            )}
-          </a>
-        );
-      })}
+<header class="mast">
+  <div class="mast-inner">
+    <a class="identity" href={base+'/'}><i aria-hidden="true"></i>岛主编剧工坊</a>
+    <nav aria-label="主导航">
+      {primary.map(([path,label]) => <a href={base+path+'/'} aria-current={activePath.startsWith(path)?'page':undefined}>{label}</a>)}
+      <details class="shelves"><summary>目录</summary><div class="menu">{library.map(([path,label])=><a href={base+path+'/'}>{label}</a>)}</div></details>
     </nav>
-
-    <!-- Header Action Button & Sound FX Equalizer Toggle -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <!-- Web Audio SFX Toggle Button -->
-      <button
-        id="btn-cinema-audio"
-        type="button"
-        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono text-cinema-400 hover:text-amber-400 hover:bg-cinema-800/80 border border-cinema-750 transition-all cursor-pointer"
-        title="开启/关闭电影拟真音效（打字机、场记板）"
-        aria-label="切换电影音效"
-      >
-        <span id="audio-icon" class="text-sm">🔈</span>
-        <span id="audio-label" class="hidden sm:inline">SFX: OFF</span>
-        <!-- Animated Equalizer bars when audio is ON -->
-        <span id="audio-eq" class="hidden items-end gap-0.5 h-3 ml-0.5">
-          <span class="w-0.5 bg-amber-400 rounded-full animate-eq-1"></span>
-          <span class="w-0.5 bg-amber-400 rounded-full animate-eq-2"></span>
-          <span class="w-0.5 bg-amber-400 rounded-full animate-eq-3"></span>
-        </span>
-      </button>
-
-      <!-- Primary Action CTA -->
-      <a
-        href="/templates#lead-pack"
-        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-cinema-950 bg-gradient-to-r from-amber-400 via-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md shadow-amber-500/25 active:scale-95 cursor-pointer"
-      >
-        <span>🎁</span>
-        <span class="hidden sm:inline">免费领</span><span>开局手艺包</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Mobile Secondary Nav -->
-  <div class="md:hidden flex items-center justify-between px-4 py-2 border-t border-cinema-800/60 overflow-x-auto text-xs space-x-3 bg-cinema-950/70">
-    {navLinks.map((item) => {
-      const isActive = activePath === item.href;
-      return (
-        <a
-          href={item.href}
-          class:list={[
-            'shrink-0 py-1 px-2.5 rounded-lg text-xs',
-            isActive ? 'text-amber-400 font-bold bg-amber-500/15 border border-amber-500/20' : 'text-cinema-400 hover:text-white',
-          ]}
-        >
-          {item.label}
-        </a>
-      );
-    })}
   </div>
 </header>
-
-<script is:inline>
-  // 绑定全局音效开关控件与状态显示
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('btn-cinema-audio');
-    const icon = document.getElementById('audio-icon');
-    const label = document.getElementById('audio-label');
-    const eq = document.getElementById('audio-eq');
-
-    function updateAudioUI(isMuted) {
-      if (!icon || !label || !eq) return;
-      if (isMuted) {
-        icon.textContent = '🔈';
-        label.textContent = 'SFX: OFF';
-        eq.classList.add('hidden');
-        eq.classList.remove('flex');
-        btn?.classList.remove('border-amber-500/50', 'text-amber-400');
-      } else {
-        icon.textContent = '🔊';
-        label.textContent = 'SFX: ON';
-        eq.classList.remove('hidden');
-        eq.classList.add('flex');
-        btn?.classList.add('border-amber-500/50', 'text-amber-400');
-      }
-    }
-
-    // 从全局音频引擎或 localStorage 读取初始状态
-    const initialMuted = localStorage.getItem('cinema_sfx_muted') !== 'false';
-    updateAudioUI(initialMuted);
-
-    btn?.addEventListener('click', () => {
-      if (window.cinemaAudio) {
-        const isMuted = !window.cinemaAudio.toggle();
-        updateAudioUI(isMuted);
-        if (!isMuted && window.showToast) {
-          window.showToast('🎬 电影拟真音效已开启（打字机、场记板）', 'success');
-        }
-      }
-    });
-
-    // 场记板点击打板交互动效与声效
-    const clapperBox = document.getElementById('header-clapper-box');
-    const clapperIcon = document.getElementById('header-clapper-icon');
-    clapperBox?.addEventListener('click', (e) => {
-      if (clapperIcon) {
-        clapperIcon.classList.remove('animate-clapper');
-        void clapperIcon.offsetWidth; // trigger reflow
-        clapperIcon.classList.add('animate-clapper');
-      }
-      window.cinemaAudio?.playClapper();
-    });
-  });
+<style>
+.mast{position:sticky;top:0;z-index:50;background:#111613;color:#f9f6e9;border-bottom:1px solid #3e413b}
+.mast-inner{max-width:1320px;margin:auto;padding:0 clamp(16px,4vw,64px);height:64px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.identity{display:inline-flex;align-items:center;gap:10px;font:700 clamp(17px,2vw,23px)/1.2 'Songti SC',serif;white-space:nowrap}
+.identity i{display:inline-block;width:21px;height:17px;border:1px solid #dfc991;background:linear-gradient(163deg,transparent 30%,#dfc991 31% 40%,transparent 41%);transform:rotate(-5deg);border-radius:2px}
+nav{display:flex;align-items:center;gap:clamp(12px,3vw,34px);font-size:14px}nav>a,summary{display:flex;align-items:center;min-height:44px}a:hover,summary:hover,a[aria-current]{color:#f4d78c}
+details{position:relative}summary{cursor:pointer;list-style:none}summary::after{content:'⌄';margin-left:5px}summary::-webkit-details-marker{display:none}
+.menu{position:absolute;right:0;min-width:10rem;top:100%;background:#20251f;border:1px solid #56594d;padding:6px;box-shadow:0 10px 32px #0005}.menu a{display:block;padding:10px 14px}.menu a:hover{background:#30362d}
+@media(max-width:420px){.mast-inner{height:54px}nav{font-size:13px}.identity{gap:7px}}
+</style>
+<script>
+document.querySelectorAll<HTMLDetailsElement>('.shelves').forEach(menu=>{
+  document.addEventListener('click',event=>{if(!menu.contains(event.target as Node))menu.open=false});
+  menu.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.open=false;menu.querySelector('summary')?.focus()}});
+});
 </script>

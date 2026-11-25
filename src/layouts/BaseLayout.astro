@@ -1,5 +1,4 @@
 ---
-import EcosystemBar from '../components/EcosystemBar.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -55,11 +54,10 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
     <div class="cinema-ambient-light fixed inset-0 pointer-events-none -z-10" aria-hidden="true"></div>
 
     <!-- 顶部生态矩阵与电影场记板 HUD -->
-    <EcosystemBar />
     <Header activePath={activePath} />
     
     <!-- 主体内容 -->
-    <main class="flex-grow relative z-10">
+    <main class="flex-grow relative z-10" data-section={activePath}>
       <slot />
     </main>
     

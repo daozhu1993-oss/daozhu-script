@@ -1,475 +1,70 @@
 ---
-import { issues, digestPath } from '../lib/digest';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LeadMagnetCard from '../components/LeadMagnetCard.astro';
-import ScreenplayBlock from '../components/ScreenplayBlock.astro';
-import BeatVisualizer from '../components/BeatVisualizer.astro';
-import { getCollection } from 'astro:content';
-
-const [latest] = issues;
-const guides = await getCollection('guides');
-const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0, 6);
-
-const teardowns = await getCollection('teardowns');
-const featuredTeardowns = teardowns.slice(0, 3);
-
-const works = await getCollection('works');
-const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
+import { issues, digestPath } from '../lib/digest';
+const [latest]=issues;
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const cases=[
+  ['taochudaying','逃出大英博物馆','器物拟人','一个玉壶，怎样成为值得牵挂的主角？'],
+  ['wushuang','无双','身份反转','观众知道、剧中人不知道，这个落差能撑几场戏？'],
+  ['bailinghouma','我在八零年代当后妈','人物选择','当主角拒绝按套路出牌，下一场冲突从哪里来？']
+];
+const tools=[
+  ['/studio/','创作工作台','从小说片段出发，整理人物、场次与分镜。'],
+  ['/guides/','编剧方法','从人物目标、潜台词到分集节拍。'],
+  ['/templates/','手艺模板','节拍表、改编提纲和分镜表，写时随手查。'],
+  ['/works/','原创样板','读岛主的项目策划、人物小传与分集大纲。']
+];
 ---
-
-<BaseLayout activePath="/" title="岛主编剧工坊 · 影视正规军手艺 × 短剧商业规则">
-  <!-- Hero Section with Film Slate HUD & Cinematic Lighting -->
-  <section class="relative pt-12 pb-20 px-4 sm:px-6 overflow-hidden border-b border-cinema-800/80">
-    <!-- Ambient glowing spotlight -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[380px] bg-amber-500/10 blur-[140px] pointer-events-none rounded-full" aria-hidden="true"></div>
-
-    <div class="max-w-4xl mx-auto text-center relative z-10">
-      <!-- Authority Film Slate HUD Badge -->
-      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cinema-900/95 border border-amber-500/35 text-xs font-mono text-cinema-300 mb-6 shadow-xl backdrop-blur-md">
-        <span class="flex items-center gap-1.5 text-rose-400 font-bold">
-          <span class="w-2 h-2 rounded-full bg-rose-500 animate-rec"></span>
-          <span>REC</span>
-        </span>
-        <span class="text-cinema-700">|</span>
-        <span class="text-amber-400 font-semibold">ROLL A01</span>
-        <span class="text-cinema-700">|</span>
-        <span>SCENE 01 · TAKE 04</span>
-        <span class="text-cinema-700 hidden sm:inline">|</span>
-        <span class="text-emerald-400 font-medium hidden sm:inline">10年职业影视编剧降维实战</span>
-      </div>
-
-      <!-- Main Headline with Golden Editorial Serif -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.18] literary-serif">
-        影视正规军手艺 × 短剧商业规则<br />
-        <span class="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
-          写出能过审、能起量的硬核剧本
-        </span>
-      </h1>
-
-      <!-- Value Subtitle -->
-      <p class="mt-6 text-base sm:text-xl text-cinema-300 max-w-2xl mx-auto leading-relaxed font-light">
-        十年案头沉淀。把影视工业级的结构力学与竖屏短剧的「付费墙力学」严密咬合。不讲三天速成玄学，只拆解有据可循、可精准复现的剧作工程图纸。
-      </p>
-
-      <!-- Primary Action CTAs with Magnetic Clapperboard Audio Feedback -->
-      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a
-          href="/start"
-          class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm sm:text-base shadow-xl shadow-amber-500/25 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-        >
-          <span>🚀</span>
-          <span>从 0 到第一个本子 · 新手路径</span>
-        </a>
-        <a
-          href="/guides"
-          class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-cinema-900/90 hover:bg-cinema-850 text-white font-medium text-sm sm:text-base border border-cinema-700 hover:border-amber-400/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
-        >
-          <span>📖</span>
-          <span>系统方法论库</span>
-        </a>
-      </div>
-
-      <!-- Social Proof Strip (Authentic & Professional) -->
-      <div class="mt-12 pt-8 border-t border-cinema-850/80 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-cinema-400 font-mono">
-        <div class="flex items-center gap-2">
-          <span class="text-amber-400 font-bold">10 年</span>
-          <span>职业影视剧作内功</span>
-        </div>
-        <span class="text-cinema-800 hidden sm:inline">|</span>
-        <div class="flex items-center gap-2">
-          <span class="text-amber-400 font-bold">独门招牌</span>
-          <span>付费点剧作学 · 追订率力学</span>
-        </div>
-        <span class="text-cinema-800 hidden sm:inline">|</span>
-        <div class="flex items-center gap-2">
-          <span class="text-emerald-400 font-bold">工程化</span>
-          <span>剧本是视听图纸，拒绝流水账</span>
-        </div>
-        <span class="text-cinema-800 hidden sm:inline">|</span>
-        <a
-          href="https://xhslink.cn/o/1t4rhxxzVDc"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-1.5 hover:text-rose-400 transition-colors group"
-        >
-          <span class="text-rose-400 font-bold">📕 984+ 赞藏</span>
-          <span class="group-hover:underline">小红书主页 ➔</span>
-        </a>
-      </div>
+<BaseLayout activePath="/" title="岛主编剧工坊 · 剧本、分镜与案头练习">
+<div class="desk">
+<div class="opening">
+  <section class="scene" aria-labelledby="scene-title">
+    <img src={base+'/images/ancestral-hall.webp'} alt="" width="790" height="563" fetchpriority="high"/>
+    <div class="scene-copy">
+      <p class="slug">剧本练习　/　内景 · 夜</p>
+      <h1 id="scene-title">顾氏宗祠</h1>
+      <p class="action">寒风卷着碎雪撞击棂窗。<br/>顾淮跪在冰冷青砖上，肩头积雪未化。</p>
+      <a class="scene-link" href={base+'/practice/'}>读这场戏的台词与分镜 <span aria-hidden="true">↗</span></a>
     </div>
   </section>
-
-  <section aria-labelledby="digest-heading" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-    <div class="flex flex-wrap gap-3 justify-between items-baseline border-b border-cinema-700 pb-3">
-      <h2 id="digest-heading" class="literary-serif text-2xl sm:text-3xl font-bold text-white"><a href={digestPath}>编剧与漫剧日刊</a></h2>
-      <a href={digestPath} class="text-amber-400 text-sm">{latest.date} · 读本期 →</a>
-    </div>
-    <ul class="grid sm:grid-cols-2 sm:gap-x-8">
-      {latest.items.map((item, i) => <li class="py-3 border-b border-cinema-800"><a class="block hover:text-amber-300" href={digestPath + latest.date + '/#story-' + (i+1)}><small class="block text-amber-400 mb-1">{item.topic}</small>{item.title}</a></li>)}
-    </ul>
+  <section class="edition" aria-labelledby="edition-title">
+    <div class="issue-head"><h2 id="edition-title"><a href={digestPath}>编剧与漫剧日刊</a></h2><time datetime={latest.date}>{latest.date.replaceAll('-','.')}</time></div>
+    <ul>{latest.items.map((item,i)=><li><a href={digestPath+latest.date+'/#story-'+(i+1)}><small>{item.topic}</small><span>{item.title}</span></a></li>)}</ul>
+    <a class="issue-link" href={digestPath}>阅读日刊与往期 <span aria-hidden="true">→</span></a>
   </section>
-
-  <!-- Studio Banner Callout (在线剧作工作台入口) -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 -mt-2 mb-10">
-    <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-cinema-900 via-cinema-900 to-amber-950/40 border border-amber-500/35 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 spotlight-card">
-      <div class="space-y-2 text-left relative z-10">
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-mono">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-          <span>⚡ 工业级在线工具 · 纯前端零隐私泄露</span>
-        </div>
-        <h3 class="text-xl sm:text-2xl font-bold text-white literary-serif">
-          拒绝假大空流水账！体验「岛主在线编剧工作台」
-        </h3>
-        <p class="text-xs sm:text-sm text-cinema-300 max-w-2xl leading-relaxed">
-          基于 10 年院线与短剧正规军四相位节拍系统。支持「90秒黄金分集节拍生成」、「小说转短剧视听脱水切片」与「工业级 DeepSeek/GPT Prompt 一键导出」。
-        </p>
-      </div>
-      <a
-        href="/studio"
-        class="shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-cinema-950 font-bold text-sm shadow-xl shadow-amber-500/20 transition-all flex items-center gap-2 relative z-10 cursor-pointer"
-      >
-        <span>立即免费体验工作台</span>
-        <span>➔</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Three Master Tracks (三大核心入口) -->
-  <section class="py-14 px-4 sm:px-6 max-w-6xl mx-auto">
-    <div class="text-center max-w-2xl mx-auto mb-12">
-      <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">
-        THREE PILLARS · 核心支柱
-      </h2>
-      <p class="text-2xl sm:text-3xl font-bold text-white tracking-tight literary-serif">
-        不是流式资讯，而是有据可循的剧作工程库
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Track 1: Guides -->
-      <a
-        href="/guides"
-        class="group p-6 rounded-2xl spotlight-card flex flex-col justify-between"
-      >
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-            📖
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2 literary-serif">
-            学方法 · 方法论库
-          </h3>
-          <p class="text-sm text-cinema-400 leading-relaxed">
-            按知识主题组织。从单集 90 秒情绪切片、压抑蓄势爆发四步法、黄金前 3 集留存，到 AI 漫剧管线，全套系统讲透。
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-amber-400">
-          <span>进入方法论库</span>
-          <span class="group-hover:translate-x-1 transition-transform">➔</span>
-        </div>
-      </a>
-
-      <!-- Track 2: Teardowns -->
-      <a
-        href="/teardowns"
-        class="group p-6 rounded-2xl spotlight-card flex flex-col justify-between"
-      >
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/25 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-            🔬
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-2 literary-serif">
-            拆爆款 · 深度拉片
-          </h3>
-          <p class="text-sm text-cinema-400 leading-relaxed">
-            用编剧眼拆解公认爆款（《无双》《八零后妈》《逃出大英》）。精准定位爽点在第几分钟、钩子埋在哪里，总结 3-5 条明天就能抄的硬核手艺。
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-blue-400">
-          <span>查看经典拆解</span>
-          <span class="group-hover:translate-x-1 transition-transform">➔</span>
-        </div>
-      </a>
-
-      <!-- Track 3: Templates -->
-      <a
-        href="/templates"
-        class="group p-6 rounded-2xl spotlight-card flex flex-col justify-between"
-      >
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-            🧰
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2 literary-serif">
-            拿模板 · 工具脚手架
-          </h3>
-          <p class="text-sm text-cinema-400 leading-relaxed">
-            提供可直接复制、下载的工业化脚手架：分集断章节奏卡、爽点检查表、人物欲望冲突表、AI 漫剧镜头 Prompt 映射字典。
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-cinema-800/80 flex items-center justify-between text-xs font-medium text-emerald-400">
-          <span>下载实用模板</span>
-          <span class="group-hover:translate-x-1 transition-transform">➔</span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- Live Demonstration: Real Screenplay Craft & Oscilloscope -->
-  <section class="py-12 px-4 sm:px-6 max-w-4xl mx-auto">
-    <div class="border border-cinema-750 rounded-3xl p-6 sm:p-8 bg-cinema-900/80 shadow-2xl spotlight-card">
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-          <span class="text-amber-400 text-xl">🖋️</span>
-          <h3 class="text-base sm:text-lg font-bold text-white literary-serif">
-            什么是正规军编剧手艺？
-          </h3>
-        </div>
-        <span class="text-xs font-mono text-cinema-400">从台词潜台词到视听镜头语言</span>
-      </div>
-
-      <p class="text-sm text-cinema-300 mb-4 leading-relaxed font-light">
-        业余写手写台词，把心里话直接吼出来；职业编剧写台词，<strong class="text-amber-300 font-medium">字面越平静，底下风暴越烈</strong>。支持切换「视听台本」、「导演分镜」与「AI Prompt」三种专业模式：
-      </p>
-
-      <!-- Upgraded Multi-View Screenplay Block -->
-      <ScreenplayBlock
-        sceneHeading="INT. 顾氏宗祠 - 夜 [暴雪]"
-        actionText="寒风卷着碎雪撞击棂窗。族长顾廷威端坐高堂，手旁搁着已除名的朱笔族谱。顾淮跪在冰冷青砖上，肩头积雪未化，衣衫单薄。"
-        character="顾淮"
-        parenthetical="抬起头，眼神平静得像一口古井，嘴角泛起微不可察的嘲弄"
-        dialogue="族长，这朱笔抹掉的，只是族谱上的两笔墨；可抹不掉的，是顾家欠我娘的一条命。"
-        note="【潜台词剖析】字面上在说族谱与旧账，实则向反派宣告：我已不在乎被逐出宗族，世俗规则约束已失效，接下来将是降维维度的复仇。"
-      />
-
-      <!-- Upgraded Dynamic SVG Oscilloscope Beat Waveform -->
-      <BeatVisualizer
-        episodeName="爆款微短剧第一集 · 黄金生死卡点"
-      />
-    </div>
-  </section>
-
-  <!-- Featured Real Teardowns Showcase -->
-  <section class="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-      <div>
-        <h2 class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-2">
-          REVERSE ENGINEERING · 深度拉片
-        </h2>
-        <h3 class="text-2xl font-bold text-white literary-serif">
-          现象级爆款真实拆解
-        </h3>
-      </div>
-      <a href="/teardowns" class="text-sm font-medium text-blue-400 hover:text-blue-300 flex items-center gap-1">
-        查看全部拉片拆解 ➔
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {featuredTeardowns.map((item) => (
-        <a
-          href={`/teardowns/${item.slug}`}
-          class="group rounded-2xl spotlight-card flex flex-col overflow-hidden shadow-xl"
-        >
-          <!-- Poster Container with Overlay & Film Slate Fallback -->
-          <div class="relative aspect-[3/4] w-full overflow-hidden bg-cinema-950 border-b border-cinema-850">
-            <!-- Cinema Slate Fallback Card -->
-            <div class="absolute inset-0 flex flex-col justify-between p-4 z-0 bg-gradient-to-b from-cinema-900 via-cinema-950 to-cinema-950 film-perforation">
-              <div class="flex items-center justify-between text-[10px] font-mono text-cinema-400">
-                <span class="text-amber-400/80">ROLL A01</span>
-                <span>35mm T1.5</span>
-              </div>
-              <div class="text-center py-6">
-                <span class="text-4xl block mb-2 opacity-70 group-hover:scale-110 transition-transform">🎬</span>
-                <span class="text-xs font-bold text-cinema-200 literary-serif block px-2 line-clamp-2">{item.data.title}</span>
-              </div>
-              <div class="text-[9px] font-mono text-cinema-400 text-center">
-                SCENE 01 · TAKE 01 · 24FPS
-              </div>
-            </div>
-
-            {item.data.poster && (
-              <img
-                src={item.data.poster}
-                alt={item.data.title}
-                class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 z-10"
-                decoding="async"
-                onerror="this.style.display='none'"
-              />
-            )}
-            
-            <!-- Gradient Overlay for Legibility -->
-            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/30 to-transparent z-20 pointer-events-none"></div>
-            
-            <!-- Top Tags -->
-            <div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-              <span class="text-[11px] font-bold px-2.5 py-1 rounded-md bg-cinema-950/85 text-amber-400 border border-amber-500/30 backdrop-blur-md shadow-sm font-mono">
-                {item.data.format}
-              </span>
-              <span class="text-[11px] font-mono px-2 py-1 rounded-md bg-cinema-950/85 text-cinema-300 border border-cinema-800 backdrop-blur-md">
-                {item.data.episodesOrDuration}
-              </span>
-            </div>
-
-            <!-- Bottom Floating Title on Poster -->
-            <div class="absolute bottom-3 left-3 right-3">
-              <span class="text-[10px] font-mono text-cinema-400 block mb-1">
-                {item.data.genre}
-              </span>
-              <h4 class="text-base sm:text-lg font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1 literary-serif drop-shadow-md">
-                {item.data.title}
-              </h4>
-            </div>
-          </div>
-
-          <!-- Bottom Card Content -->
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div class="p-2.5 rounded-lg bg-cinema-950 text-xs text-cinema-300 border border-cinema-850/80 mb-3">
-              <span class="text-amber-400 font-bold block mb-0.5">⚡ 黄金钩子卡点:</span>
-              <span class="line-clamp-2 text-[11px] leading-relaxed">{item.data.hookTiming}</span>
-            </div>
-
-            <div class="pt-2 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
-              <span class="text-emerald-400 font-medium">✓ 附全案视听拆解</span>
-              <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform">阅读拉片 ➔</span>
-            </div>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- Featured Guides Showcase -->
-  <section class="py-12 px-4 sm:px-6 max-w-6xl mx-auto border-t border-cinema-800/60">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-      <div>
-        <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">
-          CURATED ESSENTIALS · 精选手艺
-        </h2>
-        <h3 class="text-2xl font-bold text-white literary-serif">
-          方法论必读精选
-        </h3>
-      </div>
-      <a href="/guides" class="text-sm font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1">
-        查看全部方法论 ➔
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {sortedGuides.map((guide) => (
-        <a
-          href={`/guides/${guide.slug}`}
-          class="p-5 rounded-2xl spotlight-card flex flex-col justify-between"
-        >
-          <div>
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                {guide.data.topic}
-              </span>
-              <span class="text-[11px] text-cinema-400 font-mono">
-                {guide.data.level} · {guide.data.readTime}
-              </span>
-            </div>
-            <h4 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2 literary-serif">
-              {guide.data.title}
-            </h4>
-            <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed font-light">
-              {guide.data.summary}
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
-            <span>更新于 {guide.data.updated}</span>
-            <span class="text-amber-400 font-medium">阅读全文 ➔</span>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- Featured Works Showcase (原创剧本案头样板) -->
-  <section class="py-12 px-4 sm:px-6 max-w-6xl mx-auto border-t border-cinema-800/60">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-      <div>
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono mb-2">
-          <span>📑</span> AUTHENTIC SPEC SCRIPTS
-        </div>
-        <h3 class="text-2xl font-bold text-white literary-serif">
-          原创剧本案头 · 工业样板库
-        </h3>
-        <p class="text-xs sm:text-sm text-cinema-400 mt-1 font-light">
-          手艺靠真案头说话，拒绝虚假包装。全套大纲、人物小传与黄金前三集视听节拍卡已脱水公开。
-        </p>
-      </div>
-      <a href="/works" class="text-sm font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1 shrink-0">
-        浏览全部作品手稿 ➔
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {featuredWorks.map((work) => (
-        <a
-          href={`/works/${work.slug}`}
-          class="group rounded-2xl spotlight-card flex flex-col overflow-hidden shadow-xl"
-        >
-          <div class="aspect-[3/4] overflow-hidden bg-cinema-950 relative border-b border-cinema-850">
-            <!-- Cinema Slate Fallback Card -->
-            <div class="absolute inset-0 flex flex-col justify-between p-3.5 z-0 bg-gradient-to-b from-cinema-900 via-cinema-950 to-cinema-950 film-perforation">
-              <div class="flex items-center justify-between text-[10px] font-mono text-cinema-400">
-                <span class="text-amber-400/80">SPEC SCRIPT</span>
-                <span>24FPS</span>
-              </div>
-              <div class="text-center py-4">
-                <span class="text-3xl block mb-1 opacity-70 group-hover:scale-110 transition-transform">🎞️</span>
-                <span class="text-xs font-bold text-cinema-200 literary-serif block line-clamp-2">{work.data.title}</span>
-              </div>
-              <div class="text-[9px] font-mono text-cinema-400 text-center">
-                正规军案头存证
-              </div>
-            </div>
-
-            {work.data.poster && (
-              <img
-                src={work.data.poster}
-                alt={work.data.title}
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-10"
-                decoding="async"
-                onerror="this.style.display='none'"
-              />
-            )}
-            
-            <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-cinema-950/85 border border-amber-500/30 text-[10px] text-amber-400 font-mono font-bold backdrop-blur-sm z-20">
-              {work.data.episodes} 集
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-cinema-950 via-cinema-950/20 to-transparent z-15 pointer-events-none"></div>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-1.5 mb-2">
-                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
-                  {work.data.format}
-                </span>
-                <span class="text-[10px] text-cinema-400 font-mono truncate">
-                  {work.data.status}
-                </span>
-              </div>
-              <h4 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1 literary-serif">
-                {work.data.title}
-              </h4>
-              <p class="mt-2 text-xs text-cinema-300 line-clamp-2 leading-relaxed font-light">
-                {work.data.logline}
-              </p>
-            </div>
-            <div class="mt-4 pt-3 border-t border-cinema-800/60 flex items-center justify-between text-xs text-cinema-400">
-              <span class="text-[11px] text-amber-400/80 font-mono">前3集样板公开</span>
-              <span class="text-amber-400 font-bold group-hover:translate-x-0.5 transition-transform">研读 ➔</span>
-            </div>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- Lead Magnet Conversion Section -->
-  <section class="py-12 px-4 sm:px-6 max-w-4xl mx-auto">
-    <LeadMagnetCard />
-  </section>
+</div>
+<section class="cuts" aria-labelledby="cuts-title">
+  <div class="section-title"><h2 id="cuts-title">拉片室</h2><a href={base+'/teardowns/'}>全部拆解 →</a></div>
+  <div class="reel">{cases.map(([slug,title,tag,question])=><a class="cut" href={base+'/teardowns/teardown-'+slug+'/'}>
+    <div class={'still still-'+slug}><img src={base+'/images/'+slug+'-cover.webp'} alt="" loading="lazy" width="450" height="620"/></div>
+    <div class="caption"><small>{tag}</small><h3>{title}</h3><p>{question}</p></div></a>)}</div>
+</section>
+<section class="bench" aria-labelledby="bench-title">
+  <div class="section-title"><h2 id="bench-title">写作案头</h2><a href={base+'/start/'}>新手从这里开始 →</a></div>
+  <div class="tools">{tools.map(([url,name,detail])=><a href={base+url}><h3>{name} <span aria-hidden="true">↗</span></h3><p>{detail}</p></a>)}</div>
+</section>
+</div>
 </BaseLayout>
+<style>
+.desk{--ink:#141914;--paper:#f0eee2;--rule:#c4c5b7;background:var(--paper);color:var(--ink);padding:clamp(16px,2.8vw,40px) max(calc((100vw - 1200px)/2),4vw) clamp(40px,6vw,80px);font-family:system-ui,'PingFang SC',sans-serif}
+.desk h1,.desk h2,.desk h3,.desk .action{font-family:'Songti SC','Noto Serif SC',STSong,serif}
+.opening{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(18px,3vw,44px);align-items:stretch}
+.scene{position:relative;isolation:isolate;min-height:440px;display:flex;align-items:flex-end;overflow:hidden;background:#1c271f;color:#fffaf0}
+.scene img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 52%}
+.scene:after{position:absolute;content:'';inset:0;z-index:-1;background:linear-gradient(90deg,#0a130edc,#09110d3b 70%),linear-gradient(0deg,#0c120eef,transparent 68%)}
+.scene-copy{padding:clamp(24px,3vw,45px)}.slug,.edition small,.cut small,.issue-head time{font-size:12px;font-weight:600;letter-spacing:.08em}
+.slug{color:#f6d594}.scene h1{font-size:clamp(46px,5.4vw,82px);line-height:1.18;margin:.19em 0 .27em;font-weight:700;letter-spacing:.02em}
+.action{font-size:clamp(15px,1.3vw,19px);line-height:1.8;color:#f2eee1}.scene-link{display:inline-flex;align-items:center;gap:20px;border-bottom:1px solid #d6bc82;min-height:44px;margin-top:20px;color:#ffe4a8;font-weight:600;font-size:14px}
+.edition{display:flex;flex-direction:column;border-top:3px solid #303729}.issue-head{padding:14px 0 12px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.issue-head h2,.section-title h2{font-weight:700;font-size:clamp(21px,2.2vw,34px);line-height:1.3}.issue-head time{color:#505746;font:12px ui-monospace,monospace}
+.edition li{border-bottom:1px solid var(--rule)}.edition li a{display:grid;gap:3px;padding:11px 0}.edition li small,.cut small{color:#536441}
+.edition li span{font:600 clamp(16px,1.25vw,19px)/1.48 'Songti SC','Noto Serif SC',serif}.issue-link,.section-title>a{font-size:13px;color:#3f5140;font-weight:650}.issue-link{margin-top:auto;padding-top:14px;display:flex;justify-content:space-between;min-height:42px}
+.cuts,.bench{margin-top:clamp(32px,4.2vw,64px)}.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--ink)}
+.reel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);margin-top:18px}
+.still{aspect-ratio:2.12;overflow:hidden;background:#27322b}.still img{width:100%;height:100%;object-fit:cover;object-position:center 44%;transition:transform .25s ease}
+.caption{padding:12px 0}.cut h3,.tools h3{font-size:clamp(18px,1.6vw,24px);font-weight:700;margin:3px 0 5px}.cut p,.tools p{font-size:14px;line-height:1.65;color:#52584c}.tools{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}.tools a{padding:17px 0;border-bottom:1px solid var(--rule)}.tools h3{display:flex;justify-content:space-between}.tools h3 span{color:#66725a;font-size:16px}
+.desk a:focus-visible{outline:3px solid #af712d;outline-offset:3px}.desk a:hover h3,.edition a:hover span,.desk a:hover.issue-link{text-decoration:underline;text-underline-offset:4px}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.cut:hover img{transform:scale(1.035)}}
+@media(max-width:780px){.opening{grid-template-columns:1fr}.scene{min-height:310px}.edition li a{grid-template-columns:65px 1fr;align-items:baseline;gap:12px}.issue-head{padding:10px 0}.edition li a{padding:9px 0}.scene-copy{padding:24px}.scene-link{margin-top:8px}}
+@media(max-width:600px){.desk{padding:14px 16px 40px}.scene{min-height:300px}.scene-copy{padding:20px}.scene h1{font-size:44px}.scene .action{font-size:14px}.reel{grid-template-columns:1fr;gap:14px}.cut{display:grid;grid-template-columns:minmax(90px,34%) 1fr;gap:14px;align-items:center}.still{aspect-ratio:1.25}.caption{padding:0}.tools{grid-template-columns:1fr}.section-title{padding-bottom:9px}}
+</style>

@@ -147,3 +147,11 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #d4af37;
 }
+
+main[data-section="/digest"] { background: #f0eee2; color: #182019; }
+main[data-section="/digest"] :is(h1,h2) { color: #182019; }
+main[data-section="/digest"] :is(.text-amber-400,.text-amber-300) { color: #425a3a; }
+main[data-section="/digest"] :is(.text-cinema-200,.text-cinema-300) { color: #343d32; }
+main[data-section="/digest"] .text-cinema-400 { color: #56604f; }
+main[data-section="/digest"] :is(header,article) { border-color: #aeb2a2; }
+main[data-section="/digest"] article p.border-l-2 { background: #e4e7d9; border-color: #747c56; padding: 12px 16px; }
