@@ -1,0 +1,19 @@
+---
+import type { Issue } from '../lib/digest';
+interface Props { issue: Issue }
+const { issue } = Astro.props;
+---
+<header class="pb-7 border-b border-cinema-700">
+  <p class="font-mono text-sm text-amber-400"><time datetime={issue.date}>{issue.date}</time> · {issue.items.length} 条选读</p>
+  <h1 class="literary-serif text-3xl sm:text-5xl font-bold text-white mt-3">编剧与漫剧日刊</h1>
+</header>
+{issue.items.map((item, i) => (
+  <article id={'story-' + (i+1)} class="scroll-mt-32 py-8 border-b border-cinema-800">
+    <p class="text-sm text-amber-400">{item.topic}</p>
+    <h2 class="literary-serif text-2xl sm:text-3xl text-white font-bold mt-2 mb-4">{item.title}</h2>
+    <p class="text-cinema-200 leading-loose">{item.summary}</p>
+    <p class="my-4 border-l-2 border-amber-500 pl-4 text-cinema-200 leading-loose"><strong class="text-amber-300">案头练习</strong>　{item.exercise}</p>
+    <a class="text-sm underline underline-offset-4 text-cinema-300 hover:text-amber-300" href={item.url} target="_blank" rel="noopener noreferrer">{item.source} 原文 ↗</a>
+    <time class="ml-3 font-mono text-xs text-cinema-400" datetime={item.published}>{item.published}</time>
+  </article>
+))}

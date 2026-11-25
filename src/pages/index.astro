@@ -1,10 +1,12 @@
 ---
+import { issues, digestPath } from '../lib/digest';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadMagnetCard from '../components/LeadMagnetCard.astro';
 import ScreenplayBlock from '../components/ScreenplayBlock.astro';
 import BeatVisualizer from '../components/BeatVisualizer.astro';
 import { getCollection } from 'astro:content';
 
+const [latest] = issues;
 const guides = await getCollection('guides');
 const sortedGuides = guides.sort((a, b) => a.data.order - b.data.order).slice(0, 6);
 
@@ -95,6 +97,16 @@ const featuredWorks = works.sort((a, b) => a.data.order - b.data.order);
         </a>
       </div>
     </div>
+  </section>
+
+  <section aria-labelledby="digest-heading" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div class="flex flex-wrap gap-3 justify-between items-baseline border-b border-cinema-700 pb-3">
+      <h2 id="digest-heading" class="literary-serif text-2xl sm:text-3xl font-bold text-white"><a href={digestPath}>编剧与漫剧日刊</a></h2>
+      <a href={digestPath} class="text-amber-400 text-sm">{latest.date} · 读本期 →</a>
+    </div>
+    <ul class="grid sm:grid-cols-2 sm:gap-x-8">
+      {latest.items.map((item, i) => <li class="py-3 border-b border-cinema-800"><a class="block hover:text-amber-300" href={digestPath + latest.date + '/#story-' + (i+1)}><small class="block text-amber-400 mb-1">{item.topic}</small>{item.title}</a></li>)}
+    </ul>
   </section>
 
   <!-- Studio Banner Callout (在线剧作工作台入口) -->

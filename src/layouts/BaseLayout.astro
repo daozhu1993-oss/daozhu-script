@@ -20,7 +20,7 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
 ---
 
 <!doctype html>
-<html lang="zh-CN" class="scroll-smooth bg-cinema-950">
+<html lang="zh-CN" class:list={[activePath === '/digest' && 'overflow-x-hidden']} class="scroll-smooth bg-cinema-950">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,6 +43,9 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
     <meta name="twitter:description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#07090c" />
+    <meta property="og:url" content={new URL(Astro.url.pathname.replace(/^\/daozhu-script(?=\/|$)/, ''), 'https://script.daozhuai.cn').href} />
+    <meta property="og:image" content="https://www.daozhuai.cn/islands/assets/og-islands.jpg" />
+    <meta name="twitter:image" content="https://www.daozhuai.cn/islands/assets/og-islands.jpg" />
   </head>
   <body class="min-h-screen bg-cinema-950 text-cinema-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200 relative">
     <!-- 35mm 胶片质感噪点覆盖层 (Film Grain Layer) -->
@@ -228,5 +231,6 @@ const pageTitle = title.includes('岛主编剧工坊') ? title : `${title} · �
         });
       }
     </script>
-  </body>
+  <script defer src="https://www.daozhuai.cn/islands/buoy.js?v=1"></script>
+</body>
 </html>

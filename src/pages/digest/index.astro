@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DigestIssue from '../../components/DigestIssue.astro';
+import { issues, digestPath } from '../../lib/digest';
+const [latest, ...archive] = issues;
+---
+<BaseLayout title="编剧与漫剧日刊" activePath="/digest" description="精选编剧、AI 漫剧与动画制作报道，每条附原文与一项案头练习。">
+  <div class="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <DigestIssue issue={latest} />
+    <a class="inline-block mt-5 text-amber-300 underline" href={digestPath + latest.date + '/'}>本期固定链接 →</a>
+    {archive.length > 0 && <nav aria-label="往期日刊" class="mt-10"><h2 class="text-xl text-white mb-3">往期日刊</h2>
+      {archive.map(issue => <a class="block py-3 text-cinema-300 hover:text-amber-300" href={digestPath + issue.date + '/'}>{issue.date} · {issue.items[0].title}</a>)}</nav>}
+  </div>
+</BaseLayout>

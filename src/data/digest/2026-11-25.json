@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-25",
+  "items": [
+    {
+      "title": "《Hoppers》怎样让观众理解一个爱发火的主角",
+      "topic": "人物写作",
+      "source": "AWN",
+      "published": "2026-11-24",
+      "url": "https://www.awn.com/animationworld/hoppers-daniel-chong-and-nicole-paradis-grindle-pixars-unplanned-hit",
+      "summary": "制片人 Nicole Paradis Grindle 回忆，早期观众很难亲近愤怒的女主角。后来影片补进她和祖母的往事，也让观众看见她小时候怎样保护动物。等她长大后再次发火，观众已经知道她在乎什么。",
+      "exercise": "翻到主角第一次失控的那场戏。往前找一场，让观众先看见她为同一件事付出过什么。然后删掉一句解释愤怒的台词，看看还读不读得懂。"
+    },
+    {
+      "title": "书旗更新漫剧扶持计划，网文改编从哪里切第一刀",
+      "topic": "网文改编",
+      "source": "AIbase",
+      "published": "2026-11-24",
+      "url": "https://www.aibase.com/zh/news/32499",
+      "summary": "据 AIbase 对书旗创作者大会的报道，书旗计划在 2027 年向原创内容生态投入 3 亿元，并升级漫剧扶持。这个金额覆盖原创签约、内容孵化、制作提效和发行等多项工作。",
+      "exercise": "选一章自己有权改编的小说，圈出一个必须当场做出的选择。用三个格子画出选择前、落手那刻和后果，再决定原章开头哪一段可以省掉。"
+    },
+    {
+      "title": "MAGI-2 的定时动作，值得用一张分镜表试一次",
+      "topic": "AI 分镜",
+      "source": "AIbase",
+      "published": "2026-11-25",
+      "url": "https://www.aibase.com/zh/news/32505",
+      "summary": "AIbase 报道，三呆科技发布了视频生成模型 MAGI-2，可在提示中指定动作顺序和出现时刻。精度数字来自发布报道，工坊尚未独立实测。",
+      "exercise": "写一条六秒镜头：第二秒，门外传来钥匙声；第四秒，人物才回头。逐帧对照成片，把声音、动作和切点的实际时刻填回分镜表。"
+    },
+    {
+      "title": "《Digger》开场窗外的风景，后来成了戏里的道具",
+      "topic": "场景设计",
+      "source": "befores & afters",
+      "published": "2026-11-23",
+      "url": "https://beforesandafters.com/2026/11/23/a-visual-journey-through-the-miniatures-of-digger/",
+      "summary": "微缩模型主管 Simon Weisse 拆解了开场的河谷景观。团队用不同比例的实体模型制造纵深，再补上数字背景。观众最初从角色的窗前看风景，随后会再看到模型本身。",
+      "exercise": "给同一个布景写两次出场。第一次只交代人物住在哪里；第二次换机位，揭出观众先前没看到的一面，让地点本身提供新信息。"
+    }
+  ]
+}

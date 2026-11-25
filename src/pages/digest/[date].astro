@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DigestIssue from '../../components/DigestIssue.astro';
+import { issues, digestPath } from '../../lib/digest';
+export function getStaticPaths() {
+  return issues.map(issue => ({ params: {date: issue.date}, props: {issue} }));
+}
+const { issue } = Astro.props;
+---
+<BaseLayout title={issue.date + ' · 编剧与漫剧日刊'} activePath="/digest" description={issue.items[0].title}>
+  <div class="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <a class="inline-block mb-6 text-sm text-amber-300 underline" href={digestPath}>最新一期与往期日刊 →</a>
+    <DigestIssue issue={issue} />
+  </div>
+</BaseLayout>
