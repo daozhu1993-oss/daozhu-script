@@ -19,7 +19,7 @@ const tools=[
 <div class="desk">
 <div class="opening">
   <section class="scene" aria-labelledby="scene-title">
-    <img src={base+'/images/ancestral-hall.webp'} alt="" width="790" height="563" fetchpriority="high"/>
+    <img src={base+'/images/scene-winter.webp'} alt="祠堂棂窗漏进冷光，顾淮独自跪在青砖上" width="720" height="539" fetchpriority="high"/>
     <div class="scene-copy">
       <p class="slug">剧本练习　/　内景 · 夜</p>
       <h1 id="scene-title">顾氏宗祠</h1>
@@ -36,7 +36,7 @@ const tools=[
 <section class="cuts" aria-labelledby="cuts-title">
   <div class="section-title"><h2 id="cuts-title">拉片室</h2><a href={base+'/teardowns/'}>全部拆解 →</a></div>
   <div class="reel">{cases.map(([slug,title,tag,question])=><a class="cut" href={base+'/teardowns/teardown-'+slug+'/'}>
-    <div class={'still still-'+slug}><img src={base+'/images/'+slug+'-cover.webp'} alt="" loading="lazy" width="450" height="620"/></div>
+    <div class={'still still-'+slug}><img src={base+'/images/'+slug+'-still.webp'} alt="" loading="lazy" width="720" height="539"/></div>
     <div class="caption"><small>{tag}</small><h3>{title}</h3><p>{question}</p></div></a>)}</div>
 </section>
 <section class="bench" aria-labelledby="bench-title">
@@ -50,8 +50,8 @@ const tools=[
 .desk h1,.desk h2,.desk h3,.desk .action{font-family:'Songti SC','Noto Serif SC',STSong,serif}
 .opening{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(18px,3vw,44px);align-items:stretch}
 .scene{position:relative;isolation:isolate;min-height:440px;display:flex;align-items:flex-end;overflow:hidden;background:#1c271f;color:#fffaf0}
-.scene img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 52%}
-.scene:after{position:absolute;content:'';inset:0;z-index:-1;background:linear-gradient(90deg,#0a130edc,#09110d3b 70%),linear-gradient(0deg,#0c120eef,transparent 68%)}
+.scene img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:64% 52%}
+.scene:after{position:absolute;content:'';inset:0;z-index:-1;background:linear-gradient(90deg,#09100d6e,transparent 68%),linear-gradient(0deg,#080d0c80,transparent 54%)}
 .scene-copy{padding:clamp(24px,3vw,45px)}.slug,.edition small,.cut small,.issue-head time{font-size:12px;font-weight:600;letter-spacing:.08em}
 .slug{color:#f6d594}.scene h1{font-size:clamp(46px,5.4vw,82px);line-height:1.18;margin:.19em 0 .27em;font-weight:700;letter-spacing:.02em}
 .action{font-size:clamp(15px,1.3vw,19px);line-height:1.8;color:#f2eee1}.scene-link{display:inline-flex;align-items:center;gap:20px;border-bottom:1px solid #d6bc82;min-height:44px;margin-top:20px;color:#ffe4a8;font-weight:600;font-size:14px}
@@ -61,10 +61,10 @@ const tools=[
 .edition li span{font:600 clamp(16px,1.25vw,19px)/1.48 'Songti SC','Noto Serif SC',serif}.issue-link,.section-title>a{font-size:13px;color:#3f5140;font-weight:650}.issue-link{margin-top:auto;padding-top:14px;display:flex;justify-content:space-between;min-height:42px}
 .cuts,.bench{margin-top:clamp(32px,4.2vw,64px)}.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--ink)}
 .reel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);margin-top:18px}
-.still{aspect-ratio:2.12;overflow:hidden;background:#27322b}.still img{width:100%;height:100%;object-fit:cover;object-position:center 44%;transition:transform .25s ease}
+.still{aspect-ratio:1.85;overflow:hidden;background:#27322b}.still img{width:100%;height:100%;object-fit:cover;object-position:center 48%;transition:transform .25s ease}
 .caption{padding:12px 0}.cut h3,.tools h3{font-size:clamp(18px,1.6vw,24px);font-weight:700;margin:3px 0 5px}.cut p,.tools p{font-size:14px;line-height:1.65;color:#52584c}.tools{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}.tools a{padding:17px 0;border-bottom:1px solid var(--rule)}.tools h3{display:flex;justify-content:space-between}.tools h3 span{color:#66725a;font-size:16px}
 .desk a:focus-visible{outline:3px solid #af712d;outline-offset:3px}.desk a:hover h3,.edition a:hover span,.desk a:hover.issue-link{text-decoration:underline;text-underline-offset:4px}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.cut:hover img{transform:scale(1.035)}}
 @media(max-width:780px){.opening{grid-template-columns:1fr}.scene{min-height:310px}.edition li a{grid-template-columns:65px 1fr;align-items:baseline;gap:12px}.issue-head{padding:10px 0}.edition li a{padding:9px 0}.scene-copy{padding:24px}.scene-link{margin-top:8px}}
-@media(max-width:600px){.desk{padding:14px 16px 40px}.scene{min-height:300px}.scene-copy{padding:20px}.scene h1{font-size:44px}.scene .action{font-size:14px}.reel{grid-template-columns:1fr;gap:14px}.cut{display:grid;grid-template-columns:minmax(90px,34%) 1fr;gap:14px;align-items:center}.still{aspect-ratio:1.25}.caption{padding:0}.tools{grid-template-columns:1fr}.section-title{padding-bottom:9px}}
+@media(max-width:600px){.desk{padding:14px 16px 40px}.scene{min-height:350px}.scene img{object-position:70% center}.scene:after{background:linear-gradient(0deg,#090d0cef 0%,#090d0c80 37%,transparent 69%)}.scene-copy{padding:20px}.scene h1{font-size:44px}.scene .action{font-size:14px}.reel{grid-template-columns:1fr;gap:14px}.cut{display:grid;grid-template-columns:minmax(90px,34%) 1fr;gap:14px;align-items:center}.still{aspect-ratio:1.25}.caption{padding:0}.tools{grid-template-columns:1fr}.section-title{padding-bottom:9px}}
 </style>
